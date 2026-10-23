@@ -11,7 +11,8 @@ test.describe('Home page content', () => {
 
     await expect(home.brand).toBeVisible();
     await expect(home.startProject).toBeVisible();
-    await expect(home.eyebrow).toBeVisible();
+    await expect(home.eyebrow).toHaveCount(0);
+    await expect(home.contactIntro).toHaveCount(0);
     await expect(home.heading).toHaveText(
       'Professional apps, at a price a small mission can afford.',
     );
@@ -54,7 +55,7 @@ test.describe('Home page content', () => {
     await expect(home.page).toHaveTitle(/Goodwork/);
   });
 
-  test('offers only the email and message fields, both marked required, with the help text linked', async ({
+  test('offers only the email and message fields, both marked required, with no help text or reply line', async ({
     home,
   }) => {
     await home.goto();
@@ -63,10 +64,8 @@ test.describe('Home page content', () => {
     await expect(home.messageField).toBeVisible();
     await expect(home.page.getByText('(required)')).toHaveCount(2);
     await expect(home.sendButton).toBeVisible();
-    await expect(home.replyHint).toBeVisible();
-    await expect(home.messageField).toHaveAccessibleDescription(
-      'Who you serve and what you need.',
-    );
+    await expect(home.replyHint).toHaveCount(0);
+    await expect(home.messageHelp).toHaveCount(0);
     // Besides the two fields, the form holds only the honeypot, which no visitor can see or reach.
     await expect(home.page.locator('form input, form textarea')).toHaveCount(3);
     await expect(home.honeypot).not.toBeInViewport();

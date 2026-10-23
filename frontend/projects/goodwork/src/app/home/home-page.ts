@@ -35,10 +35,10 @@ export class HomePage {
   protected readonly notes: readonly HeroNote[] = [
     {
       lead: 'Why it costs less:',
-      text: "a small senior team, an AI-assisted process and a fixed-price quote up front.",
+      text: 'a small senior team, an AI-assisted process and a fixed-price quote up front.',
     },
     {
-      text: "A Christian-owned studio, serving anyone whose work serves others.",
+      text: 'A Christian-owned studio, serving anyone whose work serves others.',
     },
   ];
 
@@ -46,7 +46,7 @@ export class HomePage {
     {
       heading: 'Web and mobile apps',
       icon: 'app',
-      body: "Scheduling, case management, donor records and registration, built for the phone.",
+      body: 'Scheduling, case management, donor records and registration, built for the phone.',
     },
     {
       heading: 'Websites',

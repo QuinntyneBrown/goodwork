@@ -62,9 +62,7 @@ export class ContactForm {
     if (this.busy()) return 'Sending…';
     return this.phase() === 'failed' ? 'Try again' : 'Send request';
   });
-  protected readonly hint = computed(() =>
-    this.busy() ? 'Sending your request' : 'We reply within two business days.',
-  );
+  protected readonly hint = computed(() => (this.busy() ? 'Sending your request' : ''));
 
   /** Moves focus to the email field, or to the confirmation once the form has been replaced by it. */
   focusEmail(options?: FocusOptions): void {

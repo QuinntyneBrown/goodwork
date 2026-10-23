@@ -9,9 +9,6 @@
   display: grid;
   gap: var(--space-2);
 }
-.muted {
-  color: var(--color-fg-muted);
-}
 .form {
   display: grid;
   gap: var(--space-4);
