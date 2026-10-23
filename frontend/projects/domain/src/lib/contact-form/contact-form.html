@@ -1,0 +1,90 @@
+<section gwCard class="contact" id="contact" aria-labelledby="contact-title">
+  <div class="section-head">
+    <h2 id="contact-title">Tell us about your project</h2>
+    <p class="muted">
+      No long forms. Leave an email and a few lines, and a person will write back.
+    </p>
+  </div>
+
+  @if (phase() === 'sent') {
+  <gw-alert #confirmation variant="success" role="status" heading="Request sent. Thank you.">
+    <p>
+      We'll reply to {{ sentTo() }} within two business days to set up a short call. There's nothing
+      else to do right now.
+    </p>
+    <div class="actions-row">
+      <button gwButton variant="link" type="button" (click)="sendAnother()">
+        Send another request
+      </button>
+    </div>
+  </gw-alert>
+  } @else {
+  <form class="form" aria-labelledby="contact-title" novalidate (submit)="submit($event)">
+    @if (phase() === 'failed') {
+    <gw-alert #failure variant="danger" role="alert" heading="We couldn't send your request">
+      <p>
+        Our mail service didn't respond. Your message is still here. Try again, or email us directly
+        at
+        <a [href]="'mailto:' + studioEmail()">{{ studioEmail() }}</a>.
+      </p>
+    </gw-alert>
+    } @if (errorList().length > 0) {
+    <gw-alert #summary variant="danger" role="alert" [rule]="true" [heading]="summaryHeading()">
+      <ul>
+        @for (item of errorList(); track item.field) {
+        <li>
+          <a [href]="'#' + item.field" (click)="focusField(item.field, $event)"
+            >{{ item.summary }}</a
+          >
+        </li>
+        }
+      </ul>
+    </gw-alert>
+    }
+    <gw-text-field
+      #emailField
+      fieldId="email"
+      label="Email"
+      type="email"
+      autocomplete="email"
+      inputmode="email"
+      [required]="true"
+      [readonly]="sending()"
+      [error]="errors().email?.detail ?? null"
+      [value]="email()"
+      (valueChange)="setEmail($event)"
+    />
+    <gw-text-field
+      #messageField
+      fieldId="message"
+      label="What are you working on?"
+      [multiline]="true"
+      [required]="true"
+      [readonly]="sending()"
+      help="A sentence or two is plenty. Who you serve, what you need, and roughly when."
+      [error]="errors().message?.detail ?? null"
+      [value]="message()"
+      (valueChange)="setMessage($event)"
+    />
+    <div class="honeypot" aria-hidden="true">
+      <label>
+        Leave this field empty
+        <input
+          name="website"
+          type="text"
+          tabindex="-1"
+          autocomplete="off"
+          [value]="website()"
+          (input)="website.set($any($event.target).value)"
+        />
+      </label>
+    </div>
+    <div class="actions">
+      <button gwButton variant="primary" size="lg" type="submit" [busy]="busy()">
+        {{ buttonLabel() }}
+      </button>
+      <span class="hint" aria-live="polite">{{ hint() }}</span>
+    </div>
+  </form>
+  }
+</section>

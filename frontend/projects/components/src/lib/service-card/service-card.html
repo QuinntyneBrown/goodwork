@@ -1,0 +1,13 @@
+<div gwCard class="service">
+  <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+    @if (icon() === 'globe') {
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+    } @else {
+    <rect x="3" y="4" width="18" height="14" rx="2" />
+    <path d="M8 21h8M12 18v3" />
+    }
+  </svg>
+  <h3 class="title">{{ heading() }}</h3>
+  <p class="body">{{ body() }}</p>
+</div>

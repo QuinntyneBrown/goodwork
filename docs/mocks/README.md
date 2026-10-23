@@ -67,6 +67,6 @@ Legend: ✅ mock exists · ➖ not applicable (reason in manifest) · ❌ missin
 
 | Screen | default | loading | empty | error | invalid | sending | sent | Requirements |
 |---|---|---|---|---|---|---|---|---|
-| Home (`home`) | [✅](pages/home/default.html) | ➖ | ➖ | [✅](pages/home/error.html) | [✅](pages/home/invalid.html) | [✅](pages/home/sending.html) | [✅](pages/home/sent.html) |  |
+| Home (`home`) | [✅](pages/home/default.html) | ➖ | ➖ | [✅](pages/home/error.html) | [✅](pages/home/invalid.html) | [✅](pages/home/sending.html) | [✅](pages/home/sent.html) | L2-001 to L2-016 |
 
 <!-- coverage:end -->

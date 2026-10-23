@@ -54,6 +54,8 @@ reposiotyry is a full stack responsive web app. .NET on backend and Angular on f
 
 - `frontend/` is an Angular workspace: the `api`, `components`, and `domain`
   libraries and the application project are siblings under `frontend/projects/`.
+- The design system lives in `docs/design-system/`. Its `tokens/tokens.css` is
+  authoritative; `npm run sync:tokens` copies it into the `components` library.
 - Prefer signals over RxJS, and hold state in signals. Reach for RxJS only for
   genuine streams and events.
 - No single-file components. Template, styles, and class each live in their own file.
@@ -188,22 +190,34 @@ formatter, and review. A test suite exists to prove behavior.
 
 ```text
 goodwork/
-|-- backend/
+|-- README.md, AGENTS.md, CLAUDE.md, GEMINI.md   # Overview and agent instructions
+|-- Dockerfile, .dockerignore, .gitignore
+|-- .github/
+|   `-- copilot-instructions.md                  # Pointer to AGENTS.md
+|-- backend/                                     # .NET solution
+|   |-- Goodwork.sln, Directory.Build.props, Directory.Packages.props, global.json
 |   |-- src/
+|   |   |-- Goodwork.Domain/                     # Entities. References nothing.
+|   |   |-- Goodwork.Application/                # Commands, queries, handlers, validators, abstractions
+|   |   |-- Goodwork.Infrastructure/             # EF Core context and migrations, SMTP, options
+|   |   |-- Goodwork.Api/                        # Controllers, middleware, workers, Program.cs
+|   |   `-- Goodwork.Cli/                        # Database migrate command
 |   `-- tests/
-|-- frontend/
+|       `-- Goodwork.Api.Tests/                  # Integration tests against the API
+|-- frontend/                                    # Angular workspace
 |   `-- projects/
-|       |-- goodwork/
-|       |-- api/
-|       |-- components/
-|       `-- domain/
-|-- design-system/
-|-- e2e/
-|   |-- fixtures/
-|   |-- page-objects/
-|   `-- specs/
+|       |-- goodwork/                            # The application: shell, routed pages
+|       |-- api/                                 # Service contracts, tokens and HTTP implementations
+|       |-- components/                          # Presentational design-system components and tokens
+|       `-- domain/                              # Components that inject an api contract
+|-- e2e/                                         # Playwright suite (Chromium only)
+|   |-- fixtures/                                # Fake backend, test fixtures, static server for the build
+|   |-- page-objects/                            # One page object per screen
+|   `-- specs/                                   # Specs, including axe accessibility checks
 `-- docs/
-    |-- specs/
-    |-- detailed-designs/
-    `-- mocks/
+    |-- specs/                                   # L1 and L2 requirements
+    |-- detailed-designs/                        # Per-subsystem and feature designs and diagrams
+    |-- mocks/                                   # Static HTML mocks: the design reference
+    |-- design-system/                           # Tokens, components and patterns taken from the mocks
+    `-- estimates/                               # Effort and percent complete per design
 ```

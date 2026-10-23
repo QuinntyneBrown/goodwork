@@ -1,0 +1,36 @@
+<gw-skip-link (activated)="skipToContent()" />
+<gw-site-header ctaLabel="Start a project" (ctaActivated)="startProject()" />
+<main #main id="main" tabindex="-1" class="container brochure">
+  <div class="left">
+    <gw-hero
+      eyebrow="Software for people doing good work"
+      heading="Professional apps, at a price a small mission can afford."
+      [lead]="lead"
+      [notes]="notes"
+    />
+    <section aria-labelledby="services-title">
+      <div class="section-head">
+        <h2 id="services-title">What we build</h2>
+      </div>
+      <ul class="services" role="list">
+        @for (service of services; track service.heading) {
+        <li>
+          <gw-service-card
+            [heading]="service.heading"
+            [body]="service.body"
+            [icon]="service.icon"
+          />
+        </li>
+        }
+      </ul>
+    </section>
+  </div>
+  <gw-contact-form [studioEmail]="studio.email" />
+</main>
+<gw-site-footer
+  class="container"
+  [year]="year"
+  [name]="studio.name"
+  [location]="studio.location"
+  [email]="studio.email"
+/>

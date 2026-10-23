@@ -6,7 +6,8 @@ title Components — View the home page
 Person(visitor, "Prospective client", "Browser user")
 Container_Boundary(spa, "Goodwork web app") {
   Component(home, "HomePage", "Routed Angular component (app project)", "Composes the page at /")
-  Component(header, "SiteHeader", "components library", "Logo, Start a project link, skip link")
+  Component(skip, "SkipLink", "components library", "Skip to content link")
+  Component(header, "SiteHeader", "components library", "BrandLockup and Start a project link")
   Component(hero, "Hero", "components library", "Heading, description, cost and faith paragraphs")
   Component(card, "ServiceCard", "components library", "One service: title and body")
   Component(footer, "SiteFooter", "components library", "Copyright, location, mailto link")
@@ -14,11 +15,14 @@ Container_Boundary(spa, "Goodwork web app") {
   Component(theme, "Design tokens", "CSS custom properties", "Light and dark themes chosen by prefers-color-scheme")
 }
 Container_Boundary(api, "Goodwork API") {
-  Component(headers, "SecurityHeadersMiddleware", "ASP.NET Core middleware", "HTTPS redirect, HSTS, CSP, nosniff, Referrer-Policy")
+  Component(headers, "SecurityHeadersMiddleware", "ASP.NET Core middleware", "CSP, nosniff, Referrer-Policy")
+  Component(origin, "SameOriginMiddleware", "ASP.NET Core middleware", "Refuses cross-origin writes")
   Component(statics, "Static file host", "ASP.NET Core static files", "Serves the built web app and self-hosted fonts")
 }
 Rel(visitor, statics, "Requests /", "HTTPS")
 Rel(headers, statics, "Wraps responses of")
+Rel(origin, statics, "Guards writes beside")
+Rel(home, skip, "Renders")
 Rel(home, header, "Renders")
 Rel(home, hero, "Renders")
 Rel(home, card, "Renders twice")

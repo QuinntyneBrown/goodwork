@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+.footer {
+  border-top: 1px solid var(--color-border-default);
+  padding-block: var(--space-5);
+  font: var(--text-body-sm);
+  color: var(--color-fg-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-6);
+  justify-content: space-between;
+}
+.footer a {
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-min);
+}

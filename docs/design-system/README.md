@@ -100,4 +100,14 @@ python3 .claude/skills/writing-html-mocks/scripts/check_mocks.py docs/mocks
 python3 .claude/skills/writing-html-mocks/scripts/screenshot_mocks.py docs/design-system --out docs/design-system/.cache/shots
 ```
 
-RESULTS_PLACEHOLDER
+Results on 2026-10-23:
+
+| Check | Result |
+|---|---|
+| Contrast, light and dark | 128 passed, 0 failed |
+| Design-system structure | 61 pages, 0 errors, 0 warnings |
+| Mocks after linking this system | 5 mocks, 0 errors, 0 warnings |
+| Horizontal overflow at 360px, all 61 pages | none |
+| Brochure height at 1280px wide | 1043px, under the 1100px limit |
+
+Screenshots of the index, color, button, text field and top bar pages were reviewed at 360px and 1280px in both themes. Review found and fixed: light-theme comparison panels rendering dark inside a dark page (added a `[data-theme="light"]` token scope), and phone overflow from hidden labels escaping scroll containers and fixed-width demo figures.

@@ -1,0 +1,44 @@
+:host {
+  display: block;
+}
+.brochure {
+  display: grid;
+  gap: var(--space-10);
+  padding-block: var(--space-10) var(--space-12);
+}
+.brochure:focus {
+  outline: none;
+}
+.left {
+  display: grid;
+  gap: var(--space-10);
+}
+.section-head {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+.services {
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+gw-contact-form {
+  scroll-margin-top: calc(var(--layout-topbar-height) + var(--space-4));
+}
+@media (min-width: 48rem) {
+  .services {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 64rem) {
+  .brochure {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    column-gap: var(--space-16);
+    row-gap: var(--space-10);
+    padding-block: var(--space-12) var(--space-10);
+    align-items: start;
+  }
+}

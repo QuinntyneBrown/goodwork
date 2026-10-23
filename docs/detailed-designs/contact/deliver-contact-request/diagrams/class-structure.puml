@@ -14,11 +14,13 @@ title Class structure — Deliver a contact request
 class ContactRequestDeliveryWorker {
   +ExecuteAsync(ct): Task
 }
-class DeliverContactRequestCommand {
-  +Guid ContactRequestId
+class DeliverDueContactRequestsCommand
+class DeleteExpiredContactRequestsCommand
+class DeliverDueContactRequestsCommandHandler {
+  +Handle(command, ct): Task<int>
 }
-class DeliverContactRequestCommandHandler {
-  +Handle(command, ct): Task<Unit>
+class DeleteExpiredContactRequestsCommandHandler {
+  +Handle(command, ct): Task<int>
 }
 interface IEmailSender {
   +SendAsync(message: EmailMessage, ct): Task
@@ -53,15 +55,17 @@ enum DeliveryStatus {
   Delivered
 }
 interface TimeProvider
-ContactRequestDeliveryWorker ..> DeliverContactRequestCommand : sends
-DeliverContactRequestCommandHandler ..> DeliverContactRequestCommand : handles
-DeliverContactRequestCommandHandler --> IEmailSender
-DeliverContactRequestCommandHandler --> StudioInboxOptions
-DeliverContactRequestCommandHandler --> TimeProvider
-DeliverContactRequestCommandHandler ..> ContactRequest : loads / mutates
-DeliverContactRequestCommandHandler ..> EmailMessage : builds
+ContactRequestDeliveryWorker ..> DeliverDueContactRequestsCommand : sends
+DeliverDueContactRequestsCommandHandler ..> DeliverDueContactRequestsCommand : handles
+ContactRequestRetentionWorker ..> DeleteExpiredContactRequestsCommand : sends
+DeleteExpiredContactRequestsCommandHandler ..> DeleteExpiredContactRequestsCommand : handles
+DeleteExpiredContactRequestsCommandHandler --> TimeProvider
+DeleteExpiredContactRequestsCommandHandler ..> ContactRequest : deletes
+DeliverDueContactRequestsCommandHandler --> IEmailSender
+DeliverDueContactRequestsCommandHandler --> StudioInboxOptions
+DeliverDueContactRequestsCommandHandler --> TimeProvider
+DeliverDueContactRequestsCommandHandler ..> ContactRequest : loads / mutates
+DeliverDueContactRequestsCommandHandler ..> EmailMessage : builds
 SmtpEmailSender ..|> IEmailSender
-ContactRequestRetentionWorker --> TimeProvider
-ContactRequestRetentionWorker ..> ContactRequest : deletes
 ContactRequest --> DeliveryStatus
 @enduml

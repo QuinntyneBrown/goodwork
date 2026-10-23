@@ -1,0 +1,98 @@
+:host {
+  --btn-bg: var(--color-bg-surface);
+  --btn-fg: var(--color-fg-default);
+  --btn-border: var(--color-border-strong);
+  --btn-bg-hover: var(--color-bg-subtle);
+  --btn-bg-active: var(--color-bg-subtle-hover);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--control-height-md);
+  padding: 0 var(--space-4);
+  font: var(--text-label);
+  font-size: var(--font-size-md);
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--btn-fg);
+  background: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-decoration: none;
+  user-select: none;
+  position: relative;
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard),
+    transform var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard);
+}
+:host(:hover) {
+  background: var(--btn-bg-hover);
+  color: var(--btn-fg);
+}
+:host(:active) {
+  background: var(--btn-bg-active);
+  transform: translateY(1px);
+}
+:host(:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+:host([data-variant='primary']) {
+  --btn-bg: var(--color-accent);
+  --btn-fg: var(--color-fg-on-accent);
+  --btn-border: var(--color-accent);
+  --btn-bg-hover: var(--color-accent-hover);
+  --btn-bg-active: var(--color-accent-active);
+}
+:host([data-variant='primary']:hover) {
+  border-color: var(--color-accent-hover);
+  box-shadow: var(--shadow-1);
+}
+:host([data-variant='link']) {
+  --btn-bg: transparent;
+  --btn-border: transparent;
+  --btn-fg: var(--color-fg-link);
+  --btn-bg-hover: var(--color-accent-subtle);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+:host([data-size='lg']) {
+  min-height: var(--control-height-lg);
+  padding-inline: var(--space-6);
+  font-size: var(--font-size-lg);
+}
+:host([aria-busy='true']) {
+  color: transparent;
+  pointer-events: none;
+}
+:host([aria-busy='true'])::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 1.1em;
+  height: 1.1em;
+  border: 2px solid var(--btn-fg);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  :host([aria-busy='true'])::after {
+    animation-duration: 2.4s;
+  }
+}
+@media (forced-colors: active) {
+  :host {
+    forced-color-adjust: none;
+    border: 1px solid CanvasText;
+  }
+  :host([data-variant='primary']) {
+    background: Highlight;
+    color: HighlightText;
+  }
+}

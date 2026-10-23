@@ -18,13 +18,15 @@ The mocks leave open where requests go (email inbox, CRM or both). This design d
 
 The slice runs inside the Goodwork API process, between the database and the mail service.
 
-- **`ContactRequestDeliveryWorker`** — hosted `BackgroundService` in `Goodwork.Api`. It polls for `Pending` requests whose next attempt is due and sends one `DeliverContactRequestCommand` per request. The poll interval is `<TO SUPPLY>`.
-- **`DeliverContactRequestCommandHandler`** — MediatR handler in `Goodwork.Application`. It loads the request and builds a plain-text `EmailMessage` addressed to the studio inbox, with `Reply-To` set to the sender. It sends the message through `IEmailSender`, then marks the request delivered or records a failed attempt.
+- **`ContactRequestDeliveryWorker`** — hosted `BackgroundService` in `Goodwork.Api`. It sends a `DeliverDueContactRequestsCommand` every 30 s. Configuration `Workers:Enabled` switches both workers off, which the tests use.
+- **`DeliverDueContactRequestsCommandHandler`** — MediatR handler in `Goodwork.Application`. It loads up to 20 `Pending` requests whose `NextAttemptAt` is due and, for each, builds a plain-text `EmailMessage` addressed to the studio inbox with `Reply-To` set to the sender. It sends the message through `IEmailSender`, then marks the request delivered or records a failed attempt, and saves after each request. It returns the number delivered.
 - **`EmailMessage`** — record of recipient, reply-to address, subject and plain-text body. The body contains the sender's email and message verbatim, with no HTML.
 - **`IEmailSender`** and **`SmtpEmailSender`** — abstraction in `Goodwork.Application` and its SMTP implementation in `Goodwork.Infrastructure`. Tests replace the implementation with a fake. The mail provider is `<TO SUPPLY>`.
 - **`StudioInboxOptions`** — options bound from configuration. They hold the inbox and sender addresses. No address appears in source.
-- **`ContactRequest`** — domain entity from `contact/submit-contact-request`. `MarkDelivered()` sets the status to `Delivered`. `RecordFailedAttempt(now)` increments the attempt count and sets `NextAttemptAt`. The backoff schedule and maximum attempt count are `<TO SUPPLY>`.
-- **`ContactRequestRetentionWorker`** — hosted `BackgroundService`. It runs daily and deletes requests whose `ReceivedAt` is more than 24 months before now.
+- **`ContactRequest`** — domain entity from `contact/submit-contact-request`. `MarkDelivered()` sets the status to `Delivered` and clears `NextAttemptAt`. `RecordFailedAttempt(now)` increments the attempt count and schedules the next attempt after 1 minute, 5 minutes, 15 minutes and then every hour. After 24 failed attempts `NextAttemptAt` is cleared, the request stays stored as `Pending`, and no further attempt is made.
+- **`ContactRequestRetentionWorker`** — hosted `BackgroundService`. It sends a `DeleteExpiredContactRequestsCommand` once a day.
+- **`DeleteExpiredContactRequestsCommandHandler`** — MediatR handler. It deletes requests whose `ReceivedAt` is more than 24 months before now and logs only the count.
+- **`SmtpOptions`** — options holding the SMTP host, port, credentials and an optional `PickupDirectory`. When the directory is set, `SmtpEmailSender` writes each message there as a text file instead of sending it. Development uses this.
 - **`TimeProvider`** — .NET time abstraction. Both workers and the handler read time through it so tests can control it.
 
 Logs from this slice name a request by its id. They shall not contain the message body or the full email address.
@@ -56,19 +58,19 @@ The Goodwork API reads pending requests from the Goodwork database and sends not
 
 ### Components
 
-`ContactRequestDeliveryWorker` dispatches one command per pending request. `DeliverContactRequestCommandHandler` sends through `SmtpEmailSender` to the inbox named by `StudioInboxOptions`. `ContactRequestRetentionWorker` deletes expired requests.
+`ContactRequestDeliveryWorker` dispatches one command per run. `DeliverDueContactRequestsCommandHandler` sends through `SmtpEmailSender` to the inbox named by `StudioInboxOptions`. `ContactRequestRetentionWorker` deletes expired requests.
 
 ![C4 component view for delivering a contact request](diagrams/c4-component.png)
 
 ### Class structure
 
-The handler depends on `IEmailSender`, `StudioInboxOptions` and `TimeProvider`, and mutates `ContactRequest` through `MarkDelivered()` and `RecordFailedAttempt(now)`.
+The delivery handler depends on `IEmailSender`, `StudioInboxOptions` and `TimeProvider`, and mutates `ContactRequest` through `MarkDelivered()` and `RecordFailedAttempt(now)`. The retention handler deletes through `IGoodworkDbContext`.
 
 ![Class diagram for delivering a contact request](diagrams/class-structure.png)
 
 ### Behaviour — deliver a pending request
 
-For each due request, the handler sends a plain-text notification. A success marks the request delivered. A failure records the attempt and schedules a retry.
+For each due request in the batch, the handler sends a plain-text notification. A success marks the request delivered. A failure records the attempt and schedules a retry.
 
 ![Sequence diagram for delivering a contact request](diagrams/sequence-deliver.png)
 

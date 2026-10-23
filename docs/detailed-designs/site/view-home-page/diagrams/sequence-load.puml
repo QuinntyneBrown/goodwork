@@ -26,7 +26,8 @@ box "Backend — Goodwork API application" #D1FADF
 end box
 actor -> browser : Open https://<TO SUPPLY>/
 browser -> mw : GET /
-mw -> mw : Redirect HTTP to HTTPS, add HSTS and CSP (L2-011)
+mw -> mw : Redirect HTTP to HTTPS, add HSTS (L2-011)
+mw -> mw : Register CSP, nosniff and Referrer-Policy for response start (L2-011)
 mw -> statics : Forward request
 statics --> mw : index.html, bundle, self-hosted fonts (L2-015)
 mw --> browser : 200 with security headers

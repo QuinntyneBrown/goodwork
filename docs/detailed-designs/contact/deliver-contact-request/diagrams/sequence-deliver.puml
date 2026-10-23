@@ -18,7 +18,7 @@ box "Backend — Goodwork API application" #D1FADF
   participant "ContactRequestDeliveryWorker" as worker
 end box
 box "Backend — Goodwork Application and Domain" #ECFDF3
-  participant "DeliverContactRequestCommandHandler" as handler
+  participant "DeliverDueContactRequestsCommandHandler" as handler
   participant "ContactRequest" as entity
 end box
 box "Backend — Goodwork Infrastructure" #FFF4E5
@@ -27,11 +27,10 @@ box "Backend — Goodwork Infrastructure" #FFF4E5
 end box
 participant "Mail service" as mail
 actor "Goodwork studio" as studio
-worker -> db : Read Pending requests due now
-db --> worker : Request ids
-loop Each pending request
-  worker -> handler : Send DeliverContactRequestCommand
-  handler -> db : Load ContactRequest
+worker -> handler : Send DeliverDueContactRequestsCommand every 30 s
+handler -> db : Load up to 20 Pending requests due now
+db --> handler : Due requests
+loop Each due request
   handler -> handler : Build plain-text EmailMessage to configured inbox, Reply-To sender (L2-009)
   handler -> sender : SendAsync(message)
   sender -> mail : SMTP
@@ -46,4 +45,5 @@ loop Each pending request
   end
   handler -> db : Save
 end
+handler --> worker : Number delivered
 @enduml

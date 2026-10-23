@@ -17,11 +17,16 @@ skinparam package {
 box "Backend — Goodwork API application" #D1FADF
   participant "ContactRequestRetentionWorker" as worker
 end box
+box "Backend — Goodwork Application and Domain" #ECFDF3
+  participant "DeleteExpiredContactRequestsCommandHandler" as handler
+end box
 box "Backend — Goodwork Infrastructure" #FFF4E5
   database "Goodwork database" as db
 end box
-worker -> worker : Wait for daily run; cutoff = now minus 24 months
-worker -> db : Delete ContactRequests where ReceivedAt < cutoff (L2-011)
-db --> worker : Rows deleted
-worker -> worker : Log count only
+worker -> handler : Send DeleteExpiredContactRequestsCommand once a day
+handler -> handler : cutoff = now minus 24 months
+handler -> db : Delete ContactRequests where ReceivedAt < cutoff (L2-011)
+db --> handler : Rows deleted
+handler -> handler : Log count only
+handler --> worker : Number deleted
 @enduml

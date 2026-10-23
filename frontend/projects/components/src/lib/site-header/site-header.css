@@ -1,0 +1,16 @@
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: var(--layout-topbar-height);
+  padding-inline: var(--layout-margin);
+  background: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border-default);
+}

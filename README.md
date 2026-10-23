@@ -63,32 +63,35 @@ one application - `components` (presentational, design-system components),
 ```text
 goodwork/
 |-- backend/
-|   |-- src/              # API, Application, Domain, Infrastructure
+|   |-- src/              # Api, Application, Domain, Infrastructure, Cli
 |   `-- tests/            # API integration tests
 |-- frontend/
 |   `-- projects/
 |       |-- goodwork/     # Angular application
-|       |-- api/          # Service contracts' HTTP implementations
+|       |-- api/          # Service contracts, tokens and HTTP implementations
 |       |-- components/   # Design-system component library
 |       `-- domain/       # Service-aware components
-|-- design-system/        # Design tokens and component guidance
 |-- e2e/
-|   |-- fixtures/         # Fake API and fake OIDC
+|   |-- fixtures/         # Fake API and the static server for the built app
 |   |-- page-objects/     # One page object per screen
 |   `-- specs/            # Playwright acceptance tests
+|-- Dockerfile            # Builds the Angular app into the API image
 `-- docs/
     |-- specs/            # L1 and L2 requirements
     |-- detailed-designs/ # Detailed designs
-    `-- mocks/            # Static HTML mocks
+    |-- mocks/            # Static HTML mocks
+    |-- design-system/    # Design tokens and component guidance
+    `-- estimates/        # Effort and percent complete
 ```
 
 ## Getting started
 
 ### Prerequisites
 
-- [.NET SDK](https://dotnet.microsoft.com/download) (current LTS)
-- [Node.js](https://nodejs.org/) (current LTS) and npm
-- A SQL database for local development (connection string via configuration)
+- [.NET SDK](https://dotnet.microsoft.com/download) 10
+- [Node.js](https://nodejs.org/) 24 and npm
+
+Local development uses SQLite, so there is no database server to install.
 
 ### Clone
 
@@ -101,21 +104,32 @@ cd goodwork
 
 Secrets never live in the repository. Supply them through
 [user secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets) or
-environment variables:
+environment variables (use `__` for nesting, for example `Smtp__Host`).
 
-```bash
-cd backend/src/Goodwork.Api
-dotnet user-secrets set "ConnectionStrings:Goodwork" "<connection-string>"
-```
+| Setting | Purpose |
+| --- | --- |
+| `ConnectionStrings__Goodwork` | SQLite connection string, default `Data Source=goodwork.db` |
+| `StudioInbox__InboxAddress`, `StudioInbox__FromAddress` | Where contact requests are emailed, and the sender |
+| `Smtp__Host`, `Smtp__Port`, `Smtp__UseStartTls`, `Smtp__Username`, `Smtp__Password` | Mail server |
+| `Smtp__PickupDirectory` | Write emails to this folder instead of sending them (Development sets `outbox`) |
+| `ForwardedHeaders__Enabled` | `true` (the default) behind a reverse proxy, so the real client address and scheme are used. Set `false` if the API is exposed directly. |
+| `HttpsRedirection__Port` | Public HTTPS port used by the HTTP-to-HTTPS redirect, default 443 |
+| `AllowedOrigins` | Extra origins allowed to post; normally empty |
+| `Workers__Enabled` | `false` switches off the delivery and retention jobs |
+
+The studio location and contact email shown on the page (`Hamilton, Ontario`,
+`hello@goodwork.dev`) are placeholders from the mocks. They live in
+`frontend/projects/goodwork/src/app/studio.ts`.
 
 ### Run the API
 
-Migrations are not applied on startup; run them explicitly first.
+Migrations are not applied on startup; run them explicitly with the CLI first.
 
 ```bash
 cd backend
-dotnet ef database update --project src/Goodwork.Infrastructure --startup-project src/Goodwork.Api
-dotnet run --project src/Goodwork.Api
+dotnet run --project src/Goodwork.Cli -- migrate
+ASPNETCORE_ENVIRONMENT=Development ASPNETCORE_URLS=http://localhost:5080 \
+  dotnet run --project src/Goodwork.Api --no-launch-profile
 ```
 
 ### Run the web client
@@ -126,7 +140,7 @@ npm install
 npm start
 ```
 
-Open <http://localhost:4200>.
+Open <http://localhost:4200>. The dev server proxies `/api` to the API on port 5080.
 
 ## Running tests
 
@@ -135,7 +149,7 @@ Open <http://localhost:4200>.
 cd backend && dotnet test
 
 # Frontend lint and format checks
-cd frontend && npm run lint && npx prettier --check .
+cd frontend && npm run lint && npm run format:check && npm run build
 
 # End-to-end acceptance tests (no backend required; the API is faked)
 cd e2e && npm install && npx playwright install chromium && npx playwright test
@@ -144,6 +158,18 @@ cd e2e && npm install && npx playwright install chromium && npx playwright test
 Development follows acceptance test-driven development: every change starts
 with Given-When-Then criteria and a failing acceptance test. See
 [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Build and run in a container
+
+```bash
+docker build -t goodwork .
+docker run --rm -v goodwork-data:/data goodwork dotnet cli/Goodwork.Cli.dll migrate
+docker run -p 8080:8080 -v goodwork-data:/data \
+  -e StudioInbox__InboxAddress=studio@example.org -e StudioInbox__FromAddress=no-reply@example.org \
+  -e Smtp__Host=smtp.example.org goodwork
+```
+
+Put a TLS-terminating reverse proxy in front: the app redirects HTTP to HTTPS and sends HSTS.
 
 ## Documentation
 

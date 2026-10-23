@@ -1,0 +1,37 @@
+.hero {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 40rem;
+}
+.eyebrow {
+  font: var(--text-overline);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--color-fg-gold);
+}
+.title {
+  font: var(--text-h1);
+  letter-spacing: var(--letter-spacing-tight);
+  text-wrap: balance;
+}
+.lead {
+  font: var(--text-body-lg);
+  color: var(--color-fg-muted);
+  text-wrap: pretty;
+  max-width: var(--layout-measure);
+}
+.note {
+  font: var(--text-body);
+  color: var(--color-fg-default);
+  text-wrap: pretty;
+  max-width: var(--layout-measure);
+}
+.note strong {
+  font-weight: var(--font-weight-semibold);
+}
+@media (min-width: 48rem) {
+  .title {
+    font: var(--text-display);
+    letter-spacing: var(--letter-spacing-tight);
+  }
+}

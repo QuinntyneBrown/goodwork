@@ -24,6 +24,7 @@ box "Backend — Goodwork API application" #D1FADF
   participant "ContactRequestsController" as ctrl
 end box
 box "Backend — Goodwork Application and Domain" #ECFDF3
+  participant "ValidationBehavior" as behavior
   participant "SubmitContactRequestCommandValidator" as validator
   participant "SubmitContactRequestCommandHandler" as handler
   participant "ContactRequest" as entity
@@ -43,18 +44,25 @@ else Valid
     limiter --> client : 429 with Retry-After (L2-010)
   else Admitted
     limiter -> ctrl : Forward; body over 16 KB returns 413 (L2-010)
-    ctrl -> validator : Validate SubmitContactRequestCommand
+    ctrl -> behavior : Send SubmitContactRequestCommand
+    behavior -> validator : Validate
     alt Invalid
-      validator --> ctrl : Field failures
+      validator --> behavior : Field failures
+      behavior --> ctrl : ValidationException
       ctrl --> client : 400 ValidationProblemDetails (L2-008)
     else Valid
-      ctrl -> handler : Send command
+      behavior -> handler : Pass command
       alt Honeypot website field filled
         handler --> ctrl : Discard silently (L2-010)
       else Genuine request
         handler -> entity : Create(trimmed email, trimmed message, UTC now) (L2-008)
         handler -> db : Save with DeliveryStatus Pending
-        db --> handler : Committed
+        alt Storage fails
+          db --> handler : DbUpdateException
+          handler --> client : 503 problem response (L2-009)
+        else Stored
+          db --> handler : Committed
+        end
       end
       handler --> ctrl : Accepted
       ctrl --> client : 202 Accepted (L2-008, L2-016)

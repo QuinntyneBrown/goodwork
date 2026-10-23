@@ -18,16 +18,20 @@ The design reference is `docs/mocks/pages/home/default.html`.
 
 The slice runs from the ASP.NET Core host that serves the built Angular app to the components that compose the page.
 
-- **`HomePage`** — routed component in the `goodwork` application project. It composes the page and owns the `startProject()` handler, which scrolls to the contact section and calls `ContactForm.focusEmail()`.
+- **`HomePage`** — routed component in the `goodwork` application project. It composes the page and owns the `skipToContent()` handler, which focuses `<main>`, and the `startProject()` handler, which scrolls to the contact section and calls `ContactForm.focusEmail()`.
 - **`ServiceSummary`** — data shape holding a service title and body. The two summaries are static copy taken from the mock.
-- **`SiteHeader`** — presentational component in the `components` library. It renders the Cornerstone logo, the "Skip to content" link and the "Start a project" link, and emits `ctaActivated`.
-- **`Hero`** — presentational component in `components`. It renders the single `h1` and the description paragraphs projected into it.
-- **`ServiceCard`** — presentational component in `components`. It renders one service title and body.
+- **`SkipLink`** — presentational component in `components`. It renders the "Skip to content" link and emits `activated`.
+- **`BrandLockup`** — presentational component in `components`. It renders the Cornerstone logo and the studio name as a link to `/`.
+- **`SiteHeader`** — presentational component in the `components` library. It renders the `BrandLockup` and the "Start a project" link as a `Button`, and emits `ctaActivated`.
+- **`Hero`** — presentational component in `components`. It renders the eyebrow, the single `h1`, the description paragraph and the notes passed in as `HeroNote` values (an optional bold lead-in plus text).
+- **`ServiceCard`** — presentational component in `components`. It renders one service title, body and icon on a `Card`.
 - **`SiteFooter`** — presentational component in `components`. It renders the copyright year, the location and the studio email as a `mailto:` link.
 - **`ContactForm`** — component in the `domain` library, described in `contact/submit-contact-request`.
 - **Design tokens** — CSS custom properties copied from the design system. The dark palette applies under `prefers-color-scheme: dark` with no script, so no light flash occurs.
-- **`SecurityHeadersMiddleware`** — ASP.NET Core middleware in `Goodwork.Api`. It adds HSTS, a Content-Security-Policy without inline script, `X-Content-Type-Options: nosniff` and `Referrer-Policy: strict-origin-when-cross-origin`.
-- **Static file host** — the ASP.NET Core static file pipeline. It serves the production build and the self-hosted Inter and Source Serif 4 fonts.
+- **`SecurityHeadersMiddleware`** — ASP.NET Core middleware in `Goodwork.Api`. It sets a Content-Security-Policy without inline script, `X-Content-Type-Options: nosniff` and `Referrer-Policy: strict-origin-when-cross-origin` as each response starts, so error responses carry them. HSTS and the HTTPS redirect come from the built-in `UseHsts()` and `UseHttpsRedirection()`; both are off in Development.
+- **`SameOriginMiddleware`** — ASP.NET Core middleware. It answers 403 to any non-`GET` request whose `Origin` header names another host, unless the origin is listed in `AllowedOrigins`.
+- **Static file host** — the ASP.NET Core static file pipeline. It serves the production build and the self-hosted Inter and Source Serif 4 fonts. Fingerprinted assets carry a one-year `immutable` cache header, and `index.html` carries `no-cache`. Routing is added after static files so the fallback endpoint cannot hide an asset.
+- **SPA fallback** — every path that matches no file or controller returns `index.html`, except paths under `/api/`, which return 404.
 
 The studio location, contact email and production host name are placeholders in the mocks and remain `<TO SUPPLY>`.
 
@@ -39,7 +43,7 @@ The feature realizes the following level-2 (L2) requirements. Each L2 requiremen
 |-------|--------------|-------------|
 | `L2-001` | `L1-001` | The page at `/` shall render, without signing in, the header, hero, two service cards, contact section and footer, with copy matching the mock. |
 | `L2-002` | `L1-001` | "Start a project" shall scroll to the contact form and focus the email field, and a "Skip to content" link shall be the first focus stop. |
-| `L2-011` | `L1-004` | The site shall enforce HTTPS with HSTS and send a Content-Security-Policy, `nosniff` and `Referrer-Policy` header on every response. |
+| `L2-011` | `L1-004` | The site shall enforce HTTPS with HSTS, send a Content-Security-Policy, `nosniff` and `Referrer-Policy` header on every response, and refuse cross-origin writes. |
 | `L2-012` | `L1-005` | The page shall lay out correctly from below 576px to 1200px and wider, with no horizontal scroll, and shall be no taller than 1100px at 1280×800. |
 | `L2-013` | `L1-005` | The page shall follow the operating system's light or dark preference with no flash, and every pair shall meet WCAG 2.2 AA contrast. |
 | `L2-014` | `L1-006` | The page shall meet WCAG 2.2 AA in every state, including keyboard order, visible focus, announcements, heading order and reduced motion. |

@@ -1,1 +1,21 @@
 docs/mocks/.cache/
+docs/design-system/.cache/
+
+# .NET
+bin/
+obj/
+*.db
+*.db-shm
+*.db-wal
+outbox/
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+frontend/.cache/
+
+# Playwright
+e2e/test-results/
+e2e/playwright-report/
+backend/src/Goodwork.Api/wwwroot/

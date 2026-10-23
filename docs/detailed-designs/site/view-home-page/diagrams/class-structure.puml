@@ -13,11 +13,16 @@ title Class structure — View the home page
 
 class HomePage {
   +services: ServiceSummary[]
+  +skipToContent(): void
   +startProject(): void
 }
 class ServiceSummary <<data>> {
   +title: string
   +body: string
+}
+class SkipLink {
+  +label: input<string>
+  +activated: output<void>
 }
 class SiteHeader {
   +ctaLabel: input<string>
@@ -41,6 +46,10 @@ class ContactForm {
 class SecurityHeadersMiddleware {
   +InvokeAsync(context: HttpContext): Task
 }
+class SameOriginMiddleware {
+  +InvokeAsync(context: HttpContext): Task
+}
+HomePage *-- "1" SkipLink
 HomePage *-- "1" SiteHeader
 HomePage *-- "1" Hero
 HomePage *-- "2" ServiceCard

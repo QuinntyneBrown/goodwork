@@ -13,20 +13,24 @@ title Class structure — Submit a contact request
 
 package "frontend/projects/domain" {
   class ContactForm {
-    -state: signal<ContactFormState>
-    -email: FormControl<string>
-    -message: FormControl<string>
-    -website: FormControl<string>
-    +submit(): void
+    -phase: signal<Phase>
+    -email: signal<string>
+    -message: signal<string>
+    -website: signal<string>
+    -errors: signal<FieldErrors>
+    +submit(event): Promise<void>
     +sendAnother(): void
-    +focusEmail(): void
+    +focusEmail(options): void
   }
-  enum ContactFormState {
-    Default
-    Invalid
-    Sending
-    Sent
-    Error
+  enum Phase {
+    editing
+    sending
+    sent
+    failed
+  }
+  class ContactValidation <<functions>> {
+    +validateEmail(value): FieldError
+    +validateMessage(value): FieldError
   }
 }
 package "frontend/projects/api" {
@@ -48,6 +52,9 @@ package "Goodwork.Api" {
   class ContactRequestsController {
     +Submit(command: SubmitContactRequestCommand): Task<IActionResult>
   }
+  class MaxBodySizeAttribute
+  class ValidationExceptionHandler
+  class StorageExceptionHandler
 }
 package "Goodwork.Application" {
   class SubmitContactRequestCommand {
@@ -56,6 +63,7 @@ package "Goodwork.Application" {
     +string? Website
   }
   class SubmitContactRequestCommandValidator
+  class ValidationBehavior<TRequest, TResponse>
   class SubmitContactRequestCommandHandler {
     +Handle(command, ct): Task<Unit>
   }
@@ -79,12 +87,17 @@ package "Goodwork.Domain" {
     Delivered
   }
 }
-ContactForm --> ContactFormState
+ContactForm --> Phase
+ContactForm ..> ContactValidation : validates with
 ContactForm ..> IContactRequestService : inject(CONTACT_REQUEST_SERVICE)
 ContactRequestService ..|> IContactRequestService
 IContactRequestService ..> ContactRequestInput
 IContactRequestService ..> ContactRequestResult
 ContactRequestsController ..> SubmitContactRequestCommand : sends
+ContactRequestsController ..> MaxBodySizeAttribute : limited by
+ValidationBehavior ..> SubmitContactRequestCommandValidator : runs
+ValidationExceptionHandler ..> ValidationBehavior : handles its exception
+StorageExceptionHandler ..> SubmitContactRequestCommandHandler : handles its DbUpdateException
 SubmitContactRequestCommandValidator ..> SubmitContactRequestCommand : validates
 SubmitContactRequestCommandHandler ..> SubmitContactRequestCommand : handles
 SubmitContactRequestCommandHandler --> IGoodworkDbContext

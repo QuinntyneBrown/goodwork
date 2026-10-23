@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <ItemGroup>
+    <ProjectReference Include="..\Goodwork.Application\Goodwork.Application.csproj" />
+    <ProjectReference Include="..\Goodwork.Infrastructure\Goodwork.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

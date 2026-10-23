@@ -1,0 +1,40 @@
+<div class="field">
+  <label class="field__label" [for]="fieldId()"
+    >{{ label() }} @if (required()) {
+    <span class="optional">(required)</span>
+    }
+  </label>
+  @if (multiline()) {
+  <textarea
+    #control
+    class="control textarea"
+    [id]="fieldId()"
+    [name]="fieldId()"
+    [rows]="rows()"
+    [readOnly]="readonly()"
+    [value]="value()"
+    [attr.aria-invalid]="error() ? 'true' : null"
+    [attr.aria-describedby]="describedBy()"
+    (input)="onInput($event)"
+  ></textarea>
+  } @else {
+  <input
+    #control
+    class="control"
+    [id]="fieldId()"
+    [name]="fieldId()"
+    [type]="type()"
+    [readOnly]="readonly()"
+    [value]="value()"
+    [attr.autocomplete]="autocomplete()"
+    [attr.inputmode]="inputmode()"
+    [attr.aria-invalid]="error() ? 'true' : null"
+    [attr.aria-describedby]="describedBy()"
+    (input)="onInput($event)"
+  />
+  } @if (help()) {
+  <p class="field__help" [id]="helpId()">{{ help() }}</p>
+  } @if (error()) {
+  <p class="field__error" [id]="errorId()">{{ error() }}</p>
+  }
+</div>

@@ -18,17 +18,22 @@ The design references are the five mocks in `docs/mocks/pages/home/`.
 
 The slice runs from the `ContactForm` component to the `ContactRequests` table.
 
-- **`ContactForm`** — component in the `domain` library. It holds the form state in a signal of `ContactFormState`. It validates on submit, then live per field once a field has shown an error. It delays the sending state by 300 ms, removes the form once a request is sent, and exposes `focusEmail()` for the "Start a project" link. It renders a visually hidden `website` input as the honeypot field.
-- **`ContactFormState`** — enumeration of the five states shown in the mocks.
+- **`ContactForm`** — component in the `domain` library. It holds its state in signals: the field values, the field errors, and a phase of `editing`, `sending`, `sent` or `failed`. It validates on submit, then live per field once a field has shown an error. It delays the busy state by 300 ms, removes the form once a request is sent, and exposes `focusEmail()` for the "Start a project" link. It renders an off-screen `website` input as the honeypot field.
+- **`validateEmail`** and **`validateMessage`** — pure functions in `domain` that return a `FieldError` (a short summary text and a full detail text) or nothing. They apply the 254 and 2000 character limits.
+- **`TextField`, `Alert`, `Button`, `Card`** — presentational components from the `components` library. `ContactForm` composes every control from them.
 - **`IContactRequestService`** and **`CONTACT_REQUEST_SERVICE`** — contract and injection token in the `api` library. The form depends only on the token.
 - **`ContactRequestService`** — HTTP implementation in the `api` library. It posts to `/api/contact-requests` with a 15 s timeout and maps responses to a `ContactRequestResult`: 202 to `accepted`, 400 to `invalid` with field errors, and any other outcome to `failed`.
-- **Contact rate limiter** — ASP.NET Core fixed-window policy of 5 requests per 10 minutes per client address. It rejects excess requests with 429 and `Retry-After`. A 16 KB request body limit applies to the endpoint.
-- **`ContactRequestsController`** — controller in `Goodwork.Api.Controllers`. It binds the body, sends the command through MediatR and returns 202. It carries `[AllowAnonymous]` and the rate-limit policy.
+- **Contact rate limiter** — ASP.NET Core fixed-window policy of 5 requests per 10 minutes per client address. It rejects excess requests with 429 and `Retry-After`.
+- **`MaxBodySizeAttribute`** — resource filter on the endpoint. It answers 413 when the declared `Content-Length` exceeds 16 KB and sets the server's own limit for chunked bodies.
+- **`ContactRequestsController`** — controller in `Goodwork.Api.Controllers`. It binds the body, sends the command through MediatR and returns 202. It carries `[AllowAnonymous]`, the rate-limit policy and the size limit.
 - **`SubmitContactRequestCommand`** — command carrying `Email`, `Message` and the optional honeypot `Website`. Unknown properties are not bound.
-- **`SubmitContactRequestCommandValidator`** — validator in `Goodwork.Application`. Email shall be a complete address of at most 254 characters. Message shall contain a non-whitespace character and at most 2000 characters. Failures return 400 as `ValidationProblemDetails`. The validation library is `<TO SUPPLY>`.
-- **`SubmitContactRequestCommandHandler`** — MediatR handler. It returns success without storing anything when `Website` is filled. Otherwise it creates a `ContactRequest` and saves it. A storage failure surfaces as 503.
+- **`ValidationBehavior`** — MediatR pipeline behavior in `Goodwork.Application`. It runs every validator for a request and throws a `ValidationException` when any rule fails.
+- **`SubmitContactRequestCommandValidator`** — FluentValidation validator in `Goodwork.Application`. Email shall be a complete address of at most 254 characters after trimming. Message shall contain a non-whitespace character and at most 2000 characters after trimming.
+- **`ValidationExceptionHandler`** — exception handler in `Goodwork.Api`. It turns a `ValidationException` into a 400 `ValidationProblemDetails` whose `errors` are keyed by camel-case field name.
+- **`StorageExceptionHandler`** — exception handler in `Goodwork.Api`. It turns a `DbUpdateException` into a 503 problem response and logs the exception type only.
+- **`SubmitContactRequestCommandHandler`** — MediatR handler. It returns success without storing anything when `Website` is filled. Otherwise it creates a `ContactRequest` and saves it. A storage failure surfaces as 503 through `StorageExceptionHandler`.
 - **`ContactRequest`** — domain entity holding the trimmed email and message, the UTC `ReceivedAt` time, a `DeliveryStatus` and a delivery attempt count.
-- **`IGoodworkDbContext`** — Application-layer abstraction over the EF Core context in `Goodwork.Infrastructure`. The database engine is `<TO SUPPLY>`.
+- **`IGoodworkDbContext`** — Application-layer abstraction over `GoodworkDbContext`, the EF Core context in `Goodwork.Infrastructure`. The database engine is SQLite. The context stores timestamps as UTC ticks because SQLite cannot compare `DateTimeOffset` values.
 
 Message text is stored and rendered as plain text. Angular interpolation escapes it in the browser, and the notification email in `contact/deliver-contact-request` sends it as plain text.
 
@@ -63,7 +68,7 @@ The Goodwork web app posts the request to the Goodwork API, which writes it to t
 
 ### Components
 
-`ContactForm` reaches the API only through the `CONTACT_REQUEST_SERVICE` token. In the API, the rate limiter admits the request, the controller dispatches the command, and the handler stores a `ContactRequest`.
+`ContactForm` reaches the API only through the `CONTACT_REQUEST_SERVICE` token. In the API, the rate limiter admits the request, the controller dispatches the command through the validation behavior, and the handler stores a `ContactRequest`.
 
 ![C4 component view for submitting a contact request](diagrams/c4-component.png)
 
@@ -75,6 +80,6 @@ The frontend types sit in the `domain` and `api` libraries. The backend types fo
 
 ### Behaviour — submit a contact request
 
-The diagram shows client-side validation first. The server path follows: rate limit, server validation, the honeypot check, then storage. The final block maps each outcome to the sent, invalid or error state.
+The diagram shows client-side validation first. The server path follows: rate limit, size limit, server validation, the honeypot check, then storage. The final block maps each outcome to the sent, invalid or error state.
 
 ![Sequence diagram for submitting a contact request](diagrams/sequence-submit.png)
