@@ -230,6 +230,8 @@ goodwork/
 `-- docs/
     |-- specs/                                   # L1 and L2 requirements
     |-- detailed-designs/                        # Per-subsystem and feature designs and diagrams
+    |-- brand/
+    |   `-- print/                               # Print collateral: business card source, fonts and print-ready PDFs
     |-- mocks/                                   # Static HTML mocks: the design reference
     |-- design-system/                           # Tokens, components and patterns taken from the mocks
     |-- demo/                                    # Narrated demo video, poster, narration text
