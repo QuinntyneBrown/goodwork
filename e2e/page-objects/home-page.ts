@@ -22,6 +22,8 @@ export class HomePage {
   readonly replyHint: Locator;
   readonly pitchVideo: Locator;
   readonly pitchCaptions: Locator;
+  readonly contactIntro: Locator;
+  readonly messageHelp: Locator;
 
   constructor(readonly page: Page) {
     this.skipLink = page.getByRole('link', { name: 'Skip to content' });
@@ -53,6 +55,8 @@ export class HomePage {
       name: 'Send another request',
     });
     this.replyHint = page.getByText('We reply within two business days.');
+    this.contactIntro = page.getByText('No long forms.');
+    this.messageHelp = page.getByText('Who you serve and what you need.');
   }
 
   async goto(): Promise<void> {

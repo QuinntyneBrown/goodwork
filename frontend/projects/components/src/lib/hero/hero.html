@@ -1,5 +1,7 @@
 <section class="hero" aria-labelledby="hero-title">
+  @if (eyebrow()) {
   <p class="eyebrow">{{ eyebrow() }}</p>
+  }
   <h1 class="title" id="hero-title">{{ heading() }}</h1>
   <p class="lead">{{ lead() }}</p>
   @for (note of notes(); track note.text) {

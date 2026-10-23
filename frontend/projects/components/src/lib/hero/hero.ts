@@ -8,7 +8,7 @@ import { HeroNote } from './hero-note';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Hero {
-  readonly eyebrow = input.required<string>();
+  readonly eyebrow = input<string | null>(null);
   readonly heading = input.required<string>();
   readonly lead = input.required<string>();
   readonly notes = input<readonly HeroNote[]>([]);

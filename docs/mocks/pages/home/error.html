@@ -24,7 +24,6 @@
 <main id="main" class="container brochure">
   <div class="brochure__left">
     <section class="hero" aria-labelledby="hero-title">
-      <p class="eyebrow">Software for people doing good work</p>
       <h1 class="hero__title" id="hero-title">Professional apps, at a price a small mission can afford.</h1>
       <p class="hero__lead">Websites and custom apps for non-profits, churches and mission-driven companies. Agency quality, without the agency price.</p>
       <p class="hero__note"><strong>Why it costs less:</strong> a small senior team, an AI-assisted process and a fixed-price quote up front.</p>
@@ -71,13 +70,12 @@
           </div>
           <div class="field">
             <label class="field__label" for="message">What are you working on? <span class="optional">(required)</span></label>
-            <textarea class="textarea" id="message" name="message" rows="5" aria-describedby="message-help">We run a transitional housing program in Hamilton and track residents in three spreadsheets. We'd like one simple app our case workers can use on their phones.</textarea>
-            <p class="field__help" id="message-help">Who you serve and what you need.</p>
+            <textarea class="textarea" id="message" name="message" rows="5">We run a transitional housing program in Hamilton and track residents in three spreadsheets. We'd like one simple app our case workers can use on their phones.</textarea>
             
           </div>
           <div class="form-actions">
             <button class="btn btn--primary btn--lg" type="submit">Try again</button>
-            <span class="contact__hint">We reply within two business days.</span>
+            <span class="contact__hint" aria-live="polite"></span>
           </div>
     </form>
   </section>

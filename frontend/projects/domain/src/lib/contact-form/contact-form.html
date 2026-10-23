@@ -58,7 +58,6 @@
       [multiline]="true"
       [required]="true"
       [readonly]="sending()"
-      help="Who you serve and what you need."
       [error]="errors().message?.detail ?? null"
       [value]="message()"
       (valueChange)="setMessage($event)"
