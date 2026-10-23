@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Top bar — Goodwork design system</title>
+<meta name="description" content="The site header: brand lockup on the left, one call to action on the right.">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../assets/components.css">
+<link rel="stylesheet" href="../assets/ds.css">
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="ds-shell">
+  <nav class="ds-nav" aria-label="Design system">
+    <div class="ds-nav__brand"><a href="../index.html">Goodwork DS</a><button class="ds-theme-toggle" type="button" aria-pressed="false">☾ Dark</button></div>
+    <details open><summary>Foundations</summary><ul>
+      <li><a href="../foundations/color.html">Color</a></li>
+      <li><a href="../foundations/typography.html">Typography</a></li>
+      <li><a href="../foundations/spacing.html">Spacing</a></li>
+      <li><a href="../foundations/layout.html">Layout</a></li>
+      <li><a href="../foundations/elevation.html">Elevation</a></li>
+      <li><a href="../foundations/shape.html">Shape</a></li>
+      <li><a href="../foundations/motion.html">Motion</a></li>
+      <li><a href="../foundations/iconography.html">Iconography</a></li>
+      <li><a href="../foundations/theming.html">Theming</a></li>
+      <li><a href="../foundations/responsive.html">Responsive</a></li>
+      <li><a href="../foundations/accessibility.html">Accessibility</a></li>
+      <li><a href="../foundations/content.html">Content</a></li>
+    </ul></details>
+    <details open><summary>Components</summary><ul>
+      <li><a href="../components/button.html">Button</a></li>
+      <li><a href="../components/link.html">Link</a></li>
+      <li><a href="../components/menu.html">Menu</a></li>
+      <li><a href="../components/text-field.html">Text field</a></li>
+      <li><a href="../components/textarea.html">Textarea</a></li>
+      <li><a href="../components/select.html">Select</a></li>
+      <li><a href="../components/checkbox.html">Checkbox</a></li>
+      <li><a href="../components/radio-group.html">Radio group</a></li>
+      <li><a href="../components/switch.html">Switch</a></li>
+      <li><a href="../components/form-field.html">Form field</a></li>
+      <li><a href="../components/form-layout.html">Form layout</a></li>
+      <li><a href="../components/top-bar.html">Top bar</a></li>
+      <li><a href="../components/sidebar-navigation.html">Sidebar navigation</a></li>
+      <li><a href="../components/tabs.html">Tabs</a></li>
+      <li><a href="../components/breadcrumb.html">Breadcrumb</a></li>
+      <li><a href="../components/pagination.html">Pagination</a></li>
+      <li><a href="../components/skip-link.html">Skip link</a></li>
+      <li><a href="../components/footer.html">Footer</a></li>
+      <li><a href="../components/card.html">Card</a></li>
+      <li><a href="../components/dialog.html">Dialog</a></li>
+      <li><a href="../components/tooltip.html">Tooltip</a></li>
+      <li><a href="../components/divider.html">Divider</a></li>
+      <li><a href="../components/layout-primitives.html">Container, grid and stack</a></li>
+      <li><a href="../components/table.html">Table</a></li>
+      <li><a href="../components/list.html">List</a></li>
+      <li><a href="../components/description-list.html">Description list</a></li>
+      <li><a href="../components/avatar.html">Avatar</a></li>
+      <li><a href="../components/badge.html">Badge</a></li>
+      <li><a href="../components/chip.html">Chip</a></li>
+      <li><a href="../components/toast.html">Toast</a></li>
+      <li><a href="../components/alert.html">Alert</a></li>
+      <li><a href="../components/inline-message.html">Inline message</a></li>
+      <li><a href="../components/progress-bar.html">Progress bar</a></li>
+      <li><a href="../components/spinner.html">Spinner</a></li>
+      <li><a href="../components/skeleton.html">Skeleton</a></li>
+      <li><a href="../components/empty-state.html">Empty state</a></li>
+      <li><a href="../components/error-page.html">Error page</a></li>
+      <li><a href="../components/brand-lockup.html">Brand lockup</a></li>
+      <li><a href="../components/hero.html">Hero</a></li>
+      <li><a href="../components/service-card.html">Service card</a></li>
+    </ul></details>
+    <details open><summary>Patterns</summary><ul>
+      <li><a href="../patterns/forms.html">Forms</a></li>
+      <li><a href="../patterns/feedback-and-loading.html">Feedback &amp; loading</a></li>
+      <li><a href="../patterns/empty-and-error-states.html">Empty &amp; error states</a></li>
+      <li><a href="../patterns/navigation-and-page-structure.html">Navigation &amp; page structure</a></li>
+      <li><a href="../patterns/dialogs-and-overlays.html">Dialogs &amp; overlays</a></li>
+      <li><a href="../patterns/data-tables-and-lists.html">Data tables &amp; lists</a></li>
+      <li><a href="../patterns/notifications.html">Notifications</a></li>
+      <li><a href="../patterns/content-and-tone.html">Content &amp; tone</a></li>
+    </ul></details>
+  </nav>
+  <main id="main" class="ds-main">
+    <header class="ds-header">
+      <p class="ds-kicker">Component · Navigation</p>
+      <h1>Top bar</h1>
+      <p class="ds-lead">The top bar carries the Goodwork lockup and a single <i>Start a project</i> action. On a one-page site there is nothing else to navigate to.</p>
+      <div class="ds-meta"><span class="ds-pill ds-pill--ok">WCAG 2.2 AA</span><span class="ds-pill">Status: stable</span><span class="ds-pill"><code>&lt;header&gt;</code></span></div>
+      <ul class="ds-toc"><li><a href="#overview">Overview</a></li><li><a href="#anatomy">Anatomy</a></li><li><a href="#variants">Variants</a></li><li><a href="#sizes">Sizes</a></li><li><a href="#states">States</a></li><li><a href="#responsive">Responsive</a></li><li><a href="#theming">Theming</a></li><li><a href="#accessibility">Accessibility</a></li><li><a href="#content">Content</a></li><li><a href="#do-dont">Do and don't</a></li><li><a href="#tokens">Tokens</a></li><li><a href="#code">Code</a></li><li><a href="#sources">Sources</a></li></ul>
+    </header>
+    <section class="ds-section" id="overview"><h2><a href="#overview">Overview</a></h2>
+<p>Marketing pages use the lockup plus one primary link. App screens add a menu button, search and account actions; those variants are specified here for when Goodwork builds them.</p>
+    </section>
+    <section class="ds-section" id="anatomy"><h2><a href="#anatomy">Anatomy</a></h2>
+      <div class="ds-anatomy"><figure class="ds-anatomy__figure"><header class="topbar" style="position: static; width: 100%; max-width: 26rem;"><a class="brand" href="#overview" aria-label="Goodwork, home"><svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true"><rect class="mark-ink" x="4" y="4" width="17" height="12" rx="2.5"/><rect class="mark-ink" x="27" y="4" width="17" height="12" rx="2.5"/><rect class="mark-gold" x="4" y="22" width="17" height="22" rx="2.5"/><rect class="mark-ink" x="27" y="22" width="17" height="22" rx="2.5"/></svg>Goodwork</a><span class="topbar__spacer"></span><a class="btn btn--primary" href="#overview">Start a project</a></header><span class="ds-callout" style="left: 8%; top: 30%;" aria-hidden="true">1</span><span class="ds-callout" style="left: 78%; top: 30%;" aria-hidden="true">2</span></figure><ol class="ds-anatomy__list"><li><div><b>Brand lockup</b><small>Links home; see <a href="brand-lockup.html">brand lockup</a>.</small></div></li><li><div><b>Call to action</b><small>One primary link to the contact form.</small></div></li></ol></div>
+    </section>
+    <section class="ds-section" id="variants"><h2><a href="#variants">Variants</a></h2>
+      <div class="ds-example"><div class="ds-example__canvas ds-example__canvas--stack"><header class="topbar" style="position: static; width: 100%;"><a class="brand" href="#overview" aria-label="Goodwork, home"><svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true"><rect class="mark-ink" x="4" y="4" width="17" height="12" rx="2.5"/><rect class="mark-ink" x="27" y="4" width="17" height="12" rx="2.5"/><rect class="mark-gold" x="4" y="22" width="17" height="22" rx="2.5"/><rect class="mark-ink" x="27" y="22" width="17" height="22" rx="2.5"/></svg>Goodwork</a><span class="topbar__spacer"></span><a class="btn btn--primary" href="#variants">Start a project</a></header></div><div class="ds-example__caption"><span>Marketing, from the mocks.</span></div><details class="ds-example__code"><summary>HTML</summary><pre><code>&lt;header class=&quot;topbar&quot; style=&quot;position: static; width: 100%;&quot;&gt;&lt;a class=&quot;brand&quot; href=&quot;#overview&quot; aria-label=&quot;Goodwork, home&quot;&gt;&lt;svg class=&quot;brand__mark&quot; viewBox=&quot;0 0 48 48&quot; aria-hidden=&quot;true&quot;&gt;&lt;rect class=&quot;mark-ink&quot; x=&quot;4&quot; y=&quot;4&quot; width=&quot;17&quot; height=&quot;12&quot; rx=&quot;2.5&quot;/&gt;&lt;rect class=&quot;mark-ink&quot; x=&quot;27&quot; y=&quot;4&quot; width=&quot;17&quot; height=&quot;12&quot; rx=&quot;2.5&quot;/&gt;&lt;rect class=&quot;mark-gold&quot; x=&quot;4&quot; y=&quot;22&quot; width=&quot;17&quot; height=&quot;22&quot; rx=&quot;2.5&quot;/&gt;&lt;rect class=&quot;mark-ink&quot; x=&quot;27&quot; y=&quot;22&quot; width=&quot;17&quot; height=&quot;22&quot; rx=&quot;2.5&quot;/&gt;&lt;/svg&gt;Goodwork&lt;/a&gt;&lt;span class=&quot;topbar__spacer&quot;&gt;&lt;/span&gt;&lt;a class=&quot;btn btn--primary&quot; href=&quot;#variants&quot;&gt;Start a project&lt;/a&gt;&lt;/header&gt;</code></pre></details></div>
+      <h3>App variant</h3>
+      <div class="ds-example"><div class="ds-example__canvas ds-example__canvas--stack"><header class="topbar" style="position: static; width: 100%;"><button class="btn btn--ghost btn--icon topbar__menu" type="button" aria-label="Open navigation" aria-expanded="false"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a class="brand" href="#overview" aria-label="Goodwork, home"><svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true"><rect class="mark-ink" x="4" y="4" width="17" height="12" rx="2.5"/><rect class="mark-ink" x="27" y="4" width="17" height="12" rx="2.5"/><rect class="mark-gold" x="4" y="22" width="17" height="22" rx="2.5"/><rect class="mark-ink" x="27" y="22" width="17" height="22" rx="2.5"/></svg>Goodwork</a><span class="topbar__spacer"></span><button class="avatar avatar--sm" type="button" aria-label="Account menu for Ruth Okonkwo" style="border: 0;">RO</button></header></div><div class="ds-example__caption"><span>Menu button, brand, account.</span></div><details class="ds-example__code"><summary>HTML</summary><pre><code>&lt;header class=&quot;topbar&quot; style=&quot;position: static; width: 100%;&quot;&gt;&lt;button class=&quot;btn btn--ghost btn--icon topbar__menu&quot; type=&quot;button&quot; aria-label=&quot;Open navigation&quot; aria-expanded=&quot;false&quot;&gt;&lt;svg class=&quot;icon&quot; aria-hidden=&quot;true&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M4 7h16M4 12h16M4 17h16&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;a class=&quot;brand&quot; href=&quot;#overview&quot; aria-label=&quot;Goodwork, home&quot;&gt;&lt;svg class=&quot;brand__mark&quot; viewBox=&quot;0 0 48 48&quot; aria-hidden=&quot;true&quot;&gt;&lt;rect class=&quot;mark-ink&quot; x=&quot;4&quot; y=&quot;4&quot; width=&quot;17&quot; height=&quot;12&quot; rx=&quot;2.5&quot;/&gt;&lt;rect class=&quot;mark-ink&quot; x=&quot;27&quot; y=&quot;4&quot; width=&quot;17&quot; height=&quot;12&quot; rx=&quot;2.5&quot;/&gt;&lt;rect class=&quot;mark-gold&quot; x=&quot;4&quot; y=&quot;22&quot; width=&quot;17&quot; height=&quot;22&quot; rx=&quot;2.5&quot;/&gt;&lt;rect class=&quot;mark-ink&quot; x=&quot;27&quot; y=&quot;22&quot; width=&quot;17&quot; height=&quot;22&quot; rx=&quot;2.5&quot;/&gt;&lt;/svg&gt;Goodwork&lt;/a&gt;&lt;span class=&quot;topbar__spacer&quot;&gt;&lt;/span&gt;&lt;button class=&quot;avatar avatar--sm&quot; type=&quot;button&quot; aria-label=&quot;Account menu for Ruth Okonkwo&quot; style=&quot;border: 0;&quot;&gt;RO&lt;/button&gt;&lt;/header&gt;</code></pre></details></div>
+    </section>
+    <section class="ds-section" id="sizes" data-na="One height: &lt;code&gt;--layout-topbar-height&lt;/code&gt; (56px)."><h2><a href="#sizes">Sizes</a></h2>
+      <p class="ds-na">One height: &lt;code&gt;--layout-topbar-height&lt;/code&gt; (56px).</p>
+    </section>
+    <section class="ds-section" id="states"><h2><a href="#states">States</a></h2>
+      <p>Pointer and focus states are forced with <code>data-state</code> so they can be reviewed without a mouse; real pages get them from <code>:hover</code>, <code>:focus-visible</code> and <code>:active</code>. Everything else uses the real attribute.</p>
+      <div class="ds-matrix"><table><thead><tr><th scope="col">Variant</th><th scope="col">Default</th><th scope="col">CTA hover</th><th scope="col">CTA focus</th></tr></thead><tbody><tr><th scope="row">Marketing</th><td><a class="btn btn--primary" href="#states">Start a project</a></td><td><a class="btn btn--primary" href="#states" data-state="hover">Start a project</a></td><td><a class="btn btn--primary" href="#states" data-state="focus">Start a project</a></td></tr></tbody></table></div>
+      <h3>Both themes</h3>
+      <div class="ds-themes"><div data-theme="light"><div class="ds-example__canvas ds-example__canvas--stack" style="padding: 0;"><header class="topbar" style="position: static; width: 100%;"><a class="brand" href="#overview" aria-label="Goodwork, home"><svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true"><rect class="mark-ink" x="4" y="4" width="17" height="12" rx="2.5"/><rect class="mark-ink" x="27" y="4" width="17" height="12" rx="2.5"/><rect class="mark-gold" x="4" y="22" width="17" height="22" rx="2.5"/><rect class="mark-ink" x="27" y="22" width="17" height="22" rx="2.5"/></svg>Goodwork</a><span class="topbar__spacer"></span><a class="btn btn--primary" href="#variants">Start a project</a></header></div></div><div data-theme="dark"><div class="ds-example__canvas ds-example__canvas--stack" style="padding: 0;"><header class="topbar" style="position: static; width: 100%;"><a class="brand" href="#overview" aria-label="Goodwork, home"><svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true"><rect class="mark-ink" x="4" y="4" width="17" height="12" rx="2.5"/><rect class="mark-ink" x="27" y="4" width="17" height="12" rx="2.5"/><rect class="mark-gold" x="4" y="22" width="17" height="22" rx="2.5"/><rect class="mark-ink" x="27" y="22" width="17" height="22" rx="2.5"/></svg>Goodwork</a><span class="topbar__spacer"></span><a class="btn btn--primary" href="#variants">Start a project</a></header></div></div></div>
+    </section>
+    <section class="ds-section" id="responsive"><h2><a href="#responsive">Responsive behaviour</a></h2>
+      <ul><li>Sticky at the top at every width.</li><li>At 360px the lockup and button still fit on one row; the button never shrinks below 40px.</li></ul>
+    </section>
+    <section class="ds-section" id="theming"><h2><a href="#theming">Theming</a></h2>
+<p>Background <code>--color-bg-surface</code> with a <code>--color-border-default</code> rule. The lockup's ink follows <code>currentColor</code>, so it reverses to Linen in dark while the gold block stays gold.</p>
+    </section>
+    <section class="ds-section" id="accessibility"><h2><a href="#accessibility">Accessibility</a></h2>
+      <h3>Role and pattern</h3><p><code>&lt;header&gt;</code> landmark. The menu button uses <code>aria-expanded</code> and <code>aria-controls</code>.</p>
+      <h3>Keyboard</h3>
+      <div class="ds-table-wrap"><table class="ds-table ds-keys"><thead><tr><th scope="col">Key</th><th scope="col">Action</th></tr></thead><tbody><tr><td><kbd>Tab</kbd></td><td>Skip link, brand, then the call to action.</td></tr></tbody></table></div>
+      <h3>Focus</h3><p>Shared ring. The sticky bar never covers the focused element; use <code>scroll-padding-top</code> equal to its height.</p>
+      <h3>Labelling</h3><p>Brand link is named <i>Goodwork, home</i>.</p>
+      <h3>Contrast</h3>
+      <div class="ds-themes"><div data-theme="light"><div class="ds-example__canvas ds-example__canvas--stack" style="padding: 0; gap: var(--space-2);"><div class="ds-pair"><span>Brand text on bar</span><span class="ds-pair__ratio" data-contrast="--color-fg-default|--color-bg-surface" data-min="4.5"></span></div><div class="ds-pair"><span>CTA label</span><span class="ds-pair__ratio" data-contrast="--color-fg-on-accent|--color-accent" data-min="4.5"></span></div><div class="ds-pair"><span>Focus ring on page</span><span class="ds-pair__ratio" data-contrast="--color-focus-ring|--color-bg-canvas" data-min="3"></span></div></div></div><div data-theme="dark"><div class="ds-example__canvas ds-example__canvas--stack" style="padding: 0; gap: var(--space-2);"><div class="ds-pair"><span>Brand text on bar</span><span class="ds-pair__ratio" data-contrast="--color-fg-default|--color-bg-surface" data-min="4.5"></span></div><div class="ds-pair"><span>CTA label</span><span class="ds-pair__ratio" data-contrast="--color-fg-on-accent|--color-accent" data-min="4.5"></span></div><div class="ds-pair"><span>Focus ring on page</span><span class="ds-pair__ratio" data-contrast="--color-focus-ring|--color-bg-canvas" data-min="3"></span></div></div></div></div>
+      <h3>Motion</h3><p>None.</p>
+      <h3>Touch</h3><p>CTA is 40px; brand link is 28px tall plus padding.</p>
+    </section>
+    <section class="ds-section" id="content"><h2><a href="#content">Content</a></h2>
+      <ul><li>One call to action, a verb phrase: <i>Start a project</i>.</li></ul>
+    </section>
+    <section class="ds-section" id="do-dont"><h2><a href="#do-dont">Do and don't</a></h2>
+      <div class="ds-dodont"><figure class="ds-do"><div class="ds-example__canvas"><header class="topbar" style="position: static; width: 100%;"><a class="brand" href="#overview" aria-label="Goodwork, home"><svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true"><rect class="mark-ink" x="4" y="4" width="17" height="12" rx="2.5"/><rect class="mark-ink" x="27" y="4" width="17" height="12" rx="2.5"/><rect class="mark-gold" x="4" y="22" width="17" height="22" rx="2.5"/><rect class="mark-ink" x="27" y="22" width="17" height="22" rx="2.5"/></svg>Goodwork</a><span class="topbar__spacer"></span><a class="btn btn--primary" href="#do-dont">Start a project</a></header></div><figcaption>One action.</figcaption></figure><figure class="ds-dont"><div class="ds-example__canvas"><header class="topbar" style="position: static; width: 100%;"><a class="brand" href="#overview" aria-label="Goodwork, home"><svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true"><rect class="mark-ink" x="4" y="4" width="17" height="12" rx="2.5"/><rect class="mark-ink" x="27" y="4" width="17" height="12" rx="2.5"/><rect class="mark-gold" x="4" y="22" width="17" height="22" rx="2.5"/><rect class="mark-ink" x="27" y="22" width="17" height="22" rx="2.5"/></svg>Goodwork</a><span class="topbar__spacer"></span><a class="btn btn--primary" href="#do-dont">Contact</a><a class="btn btn--primary" href="#do-dont">Get a quote</a></header></div><figcaption>Two competing primaries.</figcaption></figure></div>
+    </section>
+    <section class="ds-section" id="tokens"><h2><a href="#tokens">Tokens</a></h2>
+      <div class="ds-table-wrap"><table class="ds-table"><thead><tr><th scope="col">Part</th><th scope="col">Token</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead><tbody><tr><td>Background</td><td><code>--color-bg-surface</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-bg-surface" data-swatch></i><span data-token="--color-bg-surface"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-bg-surface" data-swatch></i><span data-token="--color-bg-surface"></span></span></td></tr><tr><td>Rule</td><td><code>--color-border-default</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-border-default" data-swatch></i><span data-token="--color-border-default"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-border-default" data-swatch></i><span data-token="--color-border-default"></span></span></td></tr><tr><td>Height</td><td><code>--layout-topbar-height</code></td><td colspan="2"><span data-token="--layout-topbar-height"></span></td></tr><tr><td>Layer</td><td><code>--z-sticky</code></td><td colspan="2"><span data-token="--z-sticky"></span></td></tr></tbody></table></div>
+    </section>
+    <section class="ds-section" id="code"><h2><a href="#code">Code</a></h2>
+      <pre><code>&lt;header class=&quot;topbar&quot;&gt;
+  &lt;a class=&quot;brand&quot; href=&quot;/&quot; aria-label=&quot;Goodwork, home&quot;&gt;…mark…Goodwork&lt;/a&gt;
+  &lt;span class=&quot;topbar__spacer&quot;&gt;&lt;/span&gt;
+  &lt;a class=&quot;btn btn--primary&quot; href=&quot;#contact&quot;&gt;Start a project&lt;/a&gt;
+&lt;/header&gt;</code></pre>
+      <div class="ds-table-wrap"><table class="ds-table"><thead><tr><th scope="col">Class / attribute</th><th scope="col">Effect</th></tr></thead><tbody><tr><td><code>.topbar</code></td><td>Bar.</td></tr><tr><td><code>.topbar__spacer</code></td><td>Pushes actions right.</td></tr><tr><td><code>.topbar__menu</code></td><td>Menu button, hidden at 1024px and up.</td></tr></tbody></table></div></div>
+    </section>
+    <section class="ds-section" id="sources"><h2><a href="#sources">Sources</a></h2>
+      <p>Extracted from these mocks:</p>
+      <ul><li><a href="../../mocks/pages/home/default.html">pages/home/default</a></li><li><a href="../../mocks/pages/home/error.html">pages/home/error</a></li></ul>
+      <p>Drift fixed during extraction: none; the mocks used the kit classes as written.</p>
+    </section>
+
+    <footer class="ds-footer"><span>Goodwork design system · extracted from <a href="../../mocks/index.html">docs/mocks</a> on 2026-10-23</span><a href="#top">Back to top</a></footer>
+  </main>
+</div>
+<script src="../assets/ds.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+  BorderColor #344054
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+title Class structure — Submit a contact request
+
+package "frontend/projects/domain" {
+  class ContactForm {
+    -state: signal<ContactFormState>
+    -email: FormControl<string>
+    -message: FormControl<string>
+    -website: FormControl<string>
+    +submit(): void
+    +sendAnother(): void
+    +focusEmail(): void
+  }
+  enum ContactFormState {
+    Default
+    Invalid
+    Sending
+    Sent
+    Error
+  }
+}
+package "frontend/projects/api" {
+  interface IContactRequestService {
+    +submit(request: ContactRequestInput): Promise<ContactRequestResult>
+  }
+  class ContactRequestService
+  class ContactRequestInput <<data>> {
+    +email: string
+    +message: string
+    +website: string
+  }
+  class ContactRequestResult <<data>> {
+    +status: "accepted" | "invalid" | "failed"
+    +fieldErrors: Record<string, string>
+  }
+}
+package "Goodwork.Api" {
+  class ContactRequestsController {
+    +Submit(command: SubmitContactRequestCommand): Task<IActionResult>
+  }
+}
+package "Goodwork.Application" {
+  class SubmitContactRequestCommand {
+    +string Email
+    +string Message
+    +string? Website
+  }
+  class SubmitContactRequestCommandValidator
+  class SubmitContactRequestCommandHandler {
+    +Handle(command, ct): Task<Unit>
+  }
+  interface IGoodworkDbContext {
+    +ContactRequests: DbSet<ContactRequest>
+    +SaveChangesAsync(ct): Task<int>
+  }
+}
+package "Goodwork.Domain" {
+  class ContactRequest {
+    +Guid Id
+    +string Email
+    +string Message
+    +DateTimeOffset ReceivedAt
+    +DeliveryStatus DeliveryStatus
+    +int DeliveryAttempts
+    +{static} Create(email, message, receivedAt): ContactRequest
+  }
+  enum DeliveryStatus {
+    Pending
+    Delivered
+  }
+}
+ContactForm --> ContactFormState
+ContactForm ..> IContactRequestService : inject(CONTACT_REQUEST_SERVICE)
+ContactRequestService ..|> IContactRequestService
+IContactRequestService ..> ContactRequestInput
+IContactRequestService ..> ContactRequestResult
+ContactRequestsController ..> SubmitContactRequestCommand : sends
+SubmitContactRequestCommandValidator ..> SubmitContactRequestCommand : validates
+SubmitContactRequestCommandHandler ..> SubmitContactRequestCommand : handles
+SubmitContactRequestCommandHandler --> IGoodworkDbContext
+SubmitContactRequestCommandHandler ..> ContactRequest : creates
+ContactRequest --> DeliveryStatus
+@enduml

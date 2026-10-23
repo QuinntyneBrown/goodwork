@@ -1,0 +1,16 @@
+@startuml
+!include <C4/C4_Container>
+LAYOUT_WITH_LEGEND()
+title Containers — View the home page
+
+Person(visitor, "Prospective client", "Uses the home page in a browser")
+System_Boundary(goodwork, "Goodwork website") {
+  Container(spa, "Goodwork web app", "Angular", "Home page and contact form")
+  Container(api, "Goodwork API", "ASP.NET Core", "Serves the web app and accepts contact requests")
+  ContainerDb(db, "Goodwork database", "<TO SUPPLY> via EF Core", "Stored contact requests")
+}
+System_Ext(mail, "Mail service", "SMTP relay")
+Rel(visitor, spa, "Uses", "HTTPS")
+Rel(spa, api, "Posts contact requests to", "JSON/HTTPS")
+Rel(api, spa, "Serves static assets and security headers for", "HTTPS")
+@enduml

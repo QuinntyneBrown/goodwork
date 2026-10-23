@@ -1,0 +1,21 @@
+{
+  "project": "Goodwork",
+  "required_states": {
+    "page": ["default", "loading", "empty", "error"],
+    "dialog": ["default", "busy", "invalid"],
+    "notification": ["info", "success", "warning", "danger"]
+  },
+  "screens": [
+    {
+      "id": "home",
+      "kind": "page",
+      "title": "Home",
+      "route": "/",
+      "states": ["default", "invalid", "sending", "sent", "error"],
+      "not_applicable": {
+        "loading": "Static brochure page with no fetched data; it renders complete on first paint. The only async action is the contact request, shown as the sending state.",
+        "empty": "The page has no collection that can be empty; the contact form's blank state is the default state."
+      }
+    }
+  ]
+}

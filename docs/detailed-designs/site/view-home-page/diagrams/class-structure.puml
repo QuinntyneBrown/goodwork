@@ -1,0 +1,51 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+  BorderColor #344054
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+title Class structure — View the home page
+
+class HomePage {
+  +services: ServiceSummary[]
+  +startProject(): void
+}
+class ServiceSummary <<data>> {
+  +title: string
+  +body: string
+}
+class SiteHeader {
+  +ctaLabel: input<string>
+  +ctaActivated: output<void>
+}
+class Hero {
+  +heading: input<string>
+}
+class ServiceCard {
+  +title: input<string>
+  +body: input<string>
+}
+class SiteFooter {
+  +year: input<number>
+  +location: input<string>
+  +email: input<string>
+}
+class ContactForm {
+  +focusEmail(): void
+}
+class SecurityHeadersMiddleware {
+  +InvokeAsync(context: HttpContext): Task
+}
+HomePage *-- "1" SiteHeader
+HomePage *-- "1" Hero
+HomePage *-- "2" ServiceCard
+HomePage *-- "1" ContactForm
+HomePage *-- "1" SiteFooter
+HomePage --> "2" ServiceSummary
+HomePage ..> ContactForm : startProject() calls focusEmail()
+@enduml

@@ -1,0 +1,49 @@
+@startuml
+title UML sequence behaviour — Deliver a contact request
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+box "Backend — Goodwork API application" #D1FADF
+  participant "ContactRequestDeliveryWorker" as worker
+end box
+box "Backend — Goodwork Application and Domain" #ECFDF3
+  participant "DeliverContactRequestCommandHandler" as handler
+  participant "ContactRequest" as entity
+end box
+box "Backend — Goodwork Infrastructure" #FFF4E5
+  participant "SmtpEmailSender" as sender
+  database "Goodwork database" as db
+end box
+participant "Mail service" as mail
+actor "Goodwork studio" as studio
+worker -> db : Read Pending requests due now
+db --> worker : Request ids
+loop Each pending request
+  worker -> handler : Send DeliverContactRequestCommand
+  handler -> db : Load ContactRequest
+  handler -> handler : Build plain-text EmailMessage to configured inbox, Reply-To sender (L2-009)
+  handler -> sender : SendAsync(message)
+  sender -> mail : SMTP
+  alt Delivered
+    mail --> sender : 250 OK
+    handler -> entity : MarkDelivered()
+    mail -> studio : Notification email
+  else Mail service fails
+    mail --> sender : Error or timeout
+    handler -> entity : RecordFailedAttempt(now) schedules retry (L2-009)
+    handler -> handler : Log failure with id only, no body or full email (L2-011)
+  end
+  handler -> db : Save
+end
+@enduml

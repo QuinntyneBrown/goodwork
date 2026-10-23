@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dialogs &amp; overlays — Goodwork design system</title>
+<meta name="description" content="Interrupt only when a decision cannot wait.">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../assets/components.css">
+<link rel="stylesheet" href="../assets/ds.css">
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="ds-shell">
+  <nav class="ds-nav" aria-label="Design system">
+    <div class="ds-nav__brand"><a href="../index.html">Goodwork DS</a><button class="ds-theme-toggle" type="button" aria-pressed="false">☾ Dark</button></div>
+    <details open><summary>Foundations</summary><ul>
+      <li><a href="../foundations/color.html">Color</a></li>
+      <li><a href="../foundations/typography.html">Typography</a></li>
+      <li><a href="../foundations/spacing.html">Spacing</a></li>
+      <li><a href="../foundations/layout.html">Layout</a></li>
+      <li><a href="../foundations/elevation.html">Elevation</a></li>
+      <li><a href="../foundations/shape.html">Shape</a></li>
+      <li><a href="../foundations/motion.html">Motion</a></li>
+      <li><a href="../foundations/iconography.html">Iconography</a></li>
+      <li><a href="../foundations/theming.html">Theming</a></li>
+      <li><a href="../foundations/responsive.html">Responsive</a></li>
+      <li><a href="../foundations/accessibility.html">Accessibility</a></li>
+      <li><a href="../foundations/content.html">Content</a></li>
+    </ul></details>
+    <details open><summary>Components</summary><ul>
+      <li><a href="../components/button.html">Button</a></li>
+      <li><a href="../components/link.html">Link</a></li>
+      <li><a href="../components/menu.html">Menu</a></li>
+      <li><a href="../components/text-field.html">Text field</a></li>
+      <li><a href="../components/textarea.html">Textarea</a></li>
+      <li><a href="../components/select.html">Select</a></li>
+      <li><a href="../components/checkbox.html">Checkbox</a></li>
+      <li><a href="../components/radio-group.html">Radio group</a></li>
+      <li><a href="../components/switch.html">Switch</a></li>
+      <li><a href="../components/form-field.html">Form field</a></li>
+      <li><a href="../components/form-layout.html">Form layout</a></li>
+      <li><a href="../components/top-bar.html">Top bar</a></li>
+      <li><a href="../components/sidebar-navigation.html">Sidebar navigation</a></li>
+      <li><a href="../components/tabs.html">Tabs</a></li>
+      <li><a href="../components/breadcrumb.html">Breadcrumb</a></li>
+      <li><a href="../components/pagination.html">Pagination</a></li>
+      <li><a href="../components/skip-link.html">Skip link</a></li>
+      <li><a href="../components/footer.html">Footer</a></li>
+      <li><a href="../components/card.html">Card</a></li>
+      <li><a href="../components/dialog.html">Dialog</a></li>
+      <li><a href="../components/tooltip.html">Tooltip</a></li>
+      <li><a href="../components/divider.html">Divider</a></li>
+      <li><a href="../components/layout-primitives.html">Container, grid and stack</a></li>
+      <li><a href="../components/table.html">Table</a></li>
+      <li><a href="../components/list.html">List</a></li>
+      <li><a href="../components/description-list.html">Description list</a></li>
+      <li><a href="../components/avatar.html">Avatar</a></li>
+      <li><a href="../components/badge.html">Badge</a></li>
+      <li><a href="../components/chip.html">Chip</a></li>
+      <li><a href="../components/toast.html">Toast</a></li>
+      <li><a href="../components/alert.html">Alert</a></li>
+      <li><a href="../components/inline-message.html">Inline message</a></li>
+      <li><a href="../components/progress-bar.html">Progress bar</a></li>
+      <li><a href="../components/spinner.html">Spinner</a></li>
+      <li><a href="../components/skeleton.html">Skeleton</a></li>
+      <li><a href="../components/empty-state.html">Empty state</a></li>
+      <li><a href="../components/error-page.html">Error page</a></li>
+      <li><a href="../components/brand-lockup.html">Brand lockup</a></li>
+      <li><a href="../components/hero.html">Hero</a></li>
+      <li><a href="../components/service-card.html">Service card</a></li>
+    </ul></details>
+    <details open><summary>Patterns</summary><ul>
+      <li><a href="../patterns/forms.html">Forms</a></li>
+      <li><a href="../patterns/feedback-and-loading.html">Feedback &amp; loading</a></li>
+      <li><a href="../patterns/empty-and-error-states.html">Empty &amp; error states</a></li>
+      <li><a href="../patterns/navigation-and-page-structure.html">Navigation &amp; page structure</a></li>
+      <li><a href="../patterns/dialogs-and-overlays.html">Dialogs &amp; overlays</a></li>
+      <li><a href="../patterns/data-tables-and-lists.html">Data tables &amp; lists</a></li>
+      <li><a href="../patterns/notifications.html">Notifications</a></li>
+      <li><a href="../patterns/content-and-tone.html">Content &amp; tone</a></li>
+    </ul></details>
+  </nav>
+  <main id="main" class="ds-main">
+    <header class="ds-header">
+      <p class="ds-kicker">Pattern</p>
+      <h1>Dialogs &amp; overlays</h1>
+      <p class="ds-lead">Interrupt only when a decision cannot wait.</p>
+      <div class="ds-meta"><span class="ds-pill ds-pill--ok">WCAG 2.2 AA</span><span class="ds-pill">Status: stable</span></div>
+      <ul class="ds-toc"><li><a href="#overview">Overview</a></li><li><a href="#when">When to use</a></li><li><a href="#structure">Structure</a></li><li><a href="#states">States</a></li><li><a href="#responsive">Responsive</a></li><li><a href="#accessibility">Accessibility</a></li><li><a href="#content">Content</a></li><li><a href="#do-dont">Do and don't</a></li><li><a href="#sources">Sources</a></li></ul>
+    </header>
+    <section class="ds-section" id="overview"><h2><a href="#overview">Overview</a></h2>
+      <p>The brochure has no overlays. Apps use dialogs for confirmations, menus for secondary actions, tooltips for icon names.</p>
+    </section>
+    <section class="ds-section" id="when"><h2><a href="#when">When to use</a></h2>
+      <ul><li>Dialog: a decision now.</li><li>Drawer: a side task with context.</li><li>Popover: a small form anchored to a control.</li><li>Menu: several actions on one object.</li></ul>
+    </section>
+    <section class="ds-section" id="structure"><h2><a href="#structure">Structure</a></h2>
+      <div class="ds-example"><div class="ds-example__canvas ds-example__canvas--stack"><div class="dialog__panel" style="position: static; animation: none; border-radius: var(--radius-lg);"><div class="dialog__header"><h3 class="dialog__title">Delete this request?</h3></div><div class="dialog__body"><p>This cannot be undone.</p></div><div class="dialog__footer"><button class="btn" type="button">Keep it</button><button class="btn btn--danger" type="button">Delete request</button></div></div></div><div class="ds-example__caption"><span>A confirmation.</span></div><details class="ds-example__code"><summary>HTML</summary><pre><code>&lt;div class=&quot;dialog__panel&quot; style=&quot;position: static; animation: none; border-radius: var(--radius-lg);&quot;&gt;&lt;div class=&quot;dialog__header&quot;&gt;&lt;h3 class=&quot;dialog__title&quot;&gt;Delete this request?&lt;/h3&gt;&lt;/div&gt;&lt;div class=&quot;dialog__body&quot;&gt;&lt;p&gt;This cannot be undone.&lt;/p&gt;&lt;/div&gt;&lt;div class=&quot;dialog__footer&quot;&gt;&lt;button class=&quot;btn&quot; type=&quot;button&quot;&gt;Keep it&lt;/button&gt;&lt;button class=&quot;btn btn--danger&quot; type=&quot;button&quot;&gt;Delete request&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;</code></pre></details></div>
+    </section>
+    <section class="ds-section" id="states"><h2><a href="#states">States</a></h2>
+      <ul><li>Default, busy, invalid, failed.</li></ul>
+    </section>
+    <section class="ds-section" id="responsive"><h2><a href="#responsive">Responsive</a></h2>
+      <ul><li>Bottom sheets under 640px.</li></ul>
+    </section>
+    <section class="ds-section" id="accessibility"><h2><a href="#accessibility">Accessibility</a></h2>
+      <ul><li>Focus trapped and restored; page behind <code>inert</code>; Esc closes.</li></ul>
+    </section>
+    <section class="ds-section" id="content"><h2><a href="#content">Content</a></h2>
+      <ul><li>Title asks, buttons answer.</li></ul>
+    </section>
+    <section class="ds-section" id="do-dont"><h2><a href="#do-dont">Do and don't</a></h2>
+      <div class="ds-dodont"><figure class="ds-do"><div class="ds-example__canvas"><button class="btn" type="button">Keep it</button></div><figcaption>Safe action focused first.</figcaption></figure><figure class="ds-dont"><div class="ds-example__canvas"><button class="btn btn--danger" type="button" autofocus>Delete</button></div><figcaption>Destructive action focused by default.</figcaption></figure></div>
+    </section>
+    <section class="ds-section" id="sources"><h2><a href="#sources">Sources</a></h2>
+      <p>Not used by the brochure mocks; specified for client apps from the shared kit. See the <a href="../../mocks/index.html">mock gallery</a>.</p>
+    </section>
+
+    <footer class="ds-footer"><span>Goodwork design system · extracted from <a href="../../mocks/index.html">docs/mocks</a> on 2026-10-23</span><a href="#top">Back to top</a></footer>
+  </main>
+</div>
+<script src="../assets/ds.js"></script>
+</body>
+</html>

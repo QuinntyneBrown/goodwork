@@ -1,0 +1,72 @@
+@startuml
+title UML sequence behaviour — Submit a contact request
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+actor "Prospective client" as actor
+box "Frontend — Goodwork web app" #E0F2FE
+  participant "ContactForm" as form
+  participant "ContactRequestService" as client
+end box
+box "Backend — Goodwork API application" #D1FADF
+  participant "Contact rate limiter" as limiter
+  participant "ContactRequestsController" as ctrl
+end box
+box "Backend — Goodwork Application and Domain" #ECFDF3
+  participant "SubmitContactRequestCommandValidator" as validator
+  participant "SubmitContactRequestCommandHandler" as handler
+  participant "ContactRequest" as entity
+end box
+box "Backend — Goodwork Infrastructure" #FFF4E5
+  database "Goodwork database" as db
+end box
+actor -> form : Enter email and message, activate Send request
+form -> form : Validate email (254 max) and message (1-2000) (L2-004)
+alt Client-side invalid
+  form --> actor : Error summary focused, fields marked aria-invalid (L2-004)
+else Valid
+  form -> client : submit(input)
+  form -> form : After 300 ms show Sending…, fields read-only (L2-005)
+  client -> limiter : POST /api/contact-requests (15 s timeout)
+  alt Over 5 requests in 10 minutes
+    limiter --> client : 429 with Retry-After (L2-010)
+  else Admitted
+    limiter -> ctrl : Forward; body over 16 KB returns 413 (L2-010)
+    ctrl -> validator : Validate SubmitContactRequestCommand
+    alt Invalid
+      validator --> ctrl : Field failures
+      ctrl --> client : 400 ValidationProblemDetails (L2-008)
+    else Valid
+      ctrl -> handler : Send command
+      alt Honeypot website field filled
+        handler --> ctrl : Discard silently (L2-010)
+      else Genuine request
+        handler -> entity : Create(trimmed email, trimmed message, UTC now) (L2-008)
+        handler -> db : Save with DeliveryStatus Pending
+        db --> handler : Committed
+      end
+      handler --> ctrl : Accepted
+      ctrl --> client : 202 Accepted (L2-008, L2-016)
+    end
+  end
+  client --> form : ContactRequestResult
+  alt accepted
+    form --> actor : Remove form, show and focus "Request sent." (L2-006)
+  else invalid
+    form --> actor : Show field errors as in L2-004 (L2-007)
+  else 5xx, 429, network failure or timeout
+    form --> actor : Focus alert "We couldn't send your request", keep input, Try again (L2-007)
+  end
+end
+@enduml

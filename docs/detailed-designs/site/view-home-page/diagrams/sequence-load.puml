@@ -1,0 +1,42 @@
+@startuml
+title UML sequence behaviour — Load the home page
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam rectangle {
+  BorderColor #344054
+  FontColor #101828
+}
+skinparam package {
+  BorderColor #667085
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+actor "Prospective client" as actor
+box "Frontend — Goodwork web app" #E0F2FE
+  participant "Browser" as browser
+  participant "HomePage" as home
+  participant "ContactForm" as form
+end box
+box "Backend — Goodwork API application" #D1FADF
+  participant "SecurityHeadersMiddleware" as mw
+  participant "Static file host" as statics
+end box
+actor -> browser : Open https://<TO SUPPLY>/
+browser -> mw : GET /
+mw -> mw : Redirect HTTP to HTTPS, add HSTS and CSP (L2-011)
+mw -> statics : Forward request
+statics --> mw : index.html, bundle, self-hosted fonts (L2-015)
+mw --> browser : 200 with security headers
+browser -> browser : Apply light or dark tokens from prefers-color-scheme before first paint (L2-013)
+browser -> home : Bootstrap route /
+home --> actor : Header, hero, two service cards, contact form, footer (L2-001)
+opt Visitor activates Start a project (L2-002)
+  actor -> home : Activate Start a project
+  home -> home : Scroll to contact section, without animation under reduced motion (L2-014)
+  home -> form : focusEmail()
+  form --> actor : Email field focused
+end
+@enduml

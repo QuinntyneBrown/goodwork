@@ -1,0 +1,22 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+title Components — Deliver a contact request
+
+Container_Boundary(api, "Goodwork API") {
+  Component(worker, "ContactRequestDeliveryWorker", "Hosted BackgroundService", "Polls pending requests and dispatches delivery")
+  Component(handler, "DeliverContactRequestCommandHandler", "MediatR handler", "Sends one notification and records the outcome")
+  Component(sender, "SmtpEmailSender", "IEmailSender implementation", "Plain-text email over SMTP")
+  Component(options, "StudioInboxOptions", "Options pattern", "Inbox address and sender, from configuration")
+  Component(retention, "ContactRequestRetentionWorker", "Hosted BackgroundService", "Deletes requests older than 24 months")
+  ComponentDb(db, "Goodwork database", "EF Core", "ContactRequests table")
+}
+System_Ext(mail, "Mail service", "SMTP relay")
+Rel(worker, db, "Reads Pending requests")
+Rel(worker, handler, "Sends DeliverContactRequestCommand", "MediatR")
+Rel(handler, options, "Reads inbox address from")
+Rel(handler, sender, "Sends notification through")
+Rel(sender, mail, "Delivers", "SMTP")
+Rel(handler, db, "Marks Delivered or records attempt")
+Rel(retention, db, "Deletes expired requests")
+@enduml

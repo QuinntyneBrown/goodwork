@@ -1,0 +1,29 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+title Components — View the home page
+
+Person(visitor, "Prospective client", "Browser user")
+Container_Boundary(spa, "Goodwork web app") {
+  Component(home, "HomePage", "Routed Angular component (app project)", "Composes the page at /")
+  Component(header, "SiteHeader", "components library", "Logo, Start a project link, skip link")
+  Component(hero, "Hero", "components library", "Heading, description, cost and faith paragraphs")
+  Component(card, "ServiceCard", "components library", "One service: title and body")
+  Component(footer, "SiteFooter", "components library", "Copyright, location, mailto link")
+  Component(contact, "ContactForm", "domain library", "Contact request form; see contact/submit-contact-request")
+  Component(theme, "Design tokens", "CSS custom properties", "Light and dark themes chosen by prefers-color-scheme")
+}
+Container_Boundary(api, "Goodwork API") {
+  Component(headers, "SecurityHeadersMiddleware", "ASP.NET Core middleware", "HTTPS redirect, HSTS, CSP, nosniff, Referrer-Policy")
+  Component(statics, "Static file host", "ASP.NET Core static files", "Serves the built web app and self-hosted fonts")
+}
+Rel(visitor, statics, "Requests /", "HTTPS")
+Rel(headers, statics, "Wraps responses of")
+Rel(home, header, "Renders")
+Rel(home, hero, "Renders")
+Rel(home, card, "Renders twice")
+Rel(home, contact, "Renders")
+Rel(home, footer, "Renders")
+Rel(header, contact, "Start a project moves focus to")
+Rel(home, theme, "Styled by")
+@enduml

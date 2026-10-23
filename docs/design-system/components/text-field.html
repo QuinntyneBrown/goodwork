@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Text field — Goodwork design system</title>
+<meta name="description" content="Single-line text input with label, help and error.">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../assets/components.css">
+<link rel="stylesheet" href="../assets/ds.css">
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="ds-shell">
+  <nav class="ds-nav" aria-label="Design system">
+    <div class="ds-nav__brand"><a href="../index.html">Goodwork DS</a><button class="ds-theme-toggle" type="button" aria-pressed="false">☾ Dark</button></div>
+    <details open><summary>Foundations</summary><ul>
+      <li><a href="../foundations/color.html">Color</a></li>
+      <li><a href="../foundations/typography.html">Typography</a></li>
+      <li><a href="../foundations/spacing.html">Spacing</a></li>
+      <li><a href="../foundations/layout.html">Layout</a></li>
+      <li><a href="../foundations/elevation.html">Elevation</a></li>
+      <li><a href="../foundations/shape.html">Shape</a></li>
+      <li><a href="../foundations/motion.html">Motion</a></li>
+      <li><a href="../foundations/iconography.html">Iconography</a></li>
+      <li><a href="../foundations/theming.html">Theming</a></li>
+      <li><a href="../foundations/responsive.html">Responsive</a></li>
+      <li><a href="../foundations/accessibility.html">Accessibility</a></li>
+      <li><a href="../foundations/content.html">Content</a></li>
+    </ul></details>
+    <details open><summary>Components</summary><ul>
+      <li><a href="../components/button.html">Button</a></li>
+      <li><a href="../components/link.html">Link</a></li>
+      <li><a href="../components/menu.html">Menu</a></li>
+      <li><a href="../components/text-field.html">Text field</a></li>
+      <li><a href="../components/textarea.html">Textarea</a></li>
+      <li><a href="../components/select.html">Select</a></li>
+      <li><a href="../components/checkbox.html">Checkbox</a></li>
+      <li><a href="../components/radio-group.html">Radio group</a></li>
+      <li><a href="../components/switch.html">Switch</a></li>
+      <li><a href="../components/form-field.html">Form field</a></li>
+      <li><a href="../components/form-layout.html">Form layout</a></li>
+      <li><a href="../components/top-bar.html">Top bar</a></li>
+      <li><a href="../components/sidebar-navigation.html">Sidebar navigation</a></li>
+      <li><a href="../components/tabs.html">Tabs</a></li>
+      <li><a href="../components/breadcrumb.html">Breadcrumb</a></li>
+      <li><a href="../components/pagination.html">Pagination</a></li>
+      <li><a href="../components/skip-link.html">Skip link</a></li>
+      <li><a href="../components/footer.html">Footer</a></li>
+      <li><a href="../components/card.html">Card</a></li>
+      <li><a href="../components/dialog.html">Dialog</a></li>
+      <li><a href="../components/tooltip.html">Tooltip</a></li>
+      <li><a href="../components/divider.html">Divider</a></li>
+      <li><a href="../components/layout-primitives.html">Container, grid and stack</a></li>
+      <li><a href="../components/table.html">Table</a></li>
+      <li><a href="../components/list.html">List</a></li>
+      <li><a href="../components/description-list.html">Description list</a></li>
+      <li><a href="../components/avatar.html">Avatar</a></li>
+      <li><a href="../components/badge.html">Badge</a></li>
+      <li><a href="../components/chip.html">Chip</a></li>
+      <li><a href="../components/toast.html">Toast</a></li>
+      <li><a href="../components/alert.html">Alert</a></li>
+      <li><a href="../components/inline-message.html">Inline message</a></li>
+      <li><a href="../components/progress-bar.html">Progress bar</a></li>
+      <li><a href="../components/spinner.html">Spinner</a></li>
+      <li><a href="../components/skeleton.html">Skeleton</a></li>
+      <li><a href="../components/empty-state.html">Empty state</a></li>
+      <li><a href="../components/error-page.html">Error page</a></li>
+      <li><a href="../components/brand-lockup.html">Brand lockup</a></li>
+      <li><a href="../components/hero.html">Hero</a></li>
+      <li><a href="../components/service-card.html">Service card</a></li>
+    </ul></details>
+    <details open><summary>Patterns</summary><ul>
+      <li><a href="../patterns/forms.html">Forms</a></li>
+      <li><a href="../patterns/feedback-and-loading.html">Feedback &amp; loading</a></li>
+      <li><a href="../patterns/empty-and-error-states.html">Empty &amp; error states</a></li>
+      <li><a href="../patterns/navigation-and-page-structure.html">Navigation &amp; page structure</a></li>
+      <li><a href="../patterns/dialogs-and-overlays.html">Dialogs &amp; overlays</a></li>
+      <li><a href="../patterns/data-tables-and-lists.html">Data tables &amp; lists</a></li>
+      <li><a href="../patterns/notifications.html">Notifications</a></li>
+      <li><a href="../patterns/content-and-tone.html">Content &amp; tone</a></li>
+    </ul></details>
+  </nav>
+  <main id="main" class="ds-main">
+    <header class="ds-header">
+      <p class="ds-kicker">Component · Inputs</p>
+      <h1>Text field</h1>
+      <p class="ds-lead">Text fields take a short answer. The contact form's email field is the reference: visible label, required in words, inline error.</p>
+      <div class="ds-meta"><span class="ds-pill ds-pill--ok">WCAG 2.2 AA</span><span class="ds-pill">Status: stable</span><span class="ds-pill">Native <code>&lt;input&gt;</code></span></div>
+      <ul class="ds-toc"><li><a href="#overview">Overview</a></li><li><a href="#anatomy">Anatomy</a></li><li><a href="#variants">Variants</a></li><li><a href="#sizes">Sizes</a></li><li><a href="#states">States</a></li><li><a href="#responsive">Responsive</a></li><li><a href="#theming">Theming</a></li><li><a href="#accessibility">Accessibility</a></li><li><a href="#content">Content</a></li><li><a href="#do-dont">Do and don't</a></li><li><a href="#tokens">Tokens</a></li><li><a href="#code">Code</a></li><li><a href="#sources">Sources</a></li></ul>
+    </header>
+    <section class="ds-section" id="overview"><h2><a href="#overview">Overview</a></h2>
+<p>Use for one line: email, name, organisation. Use a <a href="textarea.html">textarea</a> for anything longer. Always wrap it in a <a href="form-field.html">form field</a>.</p>
+    </section>
+    <section class="ds-section" id="anatomy"><h2><a href="#anatomy">Anatomy</a></h2>
+      <div class="ds-anatomy"><figure class="ds-anatomy__figure"><div class="field" style="width: 100%; max-width: 18rem;"><label class="field__label" for="an-email">Email <span class="optional">(required)</span></label><input class="input" id="an-email" type="email" value="ruth.okonkwo@hopehouse.org"></div><span class="ds-callout" style="left: 5%; top: 10%;" aria-hidden="true">1</span><span class="ds-callout" style="left: 50%; top: 70%;" aria-hidden="true">2</span></figure><ol class="ds-anatomy__list"><li><div><b>Label</b><small>Above the input, required stated in words.</small></div></li><li><div><b>Input</b><small>40px tall, strong border, Paper background.</small></div></li></ol></div>
+    </section>
+    <section class="ds-section" id="variants"><h2><a href="#variants">Variants</a></h2>
+      <div class="ds-example"><div class="ds-example__canvas ds-example__canvas--stack"><div class="field"><label class="field__label" for="tf-email-v0">Email</label><input class="input" id="tf-email-v0" type="email" autocomplete="email" value="ruth.okonkwo@hopehouse.org"></div><div class="field"><label class="field__label" for="tf-site-v0">Website</label><div class="input-group"><span class="addon">https://</span><input class="input" id="tf-site-v0" type="text" value="hopehouse.org"></div></div><div class="field"><label class="visually-hidden" for="tf-search-v0">Search projects</label><div class="search"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input class="input" id="tf-search-v0" type="search" placeholder="Search projects"></div></div></div><div class="ds-example__caption"><span>Email, with a prefix addon, search with an icon.</span></div><details class="ds-example__code"><summary>HTML</summary><pre><code>&lt;div class=&quot;field&quot;&gt;&lt;label class=&quot;field__label&quot; for=&quot;tf-email&quot;&gt;Email&lt;/label&gt;&lt;input class=&quot;input&quot; id=&quot;tf-email&quot; type=&quot;email&quot; autocomplete=&quot;email&quot; value=&quot;ruth.okonkwo@hopehouse.org&quot;&gt;&lt;/div&gt;&lt;div class=&quot;field&quot;&gt;&lt;label class=&quot;field__label&quot; for=&quot;tf-site&quot;&gt;Website&lt;/label&gt;&lt;div class=&quot;input-group&quot;&gt;&lt;span class=&quot;addon&quot;&gt;https://&lt;/span&gt;&lt;input class=&quot;input&quot; id=&quot;tf-site&quot; type=&quot;text&quot; value=&quot;hopehouse.org&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field&quot;&gt;&lt;label class=&quot;visually-hidden&quot; for=&quot;tf-search&quot;&gt;Search projects&lt;/label&gt;&lt;div class=&quot;search&quot;&gt;&lt;svg class=&quot;icon&quot; aria-hidden=&quot;true&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;7&quot;/&gt;&lt;path d=&quot;m20 20-3.5-3.5&quot;/&gt;&lt;/svg&gt;&lt;input class=&quot;input&quot; id=&quot;tf-search&quot; type=&quot;search&quot; placeholder=&quot;Search projects&quot;&gt;&lt;/div&gt;&lt;/div&gt;</code></pre></details></div>
+    </section>
+    <section class="ds-section" id="sizes"><h2><a href="#sizes">Sizes</a></h2>
+      <p>Medium is the default. Large matches a large submit button.</p>
+      <div class="ds-example"><div class="ds-example__canvas ds-example__canvas--stack"><label class="visually-hidden" for="sz-a-sz">Small</label><input class="input input--sm" id="sz-a-sz" value="Small · 32px"><label class="visually-hidden" for="sz-b-sz">Medium</label><input class="input" id="sz-b-sz" value="Medium · 40px"><label class="visually-hidden" for="sz-c-sz">Large</label><input class="input input--lg" id="sz-c-sz" value="Large · 48px"></div><div class="ds-example__caption"><span>Heights from <code>--control-height-*</code>.</span></div><details class="ds-example__code"><summary>HTML</summary><pre><code>&lt;label class=&quot;visually-hidden&quot; for=&quot;sz-a&quot;&gt;Small&lt;/label&gt;&lt;input class=&quot;input input--sm&quot; id=&quot;sz-a&quot; value=&quot;Small · 32px&quot;&gt;&lt;label class=&quot;visually-hidden&quot; for=&quot;sz-b&quot;&gt;Medium&lt;/label&gt;&lt;input class=&quot;input&quot; id=&quot;sz-b&quot; value=&quot;Medium · 40px&quot;&gt;&lt;label class=&quot;visually-hidden&quot; for=&quot;sz-c&quot;&gt;Large&lt;/label&gt;&lt;input class=&quot;input input--lg&quot; id=&quot;sz-c&quot; value=&quot;Large · 48px&quot;&gt;</code></pre></details></div>
+    </section>
+    <section class="ds-section" id="states"><h2><a href="#states">States</a></h2>
+      <p>Pointer and focus states are forced with <code>data-state</code> so they can be reviewed without a mouse; real pages get them from <code>:hover</code>, <code>:focus-visible</code> and <code>:active</code>. Everything else uses the real attribute.</p>
+      <div class="ds-matrix"><table><thead><tr><th scope="col">Variant</th><th scope="col">Default</th><th scope="col">Hover</th><th scope="col">Focus</th><th scope="col">Invalid</th><th scope="col">Read-only</th><th scope="col">Disabled</th></tr></thead><tbody><tr><th scope="row">Email</th><td><label class="visually-hidden" for="s1-s00">Email</label><input class="input" id="s1-s00" value="ruth@hopehouse.org"></td><td><label class="visually-hidden" for="s2-s01">Email</label><input class="input" id="s2-s01" data-state="hover" value="ruth@hopehouse.org"></td><td><label class="visually-hidden" for="s3-s02">Email</label><input class="input" id="s3-s02" data-state="focus" value="ruth@hopehouse.org"></td><td><label class="visually-hidden" for="s4-s03">Email</label><input class="input" id="s4-s03" aria-invalid="true" value="ruth@hopehouse"></td><td><label class="visually-hidden" for="s5-s04">Email</label><input class="input" id="s5-s04" readonly value="ruth@hopehouse.org"></td><td><label class="visually-hidden" for="s6-s05">Email</label><input class="input" id="s6-s05" disabled value="ruth@hopehouse.org"></td></tr></tbody></table></div>
+      <h3>Both themes</h3>
+      <div class="ds-themes"><div data-theme="light"><div class="ds-example__canvas ds-example__canvas--stack" style="padding: 0;"><div class="field" style="width: 100%;"><label class="field__label" for="th-e-th">Email <span class="optional">(required)</span></label><input class="input" id="th-e-th" aria-invalid="true" aria-describedby="th-e-err-th" value="ruth.okonkwo@hopehouse"><p class="field__error" id="th-e-err-th">Enter a complete email address like name@organization.org</p></div></div></div><div data-theme="dark"><div class="ds-example__canvas ds-example__canvas--stack" style="padding: 0;"><div class="field" style="width: 100%;"><label class="field__label" for="th-e-th-dk">Email <span class="optional">(required)</span></label><input class="input" id="th-e-th-dk" aria-invalid="true" aria-describedby="th-e-err-th-dk" value="ruth.okonkwo@hopehouse"><p class="field__error" id="th-e-err-th-dk">Enter a complete email address like name@organization.org</p></div></div></div></div>
+      <ul><li><b>Read-only</b> is how the <i>sending</i> mock freezes input: the value stays readable and copyable, but cannot change.</li><li><b>Invalid</b> pairs a red border with an icon and text; colour alone never signals the error.</li></ul>
+    </section>
+    <section class="ds-section" id="responsive"><h2><a href="#responsive">Responsive behaviour</a></h2>
+      <ul><li>Inputs are full width of their column at every breakpoint.</li><li>Font size never drops below 16px, so iOS does not zoom on focus.</li></ul>
+    </section>
+    <section class="ds-section" id="theming"><h2><a href="#theming">Theming</a></h2>
+<p>Inputs sit on <code>--color-bg-surface</code> with a <code>--color-border-strong</code> edge; dark uses the Sage edge on ink-700.</p>
+    </section>
+    <section class="ds-section" id="accessibility"><h2><a href="#accessibility">Accessibility</a></h2>
+      <h3>Role and pattern</h3><p>Native <code>&lt;input&gt;</code> with <code>&lt;label for&gt;</code>; <code>aria-invalid</code> and <code>aria-describedby</code> for errors.</p>
+      <h3>Keyboard</h3>
+      <div class="ds-table-wrap"><table class="ds-table ds-keys"><thead><tr><th scope="col">Key</th><th scope="col">Action</th></tr></thead><tbody><tr><td><kbd>Tab</kbd></td><td>Focuses the input.</td></tr><tr><td>Typing</td><td>Edits the value.</td></tr></tbody></table></div>
+      <h3>Focus</h3><p>Gold ring at 0 offset on the input edge.</p>
+      <h3>Labelling</h3><p>Visible label always; placeholders are hints only. Use <code>autocomplete="email"</code> and <code>inputmode</code>.</p>
+      <h3>Contrast</h3>
+      <div class="ds-themes"><div data-theme="light"><div class="ds-example__canvas ds-example__canvas--stack" style="padding: 0; gap: var(--space-2);"><div class="ds-pair"><span>Border on card</span><span class="ds-pair__ratio" data-contrast="--color-border-strong|--color-bg-surface" data-min="3"></span></div><div class="ds-pair"><span>Text in input</span><span class="ds-pair__ratio" data-contrast="--color-fg-default|--color-bg-surface" data-min="4.5"></span></div><div class="ds-pair"><span>Placeholder</span><span class="ds-pair__ratio" data-contrast="--color-fg-subtle|--color-bg-surface" data-min="4.5"></span></div><div class="ds-pair"><span>Error text</span><span class="ds-pair__ratio" data-contrast="--color-danger-fg|--color-bg-surface" data-min="4.5"></span></div><div class="ds-pair"><span>Focus ring on page</span><span class="ds-pair__ratio" data-contrast="--color-focus-ring|--color-bg-canvas" data-min="3"></span></div></div></div><div data-theme="dark"><div class="ds-example__canvas ds-example__canvas--stack" style="padding: 0; gap: var(--space-2);"><div class="ds-pair"><span>Border on card</span><span class="ds-pair__ratio" data-contrast="--color-border-strong|--color-bg-surface" data-min="3"></span></div><div class="ds-pair"><span>Text in input</span><span class="ds-pair__ratio" data-contrast="--color-fg-default|--color-bg-surface" data-min="4.5"></span></div><div class="ds-pair"><span>Placeholder</span><span class="ds-pair__ratio" data-contrast="--color-fg-subtle|--color-bg-surface" data-min="4.5"></span></div><div class="ds-pair"><span>Error text</span><span class="ds-pair__ratio" data-contrast="--color-danger-fg|--color-bg-surface" data-min="4.5"></span></div><div class="ds-pair"><span>Focus ring on page</span><span class="ds-pair__ratio" data-contrast="--color-focus-ring|--color-bg-canvas" data-min="3"></span></div></div></div></div>
+      <h3>Motion</h3><p>Border colour transitions over <code>--duration-fast</code>.</p>
+      <h3>Touch</h3><p>40px tall, full width.</p>
+    </section>
+    <section class="ds-section" id="content"><h2><a href="#content">Content</a></h2>
+      <ul><li>Labels are nouns: <i>Email</i>, not <i>Enter your email</i>.</li><li>Mark required in words: <i>(required)</i>.</li><li>Errors say how to fix it: <i>Enter a complete email address like name@organization.org</i>.</li></ul>
+    </section>
+    <section class="ds-section" id="do-dont"><h2><a href="#do-dont">Do and don't</a></h2>
+      <div class="ds-dodont"><figure class="ds-do"><div class="ds-example__canvas"><div class="field"><label class="field__label" for="dd1-d0">Email</label><input class="input" id="dd1-d0" type="email"></div></div><figcaption>Visible label above the input.</figcaption></figure><figure class="ds-dont"><div class="ds-example__canvas"><label class="visually-hidden" for="dd2-n0">Email</label><input class="input" id="dd2-n0" placeholder="Email"></div><figcaption>Placeholder as the only visible label; it vanishes on typing.</figcaption></figure><figure class="ds-do"><div class="ds-example__canvas"><label class="visually-hidden" for="dd3-d1">Email</label><input class="input" id="dd3-d1" readonly value="ruth.okonkwo@hopehouse.org"></div><figcaption>Read-only while sending, so the value stays.</figcaption></figure><figure class="ds-dont"><div class="ds-example__canvas"><label class="visually-hidden" for="dd4-n1">Email</label><input class="input" id="dd4-n1" value=""></div><figcaption>Clearing the field after a failed send.</figcaption></figure></div>
+    </section>
+    <section class="ds-section" id="tokens"><h2><a href="#tokens">Tokens</a></h2>
+      <div class="ds-table-wrap"><table class="ds-table"><thead><tr><th scope="col">Part</th><th scope="col">Token</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead><tbody><tr><td>Background</td><td><code>--color-bg-surface</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-bg-surface" data-swatch></i><span data-token="--color-bg-surface"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-bg-surface" data-swatch></i><span data-token="--color-bg-surface"></span></span></td></tr><tr><td>Border</td><td><code>--color-border-strong</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-border-strong" data-swatch></i><span data-token="--color-border-strong"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-border-strong" data-swatch></i><span data-token="--color-border-strong"></span></span></td></tr><tr><td>Invalid border</td><td><code>--color-danger-solid</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-danger-solid" data-swatch></i><span data-token="--color-danger-solid"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-danger-solid" data-swatch></i><span data-token="--color-danger-solid"></span></span></td></tr><tr><td>Read-only background</td><td><code>--color-bg-surface-sunken</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-bg-surface-sunken" data-swatch></i><span data-token="--color-bg-surface-sunken"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-bg-surface-sunken" data-swatch></i><span data-token="--color-bg-surface-sunken"></span></span></td></tr><tr><td>Height</td><td><code>--control-height-md</code></td><td colspan="2"><span data-token="--control-height-md"></span></td></tr><tr><td>Radius</td><td><code>--radius-md</code></td><td colspan="2"><span data-token="--radius-md"></span></td></tr></tbody></table></div>
+    </section>
+    <section class="ds-section" id="code"><h2><a href="#code">Code</a></h2>
+      <pre><code>&lt;div class=&quot;field&quot;&gt;
+  &lt;label class=&quot;field__label&quot; for=&quot;email&quot;&gt;Email &lt;span class=&quot;optional&quot;&gt;(required)&lt;/span&gt;&lt;/label&gt;
+  &lt;input class=&quot;input&quot; id=&quot;email&quot; type=&quot;email&quot; autocomplete=&quot;email&quot; aria-invalid=&quot;true&quot; aria-describedby=&quot;email-error&quot;&gt;
+  &lt;p class=&quot;field__error&quot; id=&quot;email-error&quot;&gt;Enter a complete email address like name@organization.org&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+      <div class="ds-table-wrap"><table class="ds-table"><thead><tr><th scope="col">Class / attribute</th><th scope="col">Effect</th></tr></thead><tbody><tr><td><code>.input</code></td><td>Base input.</td></tr><tr><td><code>.input--sm / --lg</code></td><td>Size.</td></tr><tr><td><code>.input-group / .addon</code></td><td>Prefix or suffix.</td></tr><tr><td><code>.search</code></td><td>Search with leading icon.</td></tr><tr><td><code>aria-invalid="true"</code></td><td>Invalid look.</td></tr><tr><td><code>readonly</code></td><td>Sunken, frozen value.</td></tr></tbody></table></div></div>
+    </section>
+    <section class="ds-section" id="sources"><h2><a href="#sources">Sources</a></h2>
+      <p>Extracted from these mocks:</p>
+      <ul><li><a href="../../mocks/pages/home/default.html">pages/home/default</a> (email)</li><li><a href="../../mocks/pages/home/invalid.html">pages/home/invalid</a> (invalid email)</li><li><a href="../../mocks/pages/home/sending.html">pages/home/sending</a> (read-only while sending)</li></ul>
+      <p>Drift fixed during extraction: none.</p>
+    </section>
+
+    <footer class="ds-footer"><span>Goodwork design system · extracted from <a href="../../mocks/index.html">docs/mocks</a> on 2026-10-23</span><a href="#top">Back to top</a></footer>
+  </main>
+</div>
+<script src="../assets/ds.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+@startuml
+!include <C4/C4_Context>
+LAYOUT_WITH_LEGEND()
+title System Context — Deliver a contact request
+
+Person(visitor, "Prospective client", "Staff of a non-profit, church, ministry or mission-driven company")
+Person(studio, "Goodwork studio", "Reads and answers contact requests")
+System(goodwork, "Goodwork website", "Brochure home page and contact request intake")
+System_Ext(mail, "Mail service", "Delivers email; provider <TO SUPPLY>")
+Rel(visitor, goodwork, "Reads about the studio and sends a contact request using", "HTTPS")
+Rel(goodwork, mail, "Sends contact request notifications via", "SMTP")
+Rel(mail, studio, "Delivers notifications to", "Email")
+@enduml

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Goodwork mocks</title>
+<link rel="stylesheet" href="../design-system/tokens/tokens.css">
+<style>
+  body { margin: 0; font: var(--text-body); color: var(--color-fg-default); background: var(--color-bg-canvas); }
+  header { padding: var(--space-6) var(--layout-margin); border-bottom: 1px solid var(--color-border-default); display: flex; gap: var(--space-4); align-items: center; flex-wrap: wrap; }
+  header h1 { font: var(--text-h2); margin: 0; flex: 1; }
+  header nav a { margin-right: var(--space-4); color: var(--color-fg-link); }
+  main { padding: var(--space-6) var(--layout-margin); max-width: var(--layout-container-max); margin-inline: auto; }
+  h2 { font: var(--text-h3); margin: var(--space-8) 0 var(--space-4); }
+  .grid { display: grid; gap: var(--layout-gutter); grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); }
+  .card { background: var(--color-bg-surface); border: 1px solid var(--color-border-default); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-1); display: flex; flex-direction: column; }
+  .preview { aspect-ratio: 16 / 10; background: var(--color-bg-surface-sunken); overflow: hidden; position: relative; }
+  .preview iframe { width: 400%; height: 400%; transform: scale(0.25); transform-origin: top left; border: 0; pointer-events: none; }
+  .no-preview { display: grid; place-items: center; height: 100%; color: var(--color-fg-subtle); }
+  .body { padding: var(--space-4); }
+  .body h3 { margin: 0 0 var(--space-1); font: var(--text-h4); }
+  .meta { margin: 0 0 var(--space-3); color: var(--color-fg-muted); font: var(--text-body-sm); }
+  .meta code { font: var(--text-code); background: var(--color-bg-subtle); padding: 0 var(--space-1); border-radius: var(--radius-sm); }
+  .states { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .states li { font: var(--text-label); }
+  .states a { display: inline-block; padding: var(--space-1) var(--space-2); border-radius: var(--radius-full); background: var(--color-accent-subtle); color: var(--color-fg-accent); text-decoration: none; min-height: var(--target-min); }
+  .states a:hover { background: var(--color-accent-subtle-hover); }
+  .states a:focus-visible { outline: var(--focus-ring-width) solid var(--color-focus-ring); outline-offset: var(--focus-ring-offset); }
+  .states .na, .states .missing { padding: var(--space-1) var(--space-2); border-radius: var(--radius-full); background: var(--color-bg-subtle); color: var(--color-fg-muted); }
+  .states .missing { background: var(--color-danger-bg); color: var(--color-danger-fg); }
+  .states span { font: var(--text-caption); }
+  button.theme { font: var(--text-label); padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--color-border-strong); background: var(--color-bg-surface); color: var(--color-fg-default); cursor: pointer; min-height: var(--target-min); }
+  button.theme:focus-visible { outline: var(--focus-ring-width) solid var(--color-focus-ring); outline-offset: var(--focus-ring-offset); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Goodwork mocks</h1>
+  <nav aria-label="Sections"><a href="#pages">Pages</a><a href="README.md">Coverage</a></nav>
+  <button class="theme" type="button" onclick="var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';">Toggle theme</button>
+</header>
+<main id="main">
+<section><h2 id="pages">Pages</h2><div class="grid"><article class="card"><div class="preview"><iframe loading="lazy" tabindex="-1" aria-hidden="true" src="pages/home/default.html"></iframe></div><div class="body"><h3>Home</h3><p class="meta"><code>/</code> </p><ul class="states"><li><a href="pages/home/default.html">default</a></li><li><a href="pages/home/invalid.html">invalid</a></li><li><a href="pages/home/sending.html">sending</a></li><li><a href="pages/home/sent.html">sent</a></li><li><a href="pages/home/error.html">error</a></li><li class="na" title="Static brochure page with no fetched data; it renders complete on first paint. The only async action is the contact request, shown as the sending state.">loading <span>n/a</span></li><li class="na" title="The page has no collection that can be empty; the contact form's blank state is the default state.">empty <span>n/a</span></li></ul></div></article></div></section>
+</main>
+</body>
+</html>

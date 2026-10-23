@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Button — Goodwork design system</title>
+<meta name="description" content="Buttons trigger actions. Five variants, three sizes, every state, both themes.">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../assets/components.css">
+<link rel="stylesheet" href="../assets/ds.css">
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="ds-shell">
+  <nav class="ds-nav" aria-label="Design system">
+    <div class="ds-nav__brand"><a href="../index.html">Goodwork DS</a><button class="ds-theme-toggle" type="button" aria-pressed="false">☾ Dark</button></div>
+    <details open><summary>Foundations</summary><ul>
+      <li><a href="../foundations/color.html">Color</a></li>
+      <li><a href="../foundations/typography.html">Typography</a></li>
+      <li><a href="../foundations/spacing.html">Spacing</a></li>
+      <li><a href="../foundations/layout.html">Layout</a></li>
+      <li><a href="../foundations/elevation.html">Elevation</a></li>
+      <li><a href="../foundations/shape.html">Shape</a></li>
+      <li><a href="../foundations/motion.html">Motion</a></li>
+      <li><a href="../foundations/iconography.html">Iconography</a></li>
+      <li><a href="../foundations/theming.html">Theming</a></li>
+      <li><a href="../foundations/responsive.html">Responsive</a></li>
+      <li><a href="../foundations/accessibility.html">Accessibility</a></li>
+      <li><a href="../foundations/content.html">Content</a></li>
+    </ul></details>
+    <details open><summary>Components</summary><ul>
+      <li><a href="../components/button.html">Button</a></li>
+      <li><a href="../components/link.html">Link</a></li>
+      <li><a href="../components/menu.html">Menu</a></li>
+      <li><a href="../components/text-field.html">Text field</a></li>
+      <li><a href="../components/textarea.html">Textarea</a></li>
+      <li><a href="../components/select.html">Select</a></li>
+      <li><a href="../components/checkbox.html">Checkbox</a></li>
+      <li><a href="../components/radio-group.html">Radio group</a></li>
+      <li><a href="../components/switch.html">Switch</a></li>
+      <li><a href="../components/form-field.html">Form field</a></li>
+      <li><a href="../components/form-layout.html">Form layout</a></li>
+      <li><a href="../components/top-bar.html">Top bar</a></li>
+      <li><a href="../components/sidebar-navigation.html">Sidebar navigation</a></li>
+      <li><a href="../components/tabs.html">Tabs</a></li>
+      <li><a href="../components/breadcrumb.html">Breadcrumb</a></li>
+      <li><a href="../components/pagination.html">Pagination</a></li>
+      <li><a href="../components/skip-link.html">Skip link</a></li>
+      <li><a href="../components/footer.html">Footer</a></li>
+      <li><a href="../components/card.html">Card</a></li>
+      <li><a href="../components/dialog.html">Dialog</a></li>
+      <li><a href="../components/tooltip.html">Tooltip</a></li>
+      <li><a href="../components/divider.html">Divider</a></li>
+      <li><a href="../components/layout-primitives.html">Container, grid and stack</a></li>
+      <li><a href="../components/table.html">Table</a></li>
+      <li><a href="../components/list.html">List</a></li>
+      <li><a href="../components/description-list.html">Description list</a></li>
+      <li><a href="../components/avatar.html">Avatar</a></li>
+      <li><a href="../components/badge.html">Badge</a></li>
+      <li><a href="../components/chip.html">Chip</a></li>
+      <li><a href="../components/toast.html">Toast</a></li>
+      <li><a href="../components/alert.html">Alert</a></li>
+      <li><a href="../components/inline-message.html">Inline message</a></li>
+      <li><a href="../components/progress-bar.html">Progress bar</a></li>
+      <li><a href="../components/spinner.html">Spinner</a></li>
+      <li><a href="../components/skeleton.html">Skeleton</a></li>
+      <li><a href="../components/empty-state.html">Empty state</a></li>
+      <li><a href="../components/error-page.html">Error page</a></li>
+      <li><a href="../components/brand-lockup.html">Brand lockup</a></li>
+      <li><a href="../components/hero.html">Hero</a></li>
+      <li><a href="../components/service-card.html">Service card</a></li>
+    </ul></details>
+    <details open><summary>Patterns</summary><ul>
+      <li><a href="../patterns/forms.html">Forms</a></li>
+      <li><a href="../patterns/feedback-and-loading.html">Feedback &amp; loading</a></li>
+      <li><a href="../patterns/empty-and-error-states.html">Empty &amp; error states</a></li>
+      <li><a href="../patterns/navigation-and-page-structure.html">Navigation &amp; page structure</a></li>
+      <li><a href="../patterns/dialogs-and-overlays.html">Dialogs &amp; overlays</a></li>
+      <li><a href="../patterns/data-tables-and-lists.html">Data tables &amp; lists</a></li>
+      <li><a href="../patterns/notifications.html">Notifications</a></li>
+      <li><a href="../patterns/content-and-tone.html">Content &amp; tone</a></li>
+    </ul></details>
+  </nav>
+  <main id="main" class="ds-main">
+    <header class="ds-header">
+      <p class="ds-kicker">Component · Actions</p>
+      <h1>Button</h1>
+      <p class="ds-lead">Buttons let people act: send a request, start a project, try again. One primary button per view says what matters most.</p>
+      <div class="ds-meta"><span class="ds-pill ds-pill--ok">WCAG 2.2 AA</span><span class="ds-pill">Status: stable</span><span class="ds-pill">Native <code>&lt;button&gt;</code></span></div>
+      <ul class="ds-toc"><li><a href="#overview">Overview</a></li><li><a href="#anatomy">Anatomy</a></li><li><a href="#variants">Variants</a></li><li><a href="#sizes">Sizes</a></li><li><a href="#states">States</a></li><li><a href="#responsive">Responsive</a></li><li><a href="#theming">Theming</a></li><li><a href="#accessibility">Accessibility</a></li><li><a href="#content">Content</a></li><li><a href="#do-dont">Do and don't</a></li><li><a href="#tokens">Tokens</a></li><li><a href="#code">Code</a></li><li><a href="#sources">Sources</a></li></ul>
+    </header>
+    <section class="ds-section" id="overview"><h2><a href="#overview">Overview</a></h2>
+      <ul><li>Use a button when activating it changes something: it submits, sends or opens. Use a <a href="link.html">link</a> when it only goes somewhere.</li><li><b>Primary</b> is the one action the view exists for. On the brochure page that is <i>Send request</i>; the header's <i>Start a project</i> is a link styled as a primary button because it jumps to the form.</li><li><b>Secondary</b> (the default look) is any other action. <b>Ghost</b> sits in dense surfaces. <b>Link</b> is a low-emphasis action inside text. <b>Danger</b> appears only inside a confirmation.</li></ul>
+    </section>
+    <section class="ds-section" id="anatomy"><h2><a href="#anatomy">Anatomy</a></h2>
+      <div class="ds-anatomy"><figure class="ds-anatomy__figure"><button class="btn btn--primary btn--lg" type="button"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 12 20 4l-6 16-3-7-7-1z"/></svg>Send request</button><span class="ds-callout" style="left: 30%; top: 20%;" aria-hidden="true">1</span><span class="ds-callout" style="left: 58%; top: 20%;" aria-hidden="true">2</span><span class="ds-callout" style="left: 80%; top: 74%;" aria-hidden="true">3</span></figure><ol class="ds-anatomy__list"><li><div><b>Leading icon (optional)</b><small>1.25em, inherits the label colour, <code>aria-hidden</code>.</small></div></li><li><div><b>Label</b><small>Verb phrase, sentence case; it is the accessible name.</small></div></li><li><div><b>Container</b><small>Height from <code>--control-height-*</code>, <code>--radius-md</code>, 1px border.</small></div></li></ol></div>
+    </section>
+    <section class="ds-section" id="variants"><h2><a href="#variants">Variants</a></h2>
+      <p>Variants change emphasis, not meaning. Pick by how much attention the action deserves.</p>
+      <div class="ds-example"><div class="ds-example__canvas"><button class="btn btn--primary" type="button">Send request</button><button class="btn" type="button">Cancel</button><button class="btn btn--ghost" type="button">Edit</button><button class="btn btn--link" type="button">Learn more</button><button class="btn btn--danger" type="button">Delete request</button></div><div class="ds-example__caption"><span>Primary, secondary, ghost, link, danger.</span></div><details class="ds-example__code"><summary>HTML</summary><pre><code>&lt;button class=&quot;btn btn--primary&quot; type=&quot;button&quot;&gt;Send request&lt;/button&gt;&lt;button class=&quot;btn&quot; type=&quot;button&quot;&gt;Cancel&lt;/button&gt;&lt;button class=&quot;btn btn--ghost&quot; type=&quot;button&quot;&gt;Edit&lt;/button&gt;&lt;button class=&quot;btn btn--link&quot; type=&quot;button&quot;&gt;Learn more&lt;/button&gt;&lt;button class=&quot;btn btn--danger&quot; type=&quot;button&quot;&gt;Delete request&lt;/button&gt;</code></pre></details></div>
+      <h3>With icons, icon-only and block</h3>
+      <div class="ds-example"><div class="ds-example__canvas"><button class="btn btn--primary" type="button"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 12 20 4l-6 16-3-7-7-1z"/></svg>Send request</button><button class="btn btn--icon" type="button" aria-label="Edit project"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16v4zM13 7l4 4"/></svg></button><button class="btn btn--ghost btn--icon" type="button" aria-label="More actions"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button><button class="btn btn--block" type="button" style="max-width: 16rem;">Block, full width</button></div><div class="ds-example__caption"><span>Icon-only buttons carry <code>aria-label</code>; the icon is <code>aria-hidden</code>.</span></div><details class="ds-example__code"><summary>HTML</summary><pre><code>&lt;button class=&quot;btn btn--primary&quot; type=&quot;button&quot;&gt;&lt;svg class=&quot;icon&quot; aria-hidden=&quot;true&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M4 12 20 4l-6 16-3-7-7-1z&quot;/&gt;&lt;/svg&gt;Send request&lt;/button&gt;&lt;button class=&quot;btn btn--icon&quot; type=&quot;button&quot; aria-label=&quot;Edit project&quot;&gt;&lt;svg class=&quot;icon&quot; aria-hidden=&quot;true&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M4 20h4l10-10-4-4L4 16v4zM13 7l4 4&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;button class=&quot;btn btn--ghost btn--icon&quot; type=&quot;button&quot; aria-label=&quot;More actions&quot;&gt;&lt;svg class=&quot;icon&quot; aria-hidden=&quot;true&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;circle cx=&quot;5&quot; cy=&quot;12&quot; r=&quot;1.5&quot;/&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;1.5&quot;/&gt;&lt;circle cx=&quot;19&quot; cy=&quot;12&quot; r=&quot;1.5&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;&lt;button class=&quot;btn btn--block&quot; type=&quot;button&quot; style=&quot;max-width: 16rem;&quot;&gt;Block, full width&lt;/button&gt;</code></pre></details></div>
+    </section>
+    <section class="ds-section" id="sizes"><h2><a href="#sizes">Sizes</a></h2>
+      <p>Medium is the default. Large is the contact form's submit, where the button is the point of the page. Small lives in tables and toolbars.</p>
+      <div class="ds-example"><div class="ds-example__canvas"><button class="btn btn--primary btn--sm" type="button">Small · 32px</button><button class="btn btn--primary" type="button">Medium · 40px</button><button class="btn btn--primary btn--lg" type="button">Large · 48px</button></div><div class="ds-example__caption"><span>Heights <code>--control-height-sm/md/lg</code>; padding <code>--space-3/4/6</code>.</span></div><details class="ds-example__code"><summary>HTML</summary><pre><code>&lt;button class=&quot;btn btn--primary btn--sm&quot; type=&quot;button&quot;&gt;Small · 32px&lt;/button&gt;&lt;button class=&quot;btn btn--primary&quot; type=&quot;button&quot;&gt;Medium · 40px&lt;/button&gt;&lt;button class=&quot;btn btn--primary btn--lg&quot; type=&quot;button&quot;&gt;Large · 48px&lt;/button&gt;</code></pre></details></div>
+    </section>
+    <section class="ds-section" id="states"><h2><a href="#states">States</a></h2>
+      <p>Pointer and focus states are forced with <code>data-state</code> so they can be reviewed without a mouse; real pages get them from <code>:hover</code>, <code>:focus-visible</code> and <code>:active</code>. Everything else uses the real attribute.</p>
+      <div class="ds-matrix"><table><thead><tr><th scope="col">Variant</th><th scope="col">Default</th><th scope="col">Hover</th><th scope="col">Focus</th><th scope="col">Active</th><th scope="col">Disabled</th><th scope="col">Loading</th></tr></thead><tbody><tr><th scope="row">Primary</th><td><button class="btn btn--primary" type="button">Send</button></td><td><button class="btn btn--primary" type="button" data-state="hover">Send</button></td><td><button class="btn btn--primary" type="button" data-state="focus">Send</button></td><td><button class="btn btn--primary" type="button" data-state="active">Send</button></td><td><button class="btn btn--primary" type="button" disabled>Send</button></td><td><button class="btn btn--primary" type="button" aria-busy="true">Send</button></td></tr><tr><th scope="row">Secondary</th><td><button class="btn" type="button">Cancel</button></td><td><button class="btn" type="button" data-state="hover">Cancel</button></td><td><button class="btn" type="button" data-state="focus">Cancel</button></td><td><button class="btn" type="button" data-state="active">Cancel</button></td><td><button class="btn" type="button" disabled>Cancel</button></td><td><button class="btn" type="button" aria-busy="true">Cancel</button></td></tr><tr><th scope="row">Ghost</th><td><button class="btn btn--ghost" type="button">Edit</button></td><td><button class="btn btn--ghost" type="button" data-state="hover">Edit</button></td><td><button class="btn btn--ghost" type="button" data-state="focus">Edit</button></td><td><button class="btn btn--ghost" type="button" data-state="active">Edit</button></td><td><button class="btn btn--ghost" type="button" disabled>Edit</button></td><td><button class="btn btn--ghost" type="button" aria-busy="true">Edit</button></td></tr><tr><th scope="row">Link</th><td><button class="btn btn--link" type="button">Learn more</button></td><td><button class="btn btn--link" type="button" data-state="hover">Learn more</button></td><td><button class="btn btn--link" type="button" data-state="focus">Learn more</button></td><td><button class="btn btn--link" type="button" data-state="active">Learn more</button></td><td><button class="btn btn--link" type="button" disabled>Learn more</button></td><td><button class="btn btn--link" type="button" aria-busy="true">Learn more</button></td></tr><tr><th scope="row">Danger</th><td><button class="btn btn--danger" type="button">Delete</button></td><td><button class="btn btn--danger" type="button" data-state="hover">Delete</button></td><td><button class="btn btn--danger" type="button" data-state="focus">Delete</button></td><td><button class="btn btn--danger" type="button" data-state="active">Delete</button></td><td><button class="btn btn--danger" type="button" disabled>Delete</button></td><td><button class="btn btn--danger" type="button" aria-busy="true">Delete</button></td></tr></tbody></table></div>
+      <h3>Both themes</h3>
+      <div class="ds-themes"><div data-theme="light"><div class="ds-example__canvas" style="padding: 0;"><button class="btn btn--primary" type="button">Send request</button><button class="btn" type="button">Cancel</button><button class="btn btn--ghost" type="button">Edit</button><button class="btn btn--link" type="button">Learn more</button><button class="btn btn--danger" type="button">Delete request</button></div></div><div data-theme="dark"><div class="ds-example__canvas" style="padding: 0;"><button class="btn btn--primary" type="button">Send request</button><button class="btn" type="button">Cancel</button><button class="btn btn--ghost" type="button">Edit</button><button class="btn btn--link" type="button">Learn more</button><button class="btn btn--danger" type="button">Delete request</button></div></div></div>
+      <ul><li><b>Loading</b> keeps the width, hides the label behind a spinner, sets <code>aria-busy="true"</code> and ignores clicks. The contact form's <i>sending</i> state uses it.</li><li><b>Disabled</b> uses the native attribute. Prefer leaving <i>Send request</i> enabled and showing what to fix on submit, as the <i>invalid</i> mock does.</li></ul>
+    </section>
+    <section class="ds-section" id="responsive"><h2><a href="#responsive">Responsive behaviour</a></h2>
+      <ul><li>Below 768px a form's primary button may go full width with <code>.btn--block</code>; on the brochure it stays inline because the hint sits beside it.</li><li>Labels never truncate. A label that wraps at 360px is too long.</li><li>Medium and large buttons exceed 44px of touch height including spacing.</li></ul>
+    </section>
+    <section class="ds-section" id="theming"><h2><a href="#theming">Theming</a></h2>
+<p>The button reads four component tokens (<code>--btn-bg</code>, <code>--btn-fg</code>, <code>--btn-border</code>, <code>--btn-bg-hover</code>) that alias semantic tokens. In light, primary is Evergreen Ink with Linen text. In dark it reverses: a Linen button with ink text, exactly as the reversed logo does.</p>
+    </section>
+    <section class="ds-section" id="accessibility"><h2><a href="#accessibility">Accessibility</a></h2>
+      <h3>Role and pattern</h3><p>Native <code>&lt;button&gt;</code>, or <code>&lt;a href&gt;</code> when it navigates (the header's <i>Start a project</i>). No ARIA role needed.</p>
+      <h3>Keyboard</h3>
+      <div class="ds-table-wrap"><table class="ds-table ds-keys"><thead><tr><th scope="col">Key</th><th scope="col">Action</th></tr></thead><tbody><tr><td><kbd>Tab</kbd></td><td>Moves focus to the button.</td></tr><tr><td><kbd>Enter</kbd>, <kbd>Space</kbd></td><td>Activates it. A link-button responds to Enter only.</td></tr></tbody></table></div>
+      <h3>Focus</h3><p>The shared gold ring, 2px with a 2px offset, on <code>:focus-visible</code> only.</p>
+      <h3>Labelling</h3><p>The visible label is the name. Icon-only buttons need <code>aria-label</code> with a verb and the object.</p>
+      <h3>Contrast</h3>
+      <div class="ds-themes"><div data-theme="light"><div class="ds-example__canvas ds-example__canvas--stack" style="padding: 0; gap: var(--space-2);"><div class="ds-pair"><span>Label on primary</span><span class="ds-pair__ratio" data-contrast="--color-fg-on-accent|--color-accent" data-min="4.5"></span></div><div class="ds-pair"><span>Label on primary, hover</span><span class="ds-pair__ratio" data-contrast="--color-fg-on-accent|--color-accent-hover" data-min="4.5"></span></div><div class="ds-pair"><span>Label on danger</span><span class="ds-pair__ratio" data-contrast="--color-fg-on-danger|--color-danger-solid" data-min="4.5"></span></div><div class="ds-pair"><span>Secondary border on card</span><span class="ds-pair__ratio" data-contrast="--color-border-strong|--color-bg-surface" data-min="3"></span></div><div class="ds-pair"><span>Focus ring on page</span><span class="ds-pair__ratio" data-contrast="--color-focus-ring|--color-bg-canvas" data-min="3"></span></div></div></div><div data-theme="dark"><div class="ds-example__canvas ds-example__canvas--stack" style="padding: 0; gap: var(--space-2);"><div class="ds-pair"><span>Label on primary</span><span class="ds-pair__ratio" data-contrast="--color-fg-on-accent|--color-accent" data-min="4.5"></span></div><div class="ds-pair"><span>Label on primary, hover</span><span class="ds-pair__ratio" data-contrast="--color-fg-on-accent|--color-accent-hover" data-min="4.5"></span></div><div class="ds-pair"><span>Label on danger</span><span class="ds-pair__ratio" data-contrast="--color-fg-on-danger|--color-danger-solid" data-min="4.5"></span></div><div class="ds-pair"><span>Secondary border on card</span><span class="ds-pair__ratio" data-contrast="--color-border-strong|--color-bg-surface" data-min="3"></span></div><div class="ds-pair"><span>Focus ring on page</span><span class="ds-pair__ratio" data-contrast="--color-focus-ring|--color-bg-canvas" data-min="3"></span></div></div></div></div>
+      <h3>Motion</h3><p>Background transitions over <code>--duration-fast</code>; active nudges 1px down. Reduced motion zeroes both through the tokens.</p>
+      <h3>Touch</h3><p>40px and 48px heights clear the 24px minimum; small buttons sit only inside larger tappable rows.</p>
+    </section>
+    <section class="ds-section" id="content"><h2><a href="#content">Content</a></h2>
+      <ul><li>Verb phrases in sentence case: <i>Send request</i>, <i>Start a project</i>, <i>Try again</i>. Never <i>Submit</i> or <i>OK</i>.</li><li>Retry buttons say what is retried when the context is not obvious.</li><li>Keep labels to three words or fewer.</li></ul>
+    </section>
+    <section class="ds-section" id="do-dont"><h2><a href="#do-dont">Do and don't</a></h2>
+      <div class="ds-dodont"><figure class="ds-do"><div class="ds-example__canvas"><button class="btn btn--primary" type="button">Send request</button></div><figcaption>One primary action, named for what it does.</figcaption></figure><figure class="ds-dont"><div class="ds-example__canvas"><button class="btn btn--primary" type="button">Submit</button><button class="btn btn--primary" type="button">Send</button></div><figcaption>Two primaries, and <i>Submit</i> says nothing about the outcome.</figcaption></figure><figure class="ds-do"><div class="ds-example__canvas"><button class="btn btn--icon" type="button" aria-label="Edit project"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16v4zM13 7l4 4"/></svg></button></div><figcaption>Icon-only buttons have an <code>aria-label</code>.</figcaption></figure><figure class="ds-dont"><div class="ds-example__canvas"><button class="btn btn--primary" type="button" disabled>Send request</button></div><figcaption>A disabled submit with no reason shown. Leave it enabled and explain on submit.</figcaption></figure></div>
+    </section>
+    <section class="ds-section" id="tokens"><h2><a href="#tokens">Tokens</a></h2>
+      <div class="ds-table-wrap"><table class="ds-table"><thead><tr><th scope="col">Part</th><th scope="col">Token</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead><tbody><tr><td>Primary background</td><td><code>--color-accent</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-accent" data-swatch></i><span data-token="--color-accent"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-accent" data-swatch></i><span data-token="--color-accent"></span></span></td></tr><tr><td>Primary hover</td><td><code>--color-accent-hover</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-accent-hover" data-swatch></i><span data-token="--color-accent-hover"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-accent-hover" data-swatch></i><span data-token="--color-accent-hover"></span></span></td></tr><tr><td>Primary label</td><td><code>--color-fg-on-accent</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-fg-on-accent" data-swatch></i><span data-token="--color-fg-on-accent"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-fg-on-accent" data-swatch></i><span data-token="--color-fg-on-accent"></span></span></td></tr><tr><td>Secondary border</td><td><code>--color-border-strong</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-border-strong" data-swatch></i><span data-token="--color-border-strong"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-border-strong" data-swatch></i><span data-token="--color-border-strong"></span></span></td></tr><tr><td>Secondary hover</td><td><code>--color-bg-subtle</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-bg-subtle" data-swatch></i><span data-token="--color-bg-subtle"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-bg-subtle" data-swatch></i><span data-token="--color-bg-subtle"></span></span></td></tr><tr><td>Danger background</td><td><code>--color-danger-solid</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-danger-solid" data-swatch></i><span data-token="--color-danger-solid"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-danger-solid" data-swatch></i><span data-token="--color-danger-solid"></span></span></td></tr><tr><td>Focus ring</td><td><code>--color-focus-ring</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-focus-ring" data-swatch></i><span data-token="--color-focus-ring"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-focus-ring" data-swatch></i><span data-token="--color-focus-ring"></span></span></td></tr><tr><td>Height, medium</td><td><code>--control-height-md</code></td><td colspan="2"><span data-token="--control-height-md"></span></td></tr><tr><td>Height, large</td><td><code>--control-height-lg</code></td><td colspan="2"><span data-token="--control-height-lg"></span></td></tr><tr><td>Radius</td><td><code>--radius-md</code></td><td colspan="2"><span data-token="--radius-md"></span></td></tr><tr><td>Transition</td><td><code>--duration-fast</code></td><td colspan="2"><span data-token="--duration-fast"></span></td></tr></tbody></table></div>
+    </section>
+    <section class="ds-section" id="code"><h2><a href="#code">Code</a></h2>
+      <pre><code>&lt;button class=&quot;btn btn--primary btn--lg&quot; type=&quot;submit&quot;&gt;Send request&lt;/button&gt;
+&lt;button class=&quot;btn btn--primary btn--lg&quot; type=&quot;submit&quot; aria-busy=&quot;true&quot;&gt;Sending…&lt;/button&gt;
+&lt;a class=&quot;btn btn--primary&quot; href=&quot;#contact&quot;&gt;Start a project&lt;/a&gt;</code></pre>
+      <div class="ds-table-wrap"><table class="ds-table"><thead><tr><th scope="col">Class / attribute</th><th scope="col">Effect</th></tr></thead><tbody><tr><td><code>.btn</code></td><td>Base: secondary, medium.</td></tr><tr><td><code>.btn--primary / --ghost / --link / --danger</code></td><td>Variant.</td></tr><tr><td><code>.btn--sm / --lg</code></td><td>Size.</td></tr><tr><td><code>.btn--icon</code></td><td>Square icon-only; needs <code>aria-label</code>.</td></tr><tr><td><code>.btn--block</code></td><td>Full width.</td></tr><tr><td><code>aria-busy="true"</code></td><td>Loading.</td></tr><tr><td><code>data-state="hover|focus|active"</code></td><td>Documentation only.</td></tr></tbody></table></div></div>
+    </section>
+    <section class="ds-section" id="sources"><h2><a href="#sources">Sources</a></h2>
+      <p>Extracted from these mocks:</p>
+      <ul><li><a href="../../mocks/pages/home/default.html">pages/home/default</a> (header link-button, Send request)</li><li><a href="../../mocks/pages/home/sending.html">pages/home/sending</a> (loading state)</li><li><a href="../../mocks/pages/home/error.html">pages/home/error</a> (Try again)</li></ul>
+      <p>Drift fixed during extraction: none; the mocks used <code>.btn</code> as written.</p>
+    </section>
+
+    <footer class="ds-footer"><span>Goodwork design system · extracted from <a href="../../mocks/index.html">docs/mocks</a> on 2026-10-23</span><a href="#top">Back to top</a></footer>
+  </main>
+</div>
+<script src="../assets/ds.js"></script>
+</body>
+</html>

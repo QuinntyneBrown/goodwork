@@ -1,0 +1,67 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName Arial
+skinparam ArrowColor #344054
+skinparam class {
+  BorderColor #344054
+  FontColor #101828
+  BackgroundColor #F9FAFB
+}
+title Class structure — Deliver a contact request
+
+class ContactRequestDeliveryWorker {
+  +ExecuteAsync(ct): Task
+}
+class DeliverContactRequestCommand {
+  +Guid ContactRequestId
+}
+class DeliverContactRequestCommandHandler {
+  +Handle(command, ct): Task<Unit>
+}
+interface IEmailSender {
+  +SendAsync(message: EmailMessage, ct): Task
+}
+class SmtpEmailSender
+class EmailMessage <<record>> {
+  +string To
+  +string ReplyTo
+  +string Subject
+  +string PlainTextBody
+}
+class StudioInboxOptions {
+  +string InboxAddress
+  +string FromAddress
+}
+class ContactRequestRetentionWorker {
+  +ExecuteAsync(ct): Task
+}
+class ContactRequest {
+  +Guid Id
+  +string Email
+  +string Message
+  +DateTimeOffset ReceivedAt
+  +DeliveryStatus DeliveryStatus
+  +int DeliveryAttempts
+  +DateTimeOffset? NextAttemptAt
+  +MarkDelivered(): void
+  +RecordFailedAttempt(now): void
+}
+enum DeliveryStatus {
+  Pending
+  Delivered
+}
+interface TimeProvider
+ContactRequestDeliveryWorker ..> DeliverContactRequestCommand : sends
+DeliverContactRequestCommandHandler ..> DeliverContactRequestCommand : handles
+DeliverContactRequestCommandHandler --> IEmailSender
+DeliverContactRequestCommandHandler --> StudioInboxOptions
+DeliverContactRequestCommandHandler --> TimeProvider
+DeliverContactRequestCommandHandler ..> ContactRequest : loads / mutates
+DeliverContactRequestCommandHandler ..> EmailMessage : builds
+SmtpEmailSender ..|> IEmailSender
+ContactRequestRetentionWorker --> TimeProvider
+ContactRequestRetentionWorker ..> ContactRequest : deletes
+ContactRequest --> DeliveryStatus
+@enduml
