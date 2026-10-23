@@ -173,6 +173,23 @@ docker run -p 8080:8080 -v goodwork-data:/data \
 
 Put a TLS-terminating reverse proxy in front: the app redirects HTTP to HTTPS and sends HSTS.
 
+## Deployment
+
+Production is <https://goodwork.rocks>, an Azure Container App (consumption
+plan, scale-to-zero, one replica) in the `rg-goodwork-prod` resource group with
+the SQLite database on an Azure Files share mounted at `/data`.
+
+Every push to `main` runs [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml):
+tests, then build the image and push it to `ghcr.io/quinntynebrown/goodwork`,
+run the migration as the `caj-goodwork-migrate` Container Apps job, and update
+the `ca-goodwork-prod` container app. GitHub signs in to Azure through OpenID
+Connect with the `id-goodwork-github` managed identity; no Azure credentials are
+stored in the repository.
+
+Runtime settings (mail server, studio inbox) are environment variables and
+secrets on the container app, never in the repository. The delivery and
+retention workers are off (`Workers__Enabled=false`) until SMTP is configured.
+
 ## Documentation
 
 - [Requirements](docs/specs/) - L1 high-level and L2 detailed requirements
