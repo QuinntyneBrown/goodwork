@@ -22,5 +22,7 @@ ENV ASPNETCORE_URLS=http://+:8080 \
     ConnectionStrings__Goodwork="Data Source=/data/goodwork.db"
 VOLUME /data
 EXPOSE 8080
-# Run `dotnet cli/Goodwork.Cli.dll migrate` before the first start and after each release.
-ENTRYPOINT ["dotnet", "api/Goodwork.Api.dll"]
+# Run `dotnet /app/cli/Goodwork.Cli.dll migrate` before the first start and after each release.
+# The API runs from its own folder so its content root (and wwwroot) resolve correctly.
+WORKDIR /app/api
+ENTRYPOINT ["dotnet", "Goodwork.Api.dll"]

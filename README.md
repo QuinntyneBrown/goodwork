@@ -165,7 +165,7 @@ with Given-When-Then criteria and a failing acceptance test. See
 
 ```bash
 docker build -t goodwork .
-docker run --rm -v goodwork-data:/data goodwork dotnet cli/Goodwork.Cli.dll migrate
+docker run --rm -v goodwork-data:/data goodwork dotnet /app/cli/Goodwork.Cli.dll migrate
 docker run -p 8080:8080 -v goodwork-data:/data \
   -e StudioInbox__InboxAddress=studio@example.org -e StudioInbox__FromAddress=no-reply@example.org \
   -e Smtp__Host=smtp.example.org goodwork
