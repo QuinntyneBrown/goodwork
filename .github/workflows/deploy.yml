@@ -1,0 +1,113 @@
+# Builds the container image, pushes it to GitHub Container Registry, runs the
+# database migration, and deploys to Azure Container Apps on every push to main.
+#
+# Azure access uses OpenID Connect (no stored credentials): the user-assigned
+# managed identity below trusts this repository's main branch.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+env:
+  IMAGE: ghcr.io/quinntynebrown/goodwork
+  AZURE_CLIENT_ID: c5d36052-f243-458a-a428-7acb4b3dd1de
+  AZURE_TENANT_ID: c68758f6-70fb-41fe-8fb3-b3e35624a2a3
+  AZURE_SUBSCRIPTION_ID: 4a1b5113-89f9-4d27-acfe-581493385536
+  RESOURCE_GROUP: rg-goodwork-prod
+  CONTAINER_APP: ca-goodwork-prod
+  MIGRATE_JOB: caj-goodwork-migrate
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: backend/global.json
+      - name: Backend tests
+        run: dotnet test backend/Goodwork.sln --configuration Release
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Frontend lint and format
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run lint
+          npm run format:check
+
+  deploy:
+    name: Build and deploy
+    needs: test
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://goodwork.rocks
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:${{ github.sha }}
+            ${{ env.IMAGE }}:latest
+          labels: org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ env.AZURE_CLIENT_ID }}
+          tenant-id: ${{ env.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Run database migration
+        run: |
+          set -euo pipefail
+          az containerapp job update -g "$RESOURCE_GROUP" -n "$MIGRATE_JOB" \
+            --image "$IMAGE:$GITHUB_SHA" --output none
+          execution=$(az containerapp job start -g "$RESOURCE_GROUP" -n "$MIGRATE_JOB" --query name -o tsv)
+          echo "Started migration execution $execution"
+          for i in $(seq 1 60); do
+            status=$(az containerapp job execution show -g "$RESOURCE_GROUP" -n "$MIGRATE_JOB" \
+              --job-execution-name "$execution" --query properties.status -o tsv)
+            echo "  $status"
+            case "$status" in
+              Succeeded) exit 0 ;;
+              Failed|Stopped|Degraded) echo "Migration $status"; exit 1 ;;
+            esac
+            sleep 10
+          done
+          echo "Timed out waiting for migration"; exit 1
+
+      - name: Deploy to Azure Container Apps
+        run: |
+          az containerapp update -g "$RESOURCE_GROUP" -n "$CONTAINER_APP" \
+            --image "$IMAGE:$GITHUB_SHA" --output none
+          az containerapp show -g "$RESOURCE_GROUP" -n "$CONTAINER_APP" \
+            --query "{fqdn:properties.configuration.ingress.fqdn, revision:properties.latestRevisionName}" -o table
