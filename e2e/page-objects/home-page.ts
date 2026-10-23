@@ -8,6 +8,7 @@ export class HomePage {
   readonly heading: Locator;
   readonly eyebrow: Locator;
   readonly serviceCards: Locator;
+  readonly serviceCardSurfaces: Locator;
   readonly footerEmail: Locator;
   readonly emailField: Locator;
   readonly messageField: Locator;
@@ -35,6 +36,7 @@ export class HomePage {
     this.serviceCards = page
       .getByRole('listitem')
       .filter({ has: page.getByRole('heading', { level: 3 }) });
+    this.serviceCardSurfaces = this.serviceCards.locator('[gwCard]');
     this.footerEmail = page.getByRole('contentinfo').getByRole('link');
     this.pitchVideo = page.locator('video[aria-label="Goodwork pitch"]');
     this.pitchCaptions = this.pitchVideo.locator('track[kind="captions"]');

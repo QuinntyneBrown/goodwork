@@ -78,6 +78,16 @@ test.describe('Responsive layout', () => {
     });
   }
 
+  test('XL: the two service cards are the same height', async ({ home }) => {
+    await home.page.setViewportSize({ width: 1280, height: 800 });
+    await home.goto();
+
+    const first = await home.serviceCardSurfaces.nth(0).boundingBox();
+    const second = await home.serviceCardSurfaces.nth(1).boundingBox();
+
+    expect(second?.height).toBe(first?.height);
+  });
+
   test('XL: two columns and the whole page fits in 1100 px at 1280x800', async ({ home }) => {
     await home.page.setViewportSize({ width: 1280, height: 800 });
     await home.goto();
