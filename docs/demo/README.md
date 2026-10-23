@@ -18,7 +18,7 @@ no video of their own.
 
 | | |
 | --- | --- |
-| File | [`goodwork.webm`](goodwork.webm), 33.1 MB |
+| File | [`goodwork.webm`](goodwork.webm), 22.2 MB |
 | Length | 3 min 17 s (197.5 s) |
 | Video | VP9, 1280 x 720 |
 | Audio | Opus, 48 kHz mono, loudness-normalized (about -17 dB mean, -1.1 dB peak) |
@@ -37,12 +37,12 @@ no video of their own.
 | 1:00 | On a phone | A 360 x 640 viewport: single column, no sideways scroll (L2-012) |
 | 1:11 | Keyboard only | Skip link, focus ring, Enter to jump to content, tab order into the form (L2-002, L2-014) |
 | 1:29 | Start a project | The header button scrolls to the form and focuses the email field (L2-002) |
-| 1:37 | Fixing mistakes | Empty submit, focused error summary, summary link focuses the field, error clears live as the email is typed (L2-004) |
-| 2:00 | Sending a request | Busy "Sending..." state, read-only fields, "Request sent" confirmation; the row is checked in SQLite before the narration claims success (L2-005, L2-006, L2-008) |
-| 2:18 | Sending another | "Send another request" gives an empty form (L2-006) |
-| 2:31 | Protection from spam | The sixth request in ten minutes is refused by the real rate limiter (HTTP 429); the form keeps the message and offers the studio email; the refused request is checked as not stored (L2-007, L2-010) |
+| 1:38 | Fixing mistakes | Empty submit, focused error summary, summary link focuses the field, error clears live as the email is typed (L2-004) |
+| 2:01 | Sending a request | Busy "Sending..." state, read-only fields, "Request sent" confirmation; the row is checked in SQLite before the narration claims success (L2-005, L2-006, L2-008) |
+| 2:19 | Sending another | "Send another request" gives an empty form (L2-006) |
+| 2:32 | Protection from spam | The sixth request in ten minutes is refused by the real rate limiter (HTTP 429); the form keeps the message and offers the studio email; the refused request is checked as not stored (L2-007, L2-010) |
 | 2:43 | It reaches the studio | The delivery job's real email, read from the outbox, shown on screen with its reply-to (L2-009) |
-| 3:04 | Thank you | Closing card |
+| 3:05 | Thank you | Closing card |
 
 ## Disclosures
 
@@ -52,7 +52,7 @@ no video of their own.
   developer protocol for the send step only, so the busy state is visible. No response is mocked.
 - **Delivery runs on a 30 s timer.** The take overlaps that wait with narration. Email goes to a pickup
   folder (`Smtp:PickupDirectory`), not a real mail server.
-- **Placeholders:** the location ("Hamilton, Ontario"), the contact email and the studio inbox
+- **Placeholders:** the location ("Toronto, Ontario"), the contact email and the studio inbox
   (`studio@goodwork.test`) are placeholders, not confirmed Goodwork details.
 - **Known copy gap, shown as-is:** the rate-limit refusal displays "Our mail service didn't respond", the
   generic error text from the mock. That wording is inaccurate for a rate limit; the narration describes

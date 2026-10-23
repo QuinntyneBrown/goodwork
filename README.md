@@ -119,8 +119,8 @@ environment variables (use `__` for nesting, for example `Smtp__Host`).
 | `AllowedOrigins` | Extra origins allowed to post; normally empty |
 | `Workers__Enabled` | `false` switches off the delivery and retention jobs |
 
-The studio location and contact email shown on the page (`Hamilton, Ontario`,
-`hello@goodwork.rocks`) are placeholders from the mocks. They live in
+The studio location and contact email shown on the page (`Toronto, Ontario`,
+`hello@goodwork.rocks`) are confirmed. They live in
 `frontend/projects/goodwork/src/app/studio.ts`.
 
 ### Run the API

@@ -5,8 +5,8 @@ Static HTML mocks for the Goodwork brochure page: a single page, no taller than
 contact request form.
 
 <!-- Cast & catalog
-  Company:   Goodwork, Hamilton, Ontario · hello@goodwork.rocks
-  Prospect:  Ruth Okonkwo, Hope House (transitional housing non-profit, Hamilton)
+  Company:   Goodwork, Toronto, Ontario · hello@goodwork.rocks
+  Prospect:  Ruth Okonkwo, Hope House (transitional housing non-profit, Toronto)
   Today:     Thu 23 Oct 2026
   Reply SLA: two business days
 -->
@@ -44,8 +44,7 @@ See [the design system](../design-system/README.md).
 
 ## Open questions
 
-- Company location and email address are placeholders invented for the mock
-  (Hamilton, Ontario; hello@goodwork.rocks). Confirm the real ones.
+- Company location and email address: Toronto, Ontario; hello@goodwork.rocks.
 - Web fonts: the brand sheet uses Inter and Source Serif 4 from Google Fonts.
   Mocks open from disk without network, so they fall back to system sans and
   Georgia. The production site should self-host both fonts.
