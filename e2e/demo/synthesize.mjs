@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { PITCH, RATE, VOICE, clipKey, loadNarration } from './narration.mjs';
 
 const run = fileURLToPath(new URL('../.demo-run/', import.meta.url));
-const python = `${run}venv/bin/python`;
+const python = process.env.PYTHON ?? `${run}venv/bin/python`;
 const clips = `${run}clips/`;
 const dry = process.argv.includes('--dry');
 

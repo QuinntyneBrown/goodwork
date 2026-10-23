@@ -34,7 +34,7 @@ const step = (message) => console.log(`[demo] ${message}`);
 
 const DEMO_EMAIL = 'ruth.okonkwo@hopehouse.org';
 const DEMO_MESSAGE =
-  'We run a transitional housing program in Hamilton and need one simple app our case workers can use on their phones.';
+  'We run a transitional housing program in Toronto and need one simple app our case workers can use on their phones.';
 const SECOND_EMAIL = 'jordan@gracechurch.example';
 const SECOND_MESSAGE = 'We would love a volunteer sign-up page for our church.';
 
@@ -70,7 +70,7 @@ function preflight() {
 
 function prepare() {
   step('building the Angular app');
-  execFileSync('npm', ['--prefix', `${root}frontend`, 'run', 'build'], { stdio: 'ignore' });
+  execFileSync('npm', ['--prefix', `${root}frontend`, 'run', 'build'], { stdio: 'ignore', shell: process.platform === 'win32' });
   rmSync(insideRun(webroot), { recursive: true, force: true });
   cpSync(`${root}frontend/dist/goodwork/browser`, webroot, { recursive: true });
 

@@ -1,6 +1,6 @@
-/** Studio details shown on the page. Location and email are placeholders until confirmed. */
+/** Studio details shown on the page. */
 export const STUDIO = {
   name: 'Goodwork',
-  location: 'Hamilton, Ontario',
+  location: 'Toronto, Ontario',
   email: 'hello@goodwork.rocks',
 } as const;
