@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/detailed-designs/logo.svg" alt="Goodwork" width="96" height="96"></p>
+
 # Goodwork
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
