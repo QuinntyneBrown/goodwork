@@ -31,6 +31,12 @@ class SiteHeader {
 class Hero {
   +heading: input<string>
 }
+class VideoPlayer {
+  +src: input<string>
+  +poster: input<string>
+  +captionsSrc: input<string>
+  +label: input<string>
+}
 class ServiceCard {
   +title: input<string>
   +body: input<string>
@@ -52,6 +58,7 @@ class SameOriginMiddleware {
 HomePage *-- "1" SkipLink
 HomePage *-- "1" SiteHeader
 HomePage *-- "1" Hero
+HomePage *-- "1" VideoPlayer
 HomePage *-- "2" ServiceCard
 HomePage *-- "1" ContactForm
 HomePage *-- "1" SiteFooter

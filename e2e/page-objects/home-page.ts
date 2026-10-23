@@ -1,4 +1,4 @@
-import { Locator, Page, expect } from "@playwright/test";
+import { Locator, Page, expect } from '@playwright/test';
 
 export class HomePage {
   readonly skipLink: Locator;
@@ -20,41 +20,43 @@ export class HomePage {
   readonly confirmation: Locator;
   readonly sendAnother: Locator;
   readonly replyHint: Locator;
+  readonly pitchVideo: Locator;
+  readonly pitchCaptions: Locator;
 
   constructor(readonly page: Page) {
-    this.skipLink = page.getByRole("link", { name: "Skip to content" });
-    this.brand = page.getByRole("link", { name: "Goodwork, home" });
-    this.startProject = page.getByRole("link", { name: "Start a project" });
-    this.main = page.getByRole("main");
-    this.heading = page.getByRole("heading", { level: 1 });
-    this.eyebrow = page.getByText("Software for people doing good work");
+    this.skipLink = page.getByRole('link', { name: 'Skip to content' });
+    this.brand = page.getByRole('link', { name: 'Goodwork, home' });
+    this.startProject = page.getByRole('link', { name: 'Start a project' });
+    this.main = page.getByRole('main');
+    this.heading = page.getByRole('heading', { level: 1 });
+    this.eyebrow = page.getByText('Software for people doing good work');
     this.serviceCards = page
-      .getByRole("listitem")
-      .filter({ has: page.getByRole("heading", { level: 3 }) });
-    this.footerEmail = page.getByRole("contentinfo").getByRole("link");
-    this.emailField = page.getByLabel("Email");
-    this.messageField = page.getByLabel("What are you working on?");
+      .getByRole('listitem')
+      .filter({ has: page.getByRole('heading', { level: 3 }) });
+    this.footerEmail = page.getByRole('contentinfo').getByRole('link');
+    this.pitchVideo = page.locator('video[aria-label="Goodwork pitch"]');
+    this.pitchCaptions = this.pitchVideo.locator('track[kind="captions"]');
+    this.emailField = page.getByLabel('Email');
+    this.messageField = page.getByLabel('What are you working on?');
     this.honeypot = page.locator('input[name="website"]');
-    this.sendButton = page.getByRole("button", { name: "Send request" });
-    this.tryAgainButton = page.getByRole("button", { name: "Try again" });
-    this.sendingButton = page.getByRole("button", { name: "Sending…" });
+    this.sendButton = page.getByRole('button', { name: 'Send request' });
+    this.tryAgainButton = page.getByRole('button', { name: 'Try again' });
+    this.sendingButton = page.getByRole('button', { name: 'Sending…' });
     this.errorSummary = page
-      .getByRole("alert")
-      .filter({ hasText: "to fix before we can send this" });
+      .getByRole('alert')
+      .filter({ hasText: 'to fix before we can send this' });
     this.failureAlert = page
-      .getByRole("alert")
+      .getByRole('alert')
       .filter({ hasText: "We couldn't send your request" });
-    this.confirmation = page
-      .getByRole("status")
-      .filter({ hasText: "Request sent." });
-    this.sendAnother = page.getByRole("button", {
-      name: "Send another request",
+    this.confirmation = page.getByRole('status').filter({ hasText: 'Request sent.' });
+    this.sendAnother = page.getByRole('button', {
+      name: 'Send another request',
     });
-    this.replyHint = page.getByText("We reply within two business days.");
+    this.replyHint = page.getByText('We reply within two business days.');
   }
 
   async goto(): Promise<void> {
-    await this.page.goto("/");
+    await this.page.goto('/');
     await expect(this.heading).toBeVisible();
   }
 
@@ -65,15 +67,13 @@ export class HomePage {
 
   async fillValid(): Promise<void> {
     await this.fill(
-      "ruth.okonkwo@hopehouse.org",
-      "We run a transitional housing program and need a case management app.",
+      'ruth.okonkwo@hopehouse.org',
+      'We run a transitional housing program and need a case management app.',
     );
   }
 
   async submit(): Promise<void> {
-    await this.page
-      .getByRole("button", { name: /Send request|Try again/ })
-      .click();
+    await this.page.getByRole('button', { name: /Send request|Try again/ }).click();
   }
 
   /** The message shown beside a field (not the matching link in the error summary). */
@@ -82,12 +82,12 @@ export class HomePage {
   }
 
   async focusedElementId(): Promise<string> {
-    return this.page.evaluate(() => document.activeElement?.id ?? "");
+    return this.page.evaluate(() => document.activeElement?.id ?? '');
   }
 
   async focusedElementText(): Promise<string> {
     return this.page.evaluate(
-      () => (document.activeElement as HTMLElement | null)?.innerText ?? "",
+      () => (document.activeElement as HTMLElement | null)?.innerText ?? '',
     );
   }
 }

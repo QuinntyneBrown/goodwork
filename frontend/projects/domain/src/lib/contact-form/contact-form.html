@@ -1,9 +1,6 @@
 <section gwCard class="contact" id="contact" aria-labelledby="contact-title">
   <div class="section-head">
     <h2 id="contact-title">Tell us about your project</h2>
-    <p class="muted">
-      No long forms. Leave an email and a few lines, and a person will write back.
-    </p>
   </div>
 
   @if (phase() === 'sent') {
@@ -61,7 +58,7 @@
       [multiline]="true"
       [required]="true"
       [readonly]="sending()"
-      help="A sentence or two is plenty. Who you serve, what you need, and roughly when."
+      help="Who you serve and what you need."
       [error]="errors().message?.detail ?? null"
       [value]="message()"
       (valueChange)="setMessage($event)"

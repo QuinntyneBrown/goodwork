@@ -2,5 +2,5 @@
 export const STUDIO = {
   name: 'Goodwork',
   location: 'Hamilton, Ontario',
-  email: 'hello@goodwork.dev',
+  email: 'hello@goodwork.rocks',
 } as const;

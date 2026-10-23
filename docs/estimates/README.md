@@ -1,11 +1,11 @@
 # Estimates
 
-- Overall effort: 13 days
+- Overall effort: 14 days
 - Complete: 100%
 
 | Subsystem | Effort | Complete |
 |---|---|---|
-| [site](site.md) | 4 days | 100% |
+| [site](site.md) | 5 days | 100% |
 | [contact](contact.md) | 9 days | 100% |
 
 ## Roadmap

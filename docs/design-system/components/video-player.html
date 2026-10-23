@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video player — Goodwork design system</title>
+<meta name="description" content="Native video with a poster, controls and captions. Never autoplays.">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../assets/components.css">
+<link rel="stylesheet" href="../assets/ds.css">
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="ds-shell">
+  <nav class="ds-nav" aria-label="Design system">
+    <div class="ds-nav__brand"><a href="../index.html">Goodwork DS</a><button class="ds-theme-toggle" type="button" aria-pressed="false">☾ Dark</button></div>
+    <details open><summary>Foundations</summary><ul>
+      <li><a href="../foundations/color.html">Color</a></li>
+      <li><a href="../foundations/typography.html">Typography</a></li>
+      <li><a href="../foundations/spacing.html">Spacing</a></li>
+      <li><a href="../foundations/layout.html">Layout</a></li>
+      <li><a href="../foundations/elevation.html">Elevation</a></li>
+      <li><a href="../foundations/shape.html">Shape</a></li>
+      <li><a href="../foundations/motion.html">Motion</a></li>
+      <li><a href="../foundations/iconography.html">Iconography</a></li>
+      <li><a href="../foundations/theming.html">Theming</a></li>
+      <li><a href="../foundations/responsive.html">Responsive</a></li>
+      <li><a href="../foundations/accessibility.html">Accessibility</a></li>
+      <li><a href="../foundations/content.html">Content</a></li>
+    </ul></details>
+    <details open><summary>Components</summary><ul>
+      <li><a href="../components/button.html">Button</a></li>
+      <li><a href="../components/link.html">Link</a></li>
+      <li><a href="../components/menu.html">Menu</a></li>
+      <li><a href="../components/text-field.html">Text field</a></li>
+      <li><a href="../components/textarea.html">Textarea</a></li>
+      <li><a href="../components/select.html">Select</a></li>
+      <li><a href="../components/checkbox.html">Checkbox</a></li>
+      <li><a href="../components/radio-group.html">Radio group</a></li>
+      <li><a href="../components/switch.html">Switch</a></li>
+      <li><a href="../components/form-field.html">Form field</a></li>
+      <li><a href="../components/form-layout.html">Form layout</a></li>
+      <li><a href="../components/top-bar.html">Top bar</a></li>
+      <li><a href="../components/sidebar-navigation.html">Sidebar navigation</a></li>
+      <li><a href="../components/tabs.html">Tabs</a></li>
+      <li><a href="../components/breadcrumb.html">Breadcrumb</a></li>
+      <li><a href="../components/pagination.html">Pagination</a></li>
+      <li><a href="../components/skip-link.html">Skip link</a></li>
+      <li><a href="../components/footer.html">Footer</a></li>
+      <li><a href="../components/card.html">Card</a></li>
+      <li><a href="../components/dialog.html">Dialog</a></li>
+      <li><a href="../components/tooltip.html">Tooltip</a></li>
+      <li><a href="../components/divider.html">Divider</a></li>
+      <li><a href="../components/layout-primitives.html">Container, grid and stack</a></li>
+      <li><a href="../components/table.html">Table</a></li>
+      <li><a href="../components/list.html">List</a></li>
+      <li><a href="../components/description-list.html">Description list</a></li>
+      <li><a href="../components/avatar.html">Avatar</a></li>
+      <li><a href="../components/badge.html">Badge</a></li>
+      <li><a href="../components/chip.html">Chip</a></li>
+      <li><a href="../components/toast.html">Toast</a></li>
+      <li><a href="../components/alert.html">Alert</a></li>
+      <li><a href="../components/inline-message.html">Inline message</a></li>
+      <li><a href="../components/progress-bar.html">Progress bar</a></li>
+      <li><a href="../components/spinner.html">Spinner</a></li>
+      <li><a href="../components/skeleton.html">Skeleton</a></li>
+      <li><a href="../components/empty-state.html">Empty state</a></li>
+      <li><a href="../components/error-page.html">Error page</a></li>
+      <li><a href="../components/brand-lockup.html">Brand lockup</a></li>
+      <li><a href="../components/hero.html">Hero</a></li>
+      <li><a href="../components/service-card.html">Service card</a></li>
+      <li><a href="../components/video-player.html">Video player</a></li>
+    </ul></details>
+    <details open><summary>Patterns</summary><ul>
+      <li><a href="../patterns/forms.html">Forms</a></li>
+      <li><a href="../patterns/feedback-and-loading.html">Feedback &amp; loading</a></li>
+      <li><a href="../patterns/empty-and-error-states.html">Empty &amp; error states</a></li>
+      <li><a href="../patterns/navigation-and-page-structure.html">Navigation &amp; page structure</a></li>
+      <li><a href="../patterns/dialogs-and-overlays.html">Dialogs &amp; overlays</a></li>
+      <li><a href="../patterns/data-tables-and-lists.html">Data tables &amp; lists</a></li>
+      <li><a href="../patterns/notifications.html">Notifications</a></li>
+      <li><a href="../patterns/content-and-tone.html">Content &amp; tone</a></li>
+    </ul></details>
+  </nav>
+  <main id="main" class="ds-main">
+    <header class="ds-header">
+      <p class="ds-kicker">Component · Brand</p>
+      <h1>Video player</h1>
+      <p class="ds-lead">The browser's own player in a 16:9 frame: a poster until pressed, captions on, never autoplay.</p>
+      <div class="ds-meta"><span class="ds-pill ds-pill--ok">WCAG 2.2 AA</span><span class="ds-pill">Status: stable</span><span class="ds-pill">Marketing</span></div>
+      <ul class="ds-toc"><li><a href="#overview">Overview</a></li><li><a href="#anatomy">Anatomy</a></li><li><a href="#variants">Variants</a></li><li><a href="#sizes">Sizes</a></li><li><a href="#states">States</a></li><li><a href="#responsive">Responsive</a></li><li><a href="#theming">Theming</a></li><li><a href="#accessibility">Accessibility</a></li><li><a href="#content">Content</a></li><li><a href="#do-dont">Do and don't</a></li><li><a href="#tokens">Tokens</a></li><li><a href="#code">Code</a></li><li><a href="#sources">Sources</a></li></ul>
+    </header>
+    <section class="ds-section" id="overview"><h2><a href="#overview">Overview</a></h2>
+<p>Used once, beside the hero, for the twenty-second pitch. It is the native <code>&lt;video&gt;</code> element: no custom chrome, so every browser's keyboard, caption and full-screen behaviour comes for free.</p>
+    </section>
+    <section class="ds-section" id="anatomy"><h2><a href="#anatomy">Anatomy</a></h2>
+      <div class="ds-anatomy"><figure class="ds-anatomy__figure"><div style="width: 100%; max-width: 28rem;"><figure class="video"><video class="video__media" controls preload="metadata" playsinline poster="../../videos/01-pitch/01-pitch-poster.jpg" aria-label="Goodwork pitch"><source src="../../videos/01-pitch/01-pitch.mp4" type="video/mp4"><track kind="captions" src="../../videos/01-pitch/01-pitch.vtt" srclang="en" label="English"></video></figure></div><span class="ds-callout" style="left: 5%; top: 8%;" aria-hidden="true">1</span><span class="ds-callout" style="left: 45%; top: 45%;" aria-hidden="true">2</span><span class="ds-callout" style="left: 5%; top: 85%;" aria-hidden="true">3</span></figure><ol class="ds-anatomy__list"><li><div><b>Frame</b><small>16:9, <code>--radius-lg</code>, subtle background while the poster loads.</small></div></li><li><div><b>Poster</b><small>The video's title slide, 960×540.</small></div></li><li><div><b>Native controls</b><small>Play, scrub, volume, captions, full screen.</small></div></li></ol></div>
+    </section>
+    <section class="ds-section" id="variants"><h2><a href="#variants">Variants</a></h2>
+      <div class="ds-example"><div class="ds-example__canvas ds-example__canvas--stack"><div style="max-width: 32rem;"><figure class="video"><video class="video__media" controls preload="metadata" playsinline poster="../../videos/01-pitch/01-pitch-poster.jpg" aria-label="Goodwork pitch"><source src="../../videos/01-pitch/01-pitch.mp4" type="video/mp4"><track kind="captions" src="../../videos/01-pitch/01-pitch.vtt" srclang="en" label="English"></video></figure></div></div><div class="ds-example__caption"><span>Default: poster shown, paused.</span></div><details class="ds-example__code"><summary>HTML</summary><pre><code>&lt;figure class=&quot;video&quot;&gt;&lt;video class=&quot;video__media&quot; controls preload=&quot;metadata&quot; playsinline poster=&quot;../../videos/01-pitch/01-pitch-poster.jpg&quot; aria-label=&quot;Goodwork pitch&quot;&gt;&lt;source src=&quot;../../videos/01-pitch/01-pitch.mp4&quot; type=&quot;video/mp4&quot;&gt;&lt;track kind=&quot;captions&quot; src=&quot;../../videos/01-pitch/01-pitch.vtt&quot; srclang=&quot;en&quot; label=&quot;English&quot;&gt;&lt;/video&gt;&lt;/figure&gt;</code></pre></details></div>
+    </section>
+    <section class="ds-section" id="sizes"><h2><a href="#sizes">Sizes</a></h2>
+      <p>One size: the frame fills its container's width and keeps 16:9.</p>
+    </section>
+    <section class="ds-section" id="states"><h2><a href="#states">States</a></h2>
+      <ul><li><b>Paused</b> (default): poster and controls.</li><li><b>Playing</b>: captions burned in and the VTT track on.</li><li><b>Focus</b>: the page focus ring around the frame.</li><li><b>Ended</b>: the browser shows replay.</li></ul>
+      <div class="ds-themes"><div data-theme="light"><div class="ds-example__canvas ds-example__canvas--stack" style="padding: 0;"><figure class="video"><video class="video__media" controls preload="metadata" playsinline poster="../../videos/01-pitch/01-pitch-poster.jpg" aria-label="Goodwork pitch"><source src="../../videos/01-pitch/01-pitch.mp4" type="video/mp4"><track kind="captions" src="../../videos/01-pitch/01-pitch.vtt" srclang="en" label="English"></video></figure></div></div><div data-theme="dark"><div class="ds-example__canvas ds-example__canvas--stack" style="padding: 0;"><figure class="video"><video class="video__media" controls preload="metadata" playsinline poster="../../videos/01-pitch/01-pitch-poster.jpg" aria-label="Goodwork pitch"><source src="../../videos/01-pitch/01-pitch.mp4" type="video/mp4"><track kind="captions" src="../../videos/01-pitch/01-pitch.vtt" srclang="en" label="English" default></video></figure></div></div></div>
+    </section>
+    <section class="ds-section" id="responsive"><h2><a href="#responsive">Responsive behaviour</a></h2>
+      <ul><li>Below 1024px: full content width between the services and the contact form.</li><li>1024px and wider: the right column, top-aligned beside the hero copy, above the contact form (<code>.brochure__video</code>).</li></ul>
+    </section>
+    <section class="ds-section" id="theming"><h2><a href="#theming">Theming</a></h2>
+<p>Frame background and border follow <code>--color-bg-subtle</code> and <code>--color-border-default</code>; the poster itself is light in both themes.</p>
+    </section>
+    <section class="ds-section" id="accessibility"><h2><a href="#accessibility">Accessibility</a></h2>
+      <h3>Role and pattern</h3><p>Native <code>&lt;video controls&gt;</code> with an <code>aria-label</code>. No autoplay (WCAG 1.4.2, 2.2.2); captions track (1.2.2); the narration speaks every word on screen, so no separate audio description is needed (1.2.5).</p>
+      <h3>Keyboard</h3>
+      <div class="ds-table-wrap"><table class="ds-table ds-keys"><thead><tr><th scope="col">Key</th><th scope="col">Action</th></tr></thead><tbody><tr><td>Tab</td><td>Reaches the player, then its controls.</td></tr><tr><td>Space / Enter</td><td>Play or pause.</td></tr><tr><td>Arrows</td><td>Seek and volume, per browser.</td></tr></tbody></table></div>
+      <h3>Focus</h3><p>Page focus ring on the frame.</p>
+      <h3>Labelling</h3><p><code>aria-label="Goodwork pitch"</code> on the element; the track is labelled "English".</p>
+      <h3>Contrast</h3><p>Burned-in captions are white on a dark grey plate; the native controls are the browser's.</p>
+      <h3>Motion</h3><p>None until play is pressed, under any motion preference.</p>
+      <h3>Touch</h3><p><code>playsinline</code> keeps playback in the page on phones; native targets.</p>
+    </section>
+    <section class="ds-section" id="content"><h2><a href="#content">Content</a></h2>
+      <ul><li>The script lives in <code>docs/videos/01-pitch/script.md</code> and repeats page copy, never new claims.</li><li>Keep the clip under thirty seconds.</li></ul>
+    </section>
+    <section class="ds-section" id="do-dont"><h2><a href="#do-dont">Do and don't</a></h2>
+      <div class="ds-dodont"><figure class="ds-do"><div class="ds-example__canvas"><code>&lt;video controls preload="metadata" poster="…"&gt;</code></div><figcaption>Poster, controls, metadata only.</figcaption></figure><figure class="ds-dont"><div class="ds-example__canvas"><code>&lt;video autoplay muted loop&gt;</code></div><figcaption>Autoplay moves the page and costs the visitor data.</figcaption></figure></div>
+    </section>
+    <section class="ds-section" id="tokens"><h2><a href="#tokens">Tokens</a></h2>
+      <div class="ds-table-wrap"><table class="ds-table"><thead><tr><th scope="col">Part</th><th scope="col">Token</th><th scope="col">Light</th><th scope="col">Dark</th></tr></thead><tbody><tr><td>Frame background</td><td><code>--color-bg-subtle</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-bg-subtle" data-swatch></i><span data-token="--color-bg-subtle"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-bg-subtle" data-swatch></i><span data-token="--color-bg-subtle"></span></span></td></tr><tr><td>Frame border</td><td><code>--color-border-default</code></td><td><span class="ds-swatch-cell" data-theme="light"><i data-token="--color-border-default" data-swatch></i><span data-token="--color-border-default"></span></span></td><td><span class="ds-swatch-cell" data-theme="dark"><i data-token="--color-border-default" data-swatch></i><span data-token="--color-border-default"></span></span></td></tr><tr><td>Radius</td><td><code>--radius-lg</code></td><td colspan="2"><span data-token="--radius-lg"></span></td></tr></tbody></table></div>
+    </section>
+    <section class="ds-section" id="code"><h2><a href="#code">Code</a></h2>
+      <pre><code>&lt;figure class=&quot;video&quot;&gt;&lt;video class=&quot;video__media&quot; controls preload=&quot;metadata&quot; playsinline poster=&quot;../../videos/01-pitch/01-pitch-poster.jpg&quot; aria-label=&quot;Goodwork pitch&quot;&gt;&lt;source src=&quot;../../videos/01-pitch/01-pitch.mp4&quot; type=&quot;video/mp4&quot;&gt;&lt;track kind=&quot;captions&quot; src=&quot;../../videos/01-pitch/01-pitch.vtt&quot; srclang=&quot;en&quot; label=&quot;English&quot;&gt;&lt;/video&gt;&lt;/figure&gt;</code></pre>
+      <div class="ds-table-wrap"><table class="ds-table"><thead><tr><th scope="col">Class / attribute</th><th scope="col">Effect</th></tr></thead><tbody><tr><td><code>.video</code></td><td>Figure wrapper.</td></tr><tr><td><code>.video__media</code></td><td>16:9 frame, radius, focus ring.</td></tr><tr><td><code>.brochure__video</code></td><td>Right-column, first-row placement on the brochure.</td></tr></tbody></table></div>
+    </section>
+    <section class="ds-section" id="sources"><h2><a href="#sources">Sources</a></h2>
+      <p>Extracted from these mocks:</p>
+      <ul><li><a href="../../mocks/pages/home/default.html">pages/home/default</a></li></ul>
+      <p>Drift fixed during extraction: the first render used the 48px display size on phones, wrapping the headline to five lines at 360px. Now h1 size below 768px.</p>
+    </section>
+
+    <footer class="ds-footer"><span>Goodwork design system · extracted from <a href="../../mocks/index.html">docs/mocks</a> on 2026-10-23</span><a href="#top">Back to top</a></footer>
+  </main>
+</div>
+<script src="../assets/ds.js"></script>
+</body>
+</html>

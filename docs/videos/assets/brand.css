@@ -1,0 +1,118 @@
+/* Brand decks (the pitch video, 01-pitch): loaded after slides.css. No header strip or
+   progress bar; the slides use the Goodwork palette from docs/design-system/tokens/tokens.css
+   (Evergreen Ink, Linen, Cornerstone Gold) and the Cornerstone mark. */
+
+:root {
+  --ink: #1e2d2a; /* --palette-ink */
+  --ink-2: #33514b; /* --palette-ink-600 */
+  --page: #f5f0e6; /* --palette-cream */
+  --card: #ffffff;
+  --well: #ede6d6; /* --palette-linen-200 */
+  --coral: #b9822a; /* --palette-gold */
+  --coral-ink: #8a5f1b;
+  --coral-soft: #ede6d6;
+  --sun-soft: #e3dccd; /* --palette-linen-300 */
+  --stroke: rgba(30, 45, 42, 0.16);
+  --code-bg: #1e2d2a;
+  --code-ink: #f5f0e6;
+  --serif: 'Source Serif 4', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+}
+
+.chrome,
+.progress {
+  display: none;
+}
+
+em {
+  font-style: normal;
+  color: var(--coral-ink);
+}
+
+body > section {
+  align-items: center;
+  text-align: center;
+}
+
+body > section#title,
+body > section#outro {
+  padding: 120px 140px 210px;
+}
+
+h1,
+h2,
+.display {
+  font-family: var(--serif);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 64px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* The Cornerstone mark: three ink blocks and one gold block (docs/detailed-designs/logo.svg). */
+.brand-mark {
+  width: 88px;
+  height: 88px;
+  flex: none;
+  background: no-repeat center / contain
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect fill='%231E2D2A' x='4' y='4' width='17' height='12' rx='2.5'/%3E%3Crect fill='%231E2D2A' x='27' y='4' width='17' height='12' rx='2.5'/%3E%3Crect fill='%23B9822A' x='4' y='22' width='17' height='22' rx='2.5'/%3E%3Crect fill='%231E2D2A' x='27' y='22' width='17' height='22' rx='2.5'/%3E%3C/svg%3E");
+}
+
+.brand-mark.large {
+  width: 220px;
+  height: 220px;
+}
+
+.eyebrow {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--coral-ink);
+}
+
+.display {
+  font-size: 112px;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  max-width: 1500px;
+  text-wrap: balance;
+}
+
+.lead {
+  max-width: 1300px;
+  font-size: 44px;
+  color: var(--ink-2);
+}
+
+.url {
+  font-size: 44px;
+  font-weight: 600;
+  color: var(--coral-ink);
+}
+
+/* Centred bullet list for the "why it costs less" slide. */
+.points {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 28px;
+  font-size: 48px;
+}
+
+.points li::before {
+  content: '';
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin-right: 24px;
+  border-radius: 6px;
+  background: var(--coral);
+  vertical-align: middle;
+}

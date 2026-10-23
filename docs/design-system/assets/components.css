@@ -416,6 +416,11 @@ legend { font: var(--text-label); padding: 0; margin-bottom: var(--space-2); }
 .service .icon { width: 1.5rem; height: 1.5rem; color: var(--color-fg-gold); }
 .service__title { font: var(--text-h4); }
 .service__body { font: var(--text-body-sm); color: var(--color-fg-muted); text-wrap: pretty; }
+/* Video player: native <video> in a 16:9 figure. Never autoplay. */
+.video { margin: 0; display: grid; gap: var(--space-2); }
+.video__media { width: 100%; aspect-ratio: 16 / 9; border-radius: var(--radius-lg); background: var(--color-bg-subtle); border: 1px solid var(--color-border-default); object-fit: cover; }
+.video__media:focus-visible { outline: var(--focus-ring-width) solid var(--color-focus-ring); outline-offset: var(--focus-ring-offset); }
+.video__caption { font: var(--text-body-sm); color: var(--color-fg-muted); }
 .contact { display: grid; gap: var(--space-6); }
 .contact__form { display: grid; gap: var(--space-4); }
 .contact__form .form-actions { justify-content: flex-start; padding-top: var(--space-1); align-items: center; gap: var(--space-4); }
@@ -430,5 +435,8 @@ legend { font: var(--text-label); padding: 0; margin-bottom: var(--space-2); }
 }
 @media (min-width: 64rem) {
   .brochure { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); column-gap: var(--space-16); row-gap: var(--space-10); padding-block: var(--space-12) var(--space-10); align-items: start; }
+  .brochure__left { grid-row: 1 / span 2; }
+  .brochure__video { grid-column: 2; grid-row: 1; }
+  .brochure .contact { grid-column: 2; grid-row: 2; }
   .contact { grid-template-columns: 1fr; gap: var(--space-5); }
 }

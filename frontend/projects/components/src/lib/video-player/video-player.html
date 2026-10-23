@@ -1,0 +1,15 @@
+<figure class="video">
+  <video
+    class="media"
+    controls
+    preload="metadata"
+    playsinline
+    [poster]="poster()"
+    [attr.aria-label]="label()"
+  >
+    <source [src]="src()" type="video/mp4" />
+    @if (captionsSrc(); as captions) {
+    <track kind="captions" [src]="captions" srclang="en" label="English" />
+    }
+  </video>
+</figure>

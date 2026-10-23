@@ -19,3 +19,7 @@ frontend/.cache/
 e2e/test-results/
 e2e/playwright-report/
 backend/src/Goodwork.Api/wwwroot/
+e2e/.demo-run/
+
+# Video builds
+.cache/

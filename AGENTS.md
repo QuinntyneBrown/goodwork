@@ -18,6 +18,8 @@ reposiotyry is a full stack responsive web app. .NET on backend and Angular on f
 - Use Microsoft.Extensions libraries and patterns: dependency injection, Options,
   and Configuration.
 - Use Angular for the web client.
+- Narrated videos (`docs/videos/`) are generated from text files with the
+  `creating-narrated-videos` skill; never hand-edit the MP3 or MP4.
 
 ## Architecture and Design
 
@@ -171,6 +173,13 @@ manufacture a pass.
 - Keep the fake in step with the API: when an endpoint, DTO or permission rule
   changes, update the fake in the same change.
 
+### Demo video
+
+`e2e/demo/` records the narrated demo of every user journey (`docs/demo/`). It is not part of the
+acceptance run: it builds the app, starts the real API with a disposable database, and records one
+continuous take. Run it with `node demo/synthesize.mjs && node demo/record.mjs && node demo/assemble.mjs`
+from `e2e/`. Re-record whenever a journey on screen changes.
+
 ### Never write architecture tests
 
 Never add a test that asserts the shape of the codebase rather than its behavior:
@@ -210,14 +219,20 @@ goodwork/
 |       |-- api/                                 # Service contracts, tokens and HTTP implementations
 |       |-- components/                          # Presentational design-system components and tokens
 |       `-- domain/                              # Components that inject an api contract
+|-- tools/                                       # Build-time scripts, not shipped
+|   |-- video-audio/                             # script.md -> MP3 + timing manifest (edge-tts)
+|   `-- video-build/                             # slides.html + manifest -> captioned MP4
 |-- e2e/                                         # Playwright suite (Chromium only)
 |   |-- fixtures/                                # Fake backend, test fixtures, static server for the build
 |   |-- page-objects/                            # One page object per screen
-|   `-- specs/                                   # Specs, including axe accessibility checks
+|   |-- specs/                                   # Specs, including axe accessibility checks
+|   `-- demo/                                    # Demo-video harness: narration, recording, assembly
 `-- docs/
     |-- specs/                                   # L1 and L2 requirements
     |-- detailed-designs/                        # Per-subsystem and feature designs and diagrams
     |-- mocks/                                   # Static HTML mocks: the design reference
     |-- design-system/                           # Tokens, components and patterns taken from the mocks
+    |-- demo/                                    # Narrated demo video, poster, narration text
+    |-- videos/                                  # Narrated videos: assets/ plus one NN-topic/ folder each
     `-- estimates/                               # Effort and percent complete per design
 ```

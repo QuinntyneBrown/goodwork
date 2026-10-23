@@ -41,4 +41,15 @@ gw-contact-form {
     padding-block: var(--space-12) var(--space-10);
     align-items: start;
   }
+  .left {
+    grid-row: 1 / span 2;
+  }
+  .video {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  gw-contact-form {
+    grid-column: 2;
+    grid-row: 2;
+  }
 }

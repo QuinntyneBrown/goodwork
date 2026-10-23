@@ -3,20 +3,18 @@
 // Description: Every state of the page passes axe (WCAG 2.2 AA) in both colour schemes, is fully
 // operable by keyboard with visible focus, announces its messages, and has a sound heading outline.
 
-import AxeBuilder from "@axe-core/playwright";
-import type { Page } from "@playwright/test";
-import { expect, test } from "../fixtures/test";
-import type { HomePage } from "../page-objects/home-page";
-import type { FakeApi } from "../fixtures/fake-api";
+import AxeBuilder from '@axe-core/playwright';
+import type { Page } from '@playwright/test';
+import { expect, test } from '../fixtures/test';
+import type { HomePage } from '../page-objects/home-page';
+import type { FakeApi } from '../fixtures/fake-api';
 
-const WCAG = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
+const WCAG = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 
 async function expectNoViolations(page: Page): Promise<void> {
   const results = await new AxeBuilder({ page }).withTags(WCAG).analyze();
   expect(
-    results.violations.map(
-      (v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(" | ")}`,
-    ),
+    results.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(' | ')}`),
   ).toEqual([]);
 }
 
@@ -24,26 +22,26 @@ const STATES: {
   name: string;
   arrange: (home: HomePage, api: FakeApi) => Promise<void>;
 }[] = [
-  { name: "default", arrange: async () => undefined },
+  { name: 'default', arrange: async () => undefined },
   {
-    name: "invalid",
+    name: 'invalid',
     arrange: async (home) => {
-      await home.fill("ruth@", "");
+      await home.fill('ruth@', '');
       await home.submit();
       await expect(home.errorSummary).toBeVisible();
     },
   },
   {
-    name: "sending",
+    name: 'sending',
     arrange: async (home, api) => {
-      api.behavior = { kind: "never-responds" };
+      api.behavior = { kind: 'never-responds' };
       await home.fillValid();
       await home.submit();
       await expect(home.sendingButton).toBeVisible();
     },
   },
   {
-    name: "sent",
+    name: 'sent',
     arrange: async (home) => {
       await home.fillValid();
       await home.submit();
@@ -51,9 +49,9 @@ const STATES: {
     },
   },
   {
-    name: "error",
+    name: 'error',
     arrange: async (home, api) => {
-      api.behavior = { kind: "server-error" };
+      api.behavior = { kind: 'server-error' };
       await home.fillValid();
       await home.submit();
       await expect(home.failureAlert).toBeVisible();
@@ -61,7 +59,7 @@ const STATES: {
   },
 ];
 
-for (const scheme of ["light", "dark"] as const) {
+for (const scheme of ['light', 'dark'] as const) {
   test.describe(`axe in the ${scheme} scheme`, () => {
     test.use({ colorScheme: scheme });
 
@@ -76,42 +74,45 @@ for (const scheme of ["light", "dark"] as const) {
   });
 }
 
-test.describe("Keyboard and structure", () => {
-  test("tab order follows the visual order and every stop shows a focus indicator", async ({
+test.describe('Keyboard and structure', () => {
+  test('tab order follows the visual order and every stop shows a focus indicator', async ({
     home,
   }) => {
     await home.goto();
+    // The native video player keeps focus on the <video> while Tab walks its own
+    // controls, so repeated stops on the same element count once.
     const stops: string[] = [];
-    for (let i = 0; i < 7; i++) {
-      await home.page.keyboard.press("Tab");
-      stops.push(
-        await home.page.evaluate(() => {
-          const el = document.activeElement as HTMLElement;
-          const outline = getComputedStyle(el).outlineStyle;
-          return `${el.getAttribute("aria-label") ?? el.innerText ?? el.id}|${outline}`;
-        }),
-      );
+    for (let i = 0; i < 20 && !stops.at(-1)?.startsWith('hello@'); i++) {
+      await home.page.keyboard.press('Tab');
+      const stop = await home.page.evaluate(() => {
+        const el = document.activeElement as HTMLElement;
+        const w = window as unknown as { lastStop?: Element };
+        if (w.lastStop === el) return null;
+        w.lastStop = el;
+        const outline = getComputedStyle(el).outlineStyle;
+        return `${el.getAttribute('aria-label') ?? el.innerText ?? el.id}|${outline}`;
+      });
+      if (stop !== null) stops.push(stop);
     }
 
-    expect(stops.map((s) => s.split("|")[0]?.trim())).toEqual([
-      "Skip to content",
-      "Goodwork, home",
-      "Start a project",
-      "",
-      "",
-      "Send request",
-      "hello@goodwork.dev",
+    expect(stops.map((s) => s.split('|')[0]?.trim())).toEqual([
+      'Skip to content',
+      'Goodwork, home',
+      'Start a project',
+      'Goodwork pitch',
+      '',
+      '',
+      'Send request',
+      'hello@goodwork.rocks',
     ]);
-    for (const stop of stops) expect(stop.split("|")[1]).not.toBe("none");
+    for (const stop of stops) expect(stop.split('|')[1]).not.toBe('none');
   });
 
-  test("has exactly one h1 and no skipped heading levels", async ({ home }) => {
+  test('has exactly one h1 and no skipped heading levels', async ({ home }) => {
     await home.goto();
 
     const levels = await home.page.evaluate(() =>
-      [...document.querySelectorAll("h1,h2,h3,h4,h5,h6")].map((h) =>
-        Number(h.tagName[1]),
-      ),
+      [...document.querySelectorAll('h1,h2,h3,h4,h5,h6')].map((h) => Number(h.tagName[1])),
     );
 
     expect(levels.filter((l) => l === 1)).toHaveLength(1);
@@ -120,27 +121,21 @@ test.describe("Keyboard and structure", () => {
     });
   });
 
-  test("messages are announced: the summary and failure alert are alerts, the confirmation a status", async ({
+  test('messages are announced: the summary and failure alert are alerts, the confirmation a status', async ({
     home,
     api,
   }) => {
     await home.goto();
     await home.submit();
-    await expect(home.page.getByRole("alert")).toContainText(
-      "to fix before we can send this",
-    );
+    await expect(home.page.getByRole('alert')).toContainText('to fix before we can send this');
 
-    api.behavior = { kind: "server-error" };
+    api.behavior = { kind: 'server-error' };
     await home.fillValid();
     await home.submit();
-    await expect(home.page.getByRole("alert")).toContainText(
-      "We couldn't send your request",
-    );
+    await expect(home.page.getByRole('alert')).toContainText("We couldn't send your request");
 
-    api.behavior = { kind: "accept" };
+    api.behavior = { kind: 'accept' };
     await home.tryAgainButton.click();
-    await expect(
-      home.page.getByRole("status").filter({ hasText: "Request sent." }),
-    ).toBeVisible();
+    await expect(home.page.getByRole('status').filter({ hasText: 'Request sent.' })).toBeVisible();
   });
 });

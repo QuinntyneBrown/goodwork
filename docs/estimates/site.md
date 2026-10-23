@@ -2,4 +2,4 @@
 
 | Design | Effort | Complete |
 |---|---|---|
-| view-home-page | 4 days | 100% |
+| view-home-page | 5 days | 100% |

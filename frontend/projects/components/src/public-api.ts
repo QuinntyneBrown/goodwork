@@ -9,3 +9,4 @@ export * from './lib/site-footer/site-footer';
 export * from './lib/site-header/site-header';
 export * from './lib/skip-link/skip-link';
 export * from './lib/text-field/text-field';
+export * from './lib/video-player/video-player';

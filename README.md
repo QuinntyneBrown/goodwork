@@ -120,7 +120,7 @@ environment variables (use `__` for nesting, for example `Smtp__Host`).
 | `Workers__Enabled` | `false` switches off the delivery and retention jobs |
 
 The studio location and contact email shown on the page (`Hamilton, Ontario`,
-`hello@goodwork.dev`) are placeholders from the mocks. They live in
+`hello@goodwork.rocks`) are placeholders from the mocks. They live in
 `frontend/projects/goodwork/src/app/studio.ts`.
 
 ### Run the API

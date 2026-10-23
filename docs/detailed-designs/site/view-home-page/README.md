@@ -24,6 +24,7 @@ The slice runs from the ASP.NET Core host that serves the built Angular app to t
 - **`BrandLockup`** — presentational component in `components`. It renders the Cornerstone logo and the studio name as a link to `/`.
 - **`SiteHeader`** — presentational component in the `components` library. It renders the `BrandLockup` and the "Start a project" link as a `Button`, and emits `ctaActivated`.
 - **`Hero`** — presentational component in `components`. It renders the eyebrow, the single `h1`, the description paragraph and the notes passed in as `HeroNote` values (an optional bold lead-in plus text).
+- **`VideoPlayer`** — presentational component in `components`. It renders a native `<video>` with controls, a poster, `preload="metadata"`, no autoplay and a captions `<track>`, inside a `<figure>` labelled by the `label` input. `HomePage` places it in the right column above the contact form at 1024px and wider, so it sits beside the hero copy without lengthening the left column; below that width it spans the content between the services and the contact form. The MP4, VTT and poster are static files in the app's `public/` folder, copied from `docs/videos/01-pitch/`.
 - **`ServiceCard`** — presentational component in `components`. It renders one service title, body and icon on a `Card`.
 - **`SiteFooter`** — presentational component in `components`. It renders the copyright year, the location and the studio email as a `mailto:` link.
 - **`ContactForm`** — component in the `domain` library, described in `contact/submit-contact-request`.
@@ -42,6 +43,7 @@ The feature realizes the following level-2 (L2) requirements. Each L2 requiremen
 | L2 ID | Refines (L1) | Requirement |
 |-------|--------------|-------------|
 | `L2-001` | `L1-001` | The page at `/` shall render, without signing in, the header, hero, two service cards, contact section and footer, with copy matching the mock. |
+| `L2-017` | `L1-001` | A narrated pitch video with native controls, a poster and captions shall sit beside the hero copy, never autoplay, and keep the page within the 1100px rule. |
 | `L2-002` | `L1-001` | "Start a project" shall scroll to the contact form and focus the email field, and a "Skip to content" link shall be the first focus stop. |
 | `L2-011` | `L1-004` | The site shall enforce HTTPS with HSTS, send a Content-Security-Policy, `nosniff` and `Referrer-Policy` header on every response, and refuse cross-origin writes. |
 | `L2-012` | `L1-005` | The page shall lay out correctly from below 576px to 1200px and wider, with no horizontal scroll, and shall be no taller than 1100px at 1280×800. |
