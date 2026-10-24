@@ -2,7 +2,7 @@
 
 Tracks a deck can name with `<body data-music="../assets/music/<file>">`. The video builder lays
 the track under the narration, looped if it is shorter, at `data-music-db` (default −10.8 dB), with
-a fade in and out. Keep the provenance of every track here.
+a fade in, and holds the last slide 3 s after the narration so the music plays on and fades out. Keep the provenance of every track here.
 
 | File                               | Title and artist                               | Source                                                                                                                                      | License                                                                                                                   |
 | ---------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |

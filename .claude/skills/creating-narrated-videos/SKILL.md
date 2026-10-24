@@ -111,7 +111,7 @@ Rules:
 
 - **Every slide except the first has a `data-cue`**: a phrase copied *verbatim* from `script.md` (a heading or the start of a sentence), unique in the script, with cues in **narration order**. A slide appears when narration reaches its cue.
 - `data-part` indexes `data-parts` (header label and progress bar); parts line up with `##` sections.
-- Background music is opt-in: `<body data-music="../assets/music/<file>">` (optional `data-music-db`, default −10.8 dB). The builder loops the track under the narration with a fade in and out. Keep tracks in `assets/music/` with their source and license listed in its README; use only tracks free for commercial use.
+- Background music is opt-in: `<body data-music="../assets/music/<file>">` (optional `data-music-db`, default −10.8 dB). The builder loops the track under the narration with a fade in, holds the last slide 3 s after the narration and fades the music out there. Keep tracks in `assets/music/` with their source and license listed in its README; use only tracks free for commercial use.
 - Roughly one slide every 20-40 seconds. Cue changes inside a section are estimated from word counts (within a second or two); section boundaries are exact.
 - Slides support the narration, they don't transcribe it: a heading, 3-5 short bullets, a diagram, or a short code excerpt.
 - Code: `<pre class="code" data-lang="cs|ts|json|yaml|sql|sh|md|xml" data-mark="2,5">` (escape `<`, `>`, `&`); add `tight` for longer excerpts. Keep excerpts to ~16 lines, copied from the real file.

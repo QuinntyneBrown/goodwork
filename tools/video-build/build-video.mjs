@@ -12,7 +12,8 @@
 // runs longer, sped up evenly when it runs shorter. data-clip-delay="s" holds the first frame.
 //
 // <body data-music="../assets/music/x.mp3"> lays that track under the narration: looped if it
-// is shorter, at data-music-db (default -10.8 dB), faded in over 1.5 s and out over the last 2 s.
+// is shorter, at data-music-db (default -10.8 dB), faded in over 1.5 s. The last slide holds 3 s
+// after the narration so the music plays on and fades out over the last 2 s.
 //
 // Needs the manifest written by tools/video-audio (run it first), Chrome/Chromium (EDGE_PATH
 // or CHROME_PATH override; Playwright's bundled Chromium is found automatically) and ffmpeg
@@ -39,6 +40,7 @@ const MAX_SLIDE = 90;
 const MUSIC_DB = -10.8;
 const MUSIC_FADE_IN = 1.5;
 const MUSIC_FADE_OUT = 2;
+const MUSIC_TAIL = 3;
 
 function findBrowser() {
   const override = process.env.EDGE_PATH ?? process.env.CHROME_PATH;
@@ -417,10 +419,14 @@ function main() {
   writeAss(events, ass);
   writeSrt(events, join(cache, "captions.srt"));
 
+  // With music the last slide holds for a short tail after the narration, so the track can
+  // play on and fade out instead of being cut with the last word.
+  const tail = music ? MUSIC_TAIL : 0;
+  const total = manifest.duration + tail;
   const list = join(cache, "slides.txt");
-  const lines = slides.flatMap((s) => [
+  const lines = slides.flatMap((s, i) => [
     `file '${s.png}'`,
-    `duration ${(s.end - s.start).toFixed(3)}`,
+    `duration ${(s.end - s.start + (i === slides.length - 1 ? tail : 0)).toFixed(3)}`,
   ]);
   lines.push(`file '${slides.at(-1).png}'`); // concat demuxer: repeat the last frame
   writeFileSync(list, lines.join("\n"));
@@ -480,15 +486,17 @@ function main() {
   // Relative to cwd: an absolute Windows path (C:\…) breaks the filter's option parsing.
   const burn = !args.includes("--no-captions");
   graph.push(`[${last}]${burn ? `ass=${basename(ass)},` : ""}format=yuv420p[out]`);
-  // The music is the last input, looped so it outlasts the narration, and the mix keeps the
-  // narration's length (duration=first) so -shortest still ends the file with the speech.
+  // The music is the last input, looped so it outlasts the narration. The narration is padded
+  // with the tail's silence and the mix keeps that length (duration=first), so -shortest still
+  // ends the file with the speech plus the tail.
   const musicInput = 2 + clips.length;
   if (music) {
-    const fadeOut = Math.max(0, manifest.duration - MUSIC_FADE_OUT);
+    const fadeOut = Math.max(0, total - MUSIC_FADE_OUT);
     graph.push(
       `[${musicInput}:a]volume=${music.db}dB,afade=t=in:d=${MUSIC_FADE_IN},` +
         `afade=t=out:st=${fadeOut.toFixed(3)}:d=${MUSIC_FADE_OUT}[m]`,
-      `[1:a][m]amix=inputs=2:duration=first:normalize=0[a]`,
+      `[1:a]apad=pad_dur=${tail}[n]`,
+      `[n][m]amix=inputs=2:duration=first:normalize=0[a]`,
     );
   }
   execFileSync(

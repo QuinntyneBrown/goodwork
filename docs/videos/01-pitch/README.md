@@ -1,6 +1,6 @@
 # 01 · Goodwork pitch
 
-> **Runtime:** ~0:23 · **Audience:** prospective clients visiting the brochure page · **Prerequisites:** none
+> **Runtime:** ~0:26 · **Audience:** prospective clients visiting the brochure page · **Prerequisites:** none
 
 **Video:** [01-pitch.mp4](01-pitch.mp4) · [Slides](slides.html) · **Audio:** [01-pitch.mp3](01-pitch.mp3) · [Transcript](script.md) · [Captions](01-pitch.vtt)
 
@@ -34,12 +34,12 @@ By the end, the viewer can:
 
 ## Run sheet
 
-| Time        | Segment           | Content                                                            |
-| ----------- | ----------------- | ------------------------------------------------------------------ |
-| 00:00-00:04 | Title             | Mark, eyebrow, headline.                                           |
-| 00:04-00:09 | Who we serve      | The three audiences.                                               |
-| 00:09-00:16 | Why it costs less | Three bullets.                                                     |
-| 00:16-00:23 | Closing           | Mark, "Agency quality, without the agency price.", goodwork.rocks. |
+| Time        | Segment           | Content                                                                                    |
+| ----------- | ----------------- | ------------------------------------------------------------------------------------------ |
+| 00:00-00:04 | Title             | Mark, eyebrow, headline.                                                                   |
+| 00:04-00:09 | Who we serve      | The three audiences.                                                                       |
+| 00:09-00:16 | Why it costs less | Three bullets.                                                                             |
+| 00:16-00:26 | Closing           | Mark, "Agency quality, without the agency price.", goodwork.rocks; music plays on for 3 s. |
 
 ## Demo commands
 
