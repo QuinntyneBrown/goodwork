@@ -26,10 +26,11 @@ By the end, the viewer can:
 
 ## Code / assets on screen
 
-| File                                 | What to show                                                                    |
-| ------------------------------------ | ------------------------------------------------------------------------------- |
-| `docs/detailed-designs/logo.svg`     | The Cornerstone mark on the title and closing slides.                           |
-| `docs/mocks/pages/home/default.html` | Source of every line of copy: eyebrow, headline, "Why it costs less", services. |
+| File                                                        | What to show                                                                    |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `docs/detailed-designs/logo.svg`                            | The Cornerstone mark on the title and closing slides.                           |
+| `docs/mocks/pages/home/default.html`                        | Source of every line of copy: eyebrow, headline, "Why it costs less", services. |
+| `docs/videos/assets/music/inspiring-acoustic-corporate.mp3` | Background music under the narration (Universfield, Pixabay Content License).   |
 
 ## Run sheet
 

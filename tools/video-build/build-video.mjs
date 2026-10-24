@@ -11,6 +11,9 @@
 // MP4 overlaid on its .clip box for the slide's time: held on its last frame when the narration
 // runs longer, sped up evenly when it runs shorter. data-clip-delay="s" holds the first frame.
 //
+// <body data-music="../assets/music/x.mp3"> lays that track under the narration: looped if it
+// is shorter, at data-music-db (default -18 dB), faded in over 1.5 s and out over the last 2 s.
+//
 // Needs the manifest written by tools/video-audio (run it first), Chrome/Chromium (EDGE_PATH
 // or CHROME_PATH override; Playwright's bundled Chromium is found automatically) and ffmpeg
 // with libx264 and libass (FFMPEG_PATH override).
@@ -33,6 +36,9 @@ const ffprobe = process.env.FFPROBE_PATH ?? "ffprobe";
 const MAX_CLIP_RATE = 1.6;
 const MIN_SLIDE = 4;
 const MAX_SLIDE = 90;
+const MUSIC_DB = -18;
+const MUSIC_FADE_IN = 1.5;
+const MUSIC_FADE_OUT = 2;
 
 function findBrowser() {
   const override = process.env.EDGE_PATH ?? process.env.CHROME_PATH;
@@ -49,13 +55,20 @@ function findBrowser() {
   // (new-headless Chrome reserves window chrome and leaves a strip under the page).
   const pw = process.env.PLAYWRIGHT_BROWSERS_PATH ?? "/opt/pw-browsers";
   if (existsSync(pw)) {
+    // Older and newer Playwright layouts (chrome-linux/ vs chrome-linux64/).
     for (const d of readdirSync(pw).filter((d) =>
       /^chromium_headless_shell-\d+$/.test(d),
     )) {
-      candidates.unshift(join(pw, d, "chrome-linux", "headless_shell"));
+      candidates.unshift(
+        join(pw, d, "chrome-linux", "headless_shell"),
+        join(pw, d, "chrome-headless-shell-linux64", "chrome-headless-shell"),
+      );
     }
     for (const d of readdirSync(pw).filter((d) => /^chromium-\d+$/.test(d))) {
-      candidates.push(join(pw, d, "chrome-linux", "chrome"));
+      candidates.push(
+        join(pw, d, "chrome-linux", "chrome"),
+        join(pw, d, "chrome-linux64", "chrome"),
+      );
     }
   }
   const found = candidates.find((c) => existsSync(c));
@@ -63,6 +76,9 @@ function findBrowser() {
     throw new Error("No Chrome/Edge found; set EDGE_PATH or CHROME_PATH");
   return found;
 }
+
+const isHeadlessShell = (browser) =>
+  /^(headless_shell|chrome-headless-shell)$/.test(basename(browser));
 
 const norm = (s) =>
   s
@@ -90,6 +106,17 @@ function parseSlides(html) {
       clipDelay: Number(attr("data-clip-delay") ?? 0),
     };
   });
+}
+
+/** <body data-music> and data-music-db, or null when the deck has no background music. */
+function parseMusic(html, folder) {
+  const body = html.match(/<body\b([^>]*)>/)?.[1] ?? "";
+  const attr = (name) => body.match(new RegExp(`${name}="([^"]*)"`))?.[1];
+  const src = attr("data-music");
+  if (!src) return null;
+  const file = resolve(folder, src);
+  if (!existsSync(file)) throw new Error(`data-music: ${src} not found`);
+  return { file, db: Number(attr("data-music-db") ?? MUSIC_DB) };
 }
 
 /** data-cue → seconds: a `##` heading is its section's start; text inside a paragraph is
@@ -242,7 +269,7 @@ function auditSlides(slidesFile) {
   const dom = execFileSync(
     browser,
     [
-      ...(basename(browser) === "headless_shell" ? [] : ["--headless=new"]),
+      ...(isHeadlessShell(browser) ? [] : ["--headless=new"]),
       "--no-sandbox",
       "--disable-gpu",
       "--hide-scrollbars",
@@ -283,7 +310,7 @@ function renderSlides(slidesFile, slides, outDir) {
     execFileSync(
       browser,
       [
-        ...(basename(browser) === "headless_shell" ? [] : ["--headless=new"]),
+        ...(isHeadlessShell(browser) ? [] : ["--headless=new"]),
         "--no-sandbox",
         "--disable-gpu",
         "--hide-scrollbars",
@@ -313,7 +340,9 @@ function main() {
     throw new Error(`${manifestFile} missing — run tools/video-audio first`);
   const manifest = JSON.parse(readFileSync(manifestFile, "utf8"));
   const slidesFile = join(folder, "slides.html");
-  const slides = parseSlides(readFileSync(slidesFile, "utf8"));
+  const html = readFileSync(slidesFile, "utf8");
+  const slides = parseSlides(html);
+  const music = parseMusic(html, folder);
 
   const errors = resolveCues(slides, manifest);
   if (errors.length) throw new Error(errors.join("\n"));
@@ -372,6 +401,10 @@ function main() {
         `slide ${s.index + 1} (#${s.id}) plays its clip at x${s.rate.toFixed(2)}; give it more narration`,
       );
   }
+  if (music)
+    console.log(
+      `  music: ${basename(music.file)} at ${music.db} dB under the narration`,
+    );
   if (warnings.length) console.warn(`warnings:\n  ${warnings.join("\n  ")}`);
   if (args.includes("--check")) return;
 
@@ -447,6 +480,17 @@ function main() {
   // Relative to cwd: an absolute Windows path (C:\…) breaks the filter's option parsing.
   const burn = !args.includes("--no-captions");
   graph.push(`[${last}]${burn ? `ass=${basename(ass)},` : ""}format=yuv420p[out]`);
+  // The music is the last input, looped so it outlasts the narration, and the mix keeps the
+  // narration's length (duration=first) so -shortest still ends the file with the speech.
+  const musicInput = 2 + clips.length;
+  if (music) {
+    const fadeOut = Math.max(0, manifest.duration - MUSIC_FADE_OUT);
+    graph.push(
+      `[${musicInput}:a]volume=${music.db}dB,afade=t=in:d=${MUSIC_FADE_IN},` +
+        `afade=t=out:st=${fadeOut.toFixed(3)}:d=${MUSIC_FADE_OUT}[m]`,
+      `[1:a][m]amix=inputs=2:duration=first:normalize=0[a]`,
+    );
+  }
   execFileSync(
     ffmpeg,
     [
@@ -458,12 +502,13 @@ function main() {
       "-i",
       mp3,
       ...clips.flatMap((s) => ["-i", s.clipFile]),
+      ...(music ? ["-stream_loop", "-1", "-i", music.file] : []),
       "-filter_complex",
       graph.join(";"),
       "-map",
       "[out]",
       "-map",
-      "1:a",
+      music ? "[a]" : "1:a",
       "-c:v",
       "libx264",
       "-preset",
