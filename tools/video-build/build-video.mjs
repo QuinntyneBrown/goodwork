@@ -12,7 +12,7 @@
 // runs longer, sped up evenly when it runs shorter. data-clip-delay="s" holds the first frame.
 //
 // <body data-music="../assets/music/x.mp3"> lays that track under the narration: looped if it
-// is shorter, at data-music-db (default -12 dB), faded in over 1.5 s and out over the last 2 s.
+// is shorter, at data-music-db (default -10.8 dB), faded in over 1.5 s and out over the last 2 s.
 //
 // Needs the manifest written by tools/video-audio (run it first), Chrome/Chromium (EDGE_PATH
 // or CHROME_PATH override; Playwright's bundled Chromium is found automatically) and ffmpeg
@@ -36,7 +36,7 @@ const ffprobe = process.env.FFPROBE_PATH ?? "ffprobe";
 const MAX_CLIP_RATE = 1.6;
 const MIN_SLIDE = 4;
 const MAX_SLIDE = 90;
-const MUSIC_DB = -12;
+const MUSIC_DB = -10.8;
 const MUSIC_FADE_IN = 1.5;
 const MUSIC_FADE_OUT = 2;
 
