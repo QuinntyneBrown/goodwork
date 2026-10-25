@@ -55,6 +55,12 @@ export class HomePage {
     },
   ];
 
+  protected readonly product: Service = {
+    heading: 'Coming soon',
+    icon: 'app',
+    body: 'Ready-made tools for churches, ministries and non-profits are on the way. Tell us what you would use.',
+  };
+
   private readonly main = viewChild.required<ElementRef<HTMLElement>>('main');
   private readonly contact = viewChild.required(ContactForm);
   private readonly contactElement = viewChild.required(ContactForm, { read: ElementRef });

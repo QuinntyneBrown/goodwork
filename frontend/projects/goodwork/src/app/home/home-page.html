@@ -32,6 +32,16 @@
     label="Goodwork pitch"
   />
   <gw-contact-form [studioEmail]="studio.email" />
+  <div class="wide">
+    <section aria-labelledby="products-title">
+      <div class="section-head">
+        <h2 id="products-title">Products</h2>
+      </div>
+      <div class="products">
+        <gw-service-card [heading]="product.heading" [body]="product.body" [icon]="product.icon" />
+      </div>
+    </section>
+  </div>
 </main>
 <gw-site-footer
   class="container"

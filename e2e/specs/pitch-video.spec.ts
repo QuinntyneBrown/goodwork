@@ -36,9 +36,8 @@ test.describe('Pitch video', () => {
     const wide = await home.pitchVideo.boundingBox();
     expect(wide!.x).toBeGreaterThan(hero!.x + hero!.width);
     expect(Math.abs(wide!.y - hero!.y)).toBeLessThan(120);
-    expect(
-      await home.page.evaluate(() => document.documentElement.scrollHeight),
-    ).toBeLessThanOrEqual(1100);
+    const form = await home.contactSection.boundingBox();
+    expect(form!.y + form!.height).toBeLessThanOrEqual(1100);
 
     await home.page.setViewportSize({ width: 375, height: 800 });
     const services = await home.serviceCards.last().boundingBox();

@@ -7,6 +7,7 @@ export class HomePage {
   readonly main: Locator;
   readonly heading: Locator;
   readonly eyebrow: Locator;
+  readonly services: Locator;
   readonly serviceCards: Locator;
   readonly serviceCardSurfaces: Locator;
   readonly footerEmail: Locator;
@@ -25,6 +26,9 @@ export class HomePage {
   readonly pitchCaptions: Locator;
   readonly contactIntro: Locator;
   readonly messageHelp: Locator;
+  readonly contactSection: Locator;
+  readonly products: Locator;
+  readonly productCards: Locator;
 
   constructor(readonly page: Page) {
     this.skipLink = page.getByRole('link', { name: 'Skip to content' });
@@ -33,7 +37,8 @@ export class HomePage {
     this.main = page.getByRole('main');
     this.heading = page.getByRole('heading', { level: 1 });
     this.eyebrow = page.getByText('Software for people doing good work');
-    this.serviceCards = page
+    this.services = page.getByRole('region', { name: 'What we build' });
+    this.serviceCards = this.services
       .getByRole('listitem')
       .filter({ has: page.getByRole('heading', { level: 3 }) });
     this.serviceCardSurfaces = this.serviceCards.locator('[gwCard]');
@@ -59,11 +64,21 @@ export class HomePage {
     this.replyHint = page.getByText('We reply within two business days.');
     this.contactIntro = page.getByText('No long forms.');
     this.messageHelp = page.getByText('Who you serve and what you need.');
+    this.contactSection = page.getByRole('region', { name: 'Tell us about your project' });
+    this.products = page.getByRole('region', { name: 'Products' });
+    this.productCards = this.products.getByRole('heading', { level: 3 });
   }
 
   async goto(): Promise<void> {
     await this.page.goto('/');
     await expect(this.heading).toBeVisible();
+  }
+
+  /** True when `lower` starts below the bottom of `upper`. */
+  async isBelow(lower: Locator, upper: Locator): Promise<boolean> {
+    const a = await upper.boundingBox();
+    const b = await lower.boundingBox();
+    return !!a && !!b && b.y >= a.y + a.height;
   }
 
   async fill(email: string, message: string): Promise<void> {
