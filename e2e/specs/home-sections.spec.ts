@@ -53,3 +53,38 @@ test.describe('Work process', () => {
     expect(new Set(narrow.map((b) => b?.x)).size).toBe(1);
   });
 });
+
+test.describe('Frequently asked questions', () => {
+  test('lists six closed questions below How we work', async ({ home }) => {
+    await home.goto();
+
+    await expect(home.faq.getByRole('heading', { level: 2 })).toHaveText(
+      'Frequently asked questions',
+    );
+    await expect(home.faqQuestions).toHaveCount(6);
+    for (let i = 0; i < 6; i++) await expect(home.faqAnswer(i)).toBeHidden();
+    expect(await home.isBelow(home.faq, home.process)).toBe(true);
+  });
+
+  test('opens and closes an answer with the pointer', async ({ home }) => {
+    await home.goto();
+
+    await home.faqQuestions.first().click();
+    await expect(home.faqAnswer(0)).toBeVisible();
+    await expect(home.faqItems.first()).toHaveJSProperty('open', true);
+
+    await home.faqQuestions.first().click();
+    await expect(home.faqAnswer(0)).toBeHidden();
+  });
+
+  test('opens with Enter and closes with Space', async ({ home }) => {
+    await home.goto();
+
+    await home.faqQuestions.nth(1).focus();
+    await home.page.keyboard.press('Enter');
+    await expect(home.faqAnswer(1)).toBeVisible();
+
+    await home.page.keyboard.press('Space');
+    await expect(home.faqAnswer(1)).toBeHidden();
+  });
+});

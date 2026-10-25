@@ -103,6 +103,12 @@ test.describe('Keyboard and structure', () => {
       '',
       '',
       'Send request',
+      'How much will our project cost?',
+      'How long does a project take?',
+      'Do you only work with churches and ministries?',
+      'Can we update our website ourselves?',
+      'What happens after launch?',
+      'How do we get started?',
       'hello@goodwork.rocks',
     ]);
     for (const stop of stops) expect(stop.split('|')[1]).not.toBe('none');

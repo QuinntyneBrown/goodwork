@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, viewChild } from '@angular/core';
 import {
+  Disclosure,
   HeroNote,
   Hero,
   ProcessStep,
@@ -18,6 +19,11 @@ interface Step {
   readonly body: string;
 }
 
+interface Question {
+  readonly question: string;
+  readonly answer: string;
+}
+
 interface Service {
   readonly heading: string;
   readonly body: string;
@@ -28,6 +34,7 @@ interface Service {
   selector: 'gw-home-page',
   imports: [
     ContactForm,
+    Disclosure,
     Hero,
     ProcessStep,
     ServiceCard,
@@ -92,6 +99,38 @@ export class HomePage {
     {
       heading: 'Steward',
       body: 'We take responsibility for what we release: we tend it, examine its fruit and tell its story truthfully.',
+    },
+  ];
+
+  protected readonly faq: readonly Question[] = [
+    {
+      question: 'How much will our project cost?',
+      answer:
+        'It depends on what you need. After a short call we send a fixed-price quote, so you know the full cost before any work begins.',
+    },
+    {
+      question: 'How long does a project take?',
+      answer:
+        'It depends on the scope. Your quote comes with a timeline, so you know when to expect each milestone before any work begins.',
+    },
+    {
+      question: 'Do you only work with churches and ministries?',
+      answer:
+        'No. We work with non-profits, churches, ministries and companies whose work makes life better for someone.',
+    },
+    {
+      question: 'Can we update our website ourselves?',
+      answer: 'Yes. We build sites your team can edit without calling us, and we show you how.',
+    },
+    {
+      question: 'What happens after launch?',
+      answer:
+        'We stay with you. Stewardship is part of our process: we fix what breaks, listen to the people using it and help you decide what comes next.',
+    },
+    {
+      question: 'How do we get started?',
+      answer:
+        'Tell us about your project with the form above. We will get back to you within two business days to set up a call.',
     },
   ];
 

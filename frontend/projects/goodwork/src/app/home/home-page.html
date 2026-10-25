@@ -57,6 +57,18 @@
         }
       </ol>
     </section>
+    <section aria-labelledby="faq-title">
+      <div class="section-head">
+        <h2 id="faq-title">Frequently asked questions</h2>
+      </div>
+      <div class="faq">
+        @for (item of faq; track item.question) {
+        <gw-disclosure [heading]="item.question">
+          <p>{{ item.answer }}</p>
+        </gw-disclosure>
+        }
+      </div>
+    </section>
   </div>
 </main>
 <gw-site-footer

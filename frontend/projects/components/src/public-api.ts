@@ -2,6 +2,7 @@ export * from './lib/alert/alert';
 export * from './lib/brand-lockup/brand-lockup';
 export * from './lib/button/button';
 export * from './lib/card/card';
+export * from './lib/disclosure/disclosure';
 export * from './lib/hero/hero';
 export * from './lib/hero/hero-note';
 export * from './lib/process-step/process-step';
