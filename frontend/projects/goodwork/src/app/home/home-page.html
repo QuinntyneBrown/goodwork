@@ -73,6 +73,16 @@
       Adapted from the <a href="https://faithtech.com">FaithTech Playbook 2.0</a>.
     </p>
   </section>
+  <section class="page-section" aria-labelledby="faq-title">
+    <div class="section-head">
+      <h2 id="faq-title">Frequently asked questions</h2>
+    </div>
+    <div class="faq">
+      @for (item of questions; track item.question) {
+      <gw-disclosure [summary]="item.question" [body]="item.answer" />
+      }
+    </div>
+  </section>
 </main>
 <gw-site-footer
   class="container"

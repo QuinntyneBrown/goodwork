@@ -1,5 +1,5 @@
 // Acceptance Test
-// Traces to: L2-014, L2-013
+// Traces to: L2-014, L2-013, L2-020
 // Description: Every state of the page passes axe (WCAG 2.2 AA) in both colour schemes, is fully
 // operable by keyboard with visible focus, announces its messages, and has a sound heading outline.
 
@@ -23,6 +23,13 @@ const STATES: {
   arrange: (home: HomePage, api: FakeApi) => Promise<void>;
 }[] = [
   { name: 'default', arrange: async () => undefined },
+  {
+    name: 'faq-open',
+    arrange: async (home) => {
+      await home.faqQuestion('How does pricing work?').click();
+      await expect(home.faqAnswer('How does pricing work?')).toBeVisible();
+    },
+  },
   {
     name: 'invalid',
     arrange: async (home) => {
@@ -82,7 +89,7 @@ test.describe('Keyboard and structure', () => {
     // The native video player keeps focus on the <video> while Tab walks its own
     // controls, so repeated stops on the same element count once.
     const stops: string[] = [];
-    for (let i = 0; i < 20 && !stops.at(-1)?.startsWith('hello@'); i++) {
+    for (let i = 0; i < 30 && !stops.at(-1)?.startsWith('hello@'); i++) {
       await home.page.keyboard.press('Tab');
       const stop = await home.page.evaluate(() => {
         const el = document.activeElement as HTMLElement;
@@ -104,6 +111,12 @@ test.describe('Keyboard and structure', () => {
       '',
       'Send request',
       'FaithTech Playbook 2.0',
+      'Who do you work with?',
+      'How can you cost less than an agency?',
+      'How does pricing work?',
+      'How long does a project take?',
+      'Can we update the website ourselves?',
+      'What happens after launch?',
       'hello@goodwork.rocks',
     ]);
     for (const stop of stops) expect(stop.split('|')[1]).not.toBe('none');

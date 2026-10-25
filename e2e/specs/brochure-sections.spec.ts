@@ -87,3 +87,44 @@ test.describe('Work process', () => {
     });
   }
 });
+
+const QUESTIONS = [
+  'Who do you work with?',
+  'How can you cost less than an agency?',
+  'How does pricing work?',
+  'How long does a project take?',
+  'Can we update the website ourselves?',
+  'What happens after launch?',
+];
+
+test.describe('Frequently asked questions', () => {
+  test('lists the six questions in order, each closed', async ({ home }) => {
+    await home.goto();
+
+    await expect(home.faqQuestions).toHaveText(QUESTIONS);
+    for (const question of QUESTIONS) await expect(home.faqAnswer(question)).toBeHidden();
+    await expect(home.faq).not.toContainText(/[$€£]\s?\d/);
+  });
+
+  test('opens and closes an answer by pointer', async ({ home }) => {
+    await home.goto();
+
+    await home.faqQuestion('How does pricing work?').click();
+    await expect(home.faqAnswer('How does pricing work?')).toContainText('fixed-price quote');
+
+    await home.faqQuestion('How does pricing work?').click();
+    await expect(home.faqAnswer('How does pricing work?')).toBeHidden();
+  });
+
+  test('opens an answer with Enter and closes it with Space', async ({ home }) => {
+    await home.goto();
+    const question = 'Can we update the website ourselves?';
+
+    await home.faqQuestion(question).focus();
+    await home.page.keyboard.press('Enter');
+    await expect(home.faqAnswer(question)).toBeVisible();
+
+    await home.page.keyboard.press('Space');
+    await expect(home.faqAnswer(question)).toBeHidden();
+  });
+});

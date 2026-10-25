@@ -75,6 +75,10 @@ main:focus {
   min-height: 1.5rem;
   color: inherit;
 }
+.faq {
+  max-width: var(--layout-measure);
+  border-top: 1px solid var(--color-border-default);
+}
 gw-contact-form {
   scroll-margin-top: calc(var(--layout-topbar-height) + var(--space-4));
 }

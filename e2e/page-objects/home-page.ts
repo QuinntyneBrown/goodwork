@@ -33,6 +33,8 @@ export class HomePage {
   readonly processSteps: Locator;
   readonly processCycle: Locator;
   readonly processCredit: Locator;
+  readonly faq: Locator;
+  readonly faqQuestions: Locator;
 
   constructor(readonly page: Page) {
     this.skipLink = page.getByRole('link', { name: 'Skip to content' });
@@ -73,6 +75,8 @@ export class HomePage {
     this.processSteps = this.process.getByRole('list').getByRole('listitem');
     this.processCycle = this.process.getByText('Then the cycle starts again.');
     this.processCredit = this.process.getByRole('link', { name: 'FaithTech Playbook 2.0' });
+    this.faq = page.getByRole('region', { name: 'Frequently asked questions' });
+    this.faqQuestions = this.faq.locator('summary');
   }
 
   async goto(): Promise<void> {
@@ -94,6 +98,18 @@ export class HomePage {
 
   async submit(): Promise<void> {
     await this.page.getByRole('button', { name: /Send request|Try again/ }).click();
+  }
+
+  faqQuestion(question: string): Locator {
+    return this.faqQuestions.filter({ hasText: question });
+  }
+
+  /** The answer under a question; hidden while the question is closed. */
+  faqAnswer(question: string): Locator {
+    return this.faq
+      .locator('details')
+      .filter({ has: this.page.locator('summary', { hasText: question }) })
+      .locator('p');
   }
 
   /** The message shown beside a field (not the matching link in the error summary). */
