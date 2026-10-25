@@ -103,6 +103,7 @@ test.describe('Keyboard and structure', () => {
       '',
       '',
       'Send request',
+      'FaithTech Playbook 2.0',
       'hello@goodwork.rocks',
     ]);
     for (const stop of stops) expect(stop.split('|')[1]).not.toBe('none');

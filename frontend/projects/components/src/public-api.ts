@@ -6,6 +6,7 @@ export * from './lib/card/card';
 export * from './lib/hero/hero';
 export * from './lib/hero/hero-note';
 export * from './lib/product-card/product-card';
+export * from './lib/process-step/process-step';
 export * from './lib/service-card/service-card';
 export * from './lib/site-footer/site-footer';
 export * from './lib/site-header/site-header';

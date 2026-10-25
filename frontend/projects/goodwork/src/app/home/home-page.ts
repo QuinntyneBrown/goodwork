@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, viewChild } from '@angu
 import {
   HeroNote,
   Hero,
+  ProcessStep,
   ProductCard,
   ServiceCard,
   ServiceIcon,
@@ -19,11 +20,18 @@ interface Service {
   readonly icon: ServiceIcon;
 }
 
+interface Step {
+  readonly name: string;
+  readonly summary: string;
+  readonly practices: string;
+}
+
 @Component({
   selector: 'gw-home-page',
   imports: [
     ContactForm,
     Hero,
+    ProcessStep,
     ProductCard,
     ServiceCard,
     SiteFooter,
@@ -62,6 +70,29 @@ export class HomePage {
       heading: 'Websites',
       icon: 'globe',
       body: 'Fast, accessible sites you can edit yourself.',
+    },
+  ];
+
+  protected readonly steps: readonly Step[] = [
+    {
+      name: 'Lament',
+      summary: 'We listen to the people affected before we reach for a solution.',
+      practices: 'Listen, remember, repent, rejoice',
+    },
+    {
+      name: 'Discern',
+      summary: 'We seek wisdom before choosing a response.',
+      practices: 'Reject, receive, reimagine or create',
+    },
+    {
+      name: 'Build',
+      summary: 'We build in dependence on the Spirit, and keep listening.',
+      practices: 'Pray, prototype, pause',
+    },
+    {
+      name: 'Steward',
+      summary: 'We take responsibility for what we release.',
+      practices: 'Tend, examine, testify',
     },
   ];
 

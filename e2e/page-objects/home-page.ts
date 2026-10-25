@@ -29,6 +29,10 @@ export class HomePage {
   readonly opening: Locator;
   readonly products: Locator;
   readonly productCards: Locator;
+  readonly process: Locator;
+  readonly processSteps: Locator;
+  readonly processCycle: Locator;
+  readonly processCredit: Locator;
 
   constructor(readonly page: Page) {
     this.skipLink = page.getByRole('link', { name: 'Skip to content' });
@@ -65,6 +69,10 @@ export class HomePage {
     this.opening = page.locator('.brochure');
     this.products = page.getByRole('region', { name: 'Products' });
     this.productCards = this.products.locator('[gwCard]');
+    this.process = page.getByRole('region', { name: 'How we work' });
+    this.processSteps = this.process.getByRole('list').getByRole('listitem');
+    this.processCycle = this.process.getByText('Then the cycle starts again.');
+    this.processCredit = this.process.getByRole('link', { name: 'FaithTech Playbook 2.0' });
   }
 
   async goto(): Promise<void> {
