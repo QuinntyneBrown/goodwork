@@ -41,6 +41,22 @@
         <gw-service-card [heading]="product.heading" [body]="product.body" [icon]="product.icon" />
       </div>
     </section>
+    <section aria-labelledby="process-title">
+      <div class="section-head">
+        <h2 id="process-title">How we work</h2>
+        <p class="lead">
+          We follow the FaithTech Playbook 2.0, a rhythm for building technology redemptively. It
+          repeats for the life of your product.
+        </p>
+      </div>
+      <ol class="process" role="list">
+        @for (step of process; track step.heading; let i = $index) {
+        <li>
+          <gw-process-step [step]="i + 1" [heading]="step.heading" [body]="step.body" />
+        </li>
+        }
+      </ol>
+    </section>
   </div>
 </main>
 <gw-site-footer

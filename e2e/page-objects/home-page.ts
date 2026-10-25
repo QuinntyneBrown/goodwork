@@ -29,6 +29,8 @@ export class HomePage {
   readonly contactSection: Locator;
   readonly products: Locator;
   readonly productCards: Locator;
+  readonly process: Locator;
+  readonly processSteps: Locator;
 
   constructor(readonly page: Page) {
     this.skipLink = page.getByRole('link', { name: 'Skip to content' });
@@ -67,6 +69,8 @@ export class HomePage {
     this.contactSection = page.getByRole('region', { name: 'Tell us about your project' });
     this.products = page.getByRole('region', { name: 'Products' });
     this.productCards = this.products.getByRole('heading', { level: 3 });
+    this.process = page.getByRole('region', { name: 'How we work' });
+    this.processSteps = this.process.getByRole('list').getByRole('listitem');
   }
 
   async goto(): Promise<void> {
@@ -79,6 +83,11 @@ export class HomePage {
     const a = await upper.boundingBox();
     const b = await lower.boundingBox();
     return !!a && !!b && b.y >= a.y + a.height;
+  }
+
+  /** The titles of the process steps, in document order. */
+  processStepTitles(): Promise<string[]> {
+    return this.processSteps.getByRole('heading', { level: 3 }).allInnerTexts();
   }
 
   async fill(email: string, message: string): Promise<void> {

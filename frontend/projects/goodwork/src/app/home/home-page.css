@@ -33,12 +33,26 @@
   display: grid;
   gap: var(--space-4);
 }
+.lead {
+  font: var(--text-body);
+  color: var(--color-fg-muted);
+  text-wrap: pretty;
+  max-width: var(--layout-measure);
+}
+.process {
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 gw-contact-form {
   scroll-margin-top: calc(var(--layout-topbar-height) + var(--space-4));
 }
 @media (min-width: 48rem) {
   .services,
-  .products {
+  .products,
+  .process {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -63,5 +77,8 @@ gw-contact-form {
   }
   .wide {
     grid-column: 1 / -1;
+  }
+  .process {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

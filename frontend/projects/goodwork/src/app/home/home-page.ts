@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, viewChild } from '@angu
 import {
   HeroNote,
   Hero,
+  ProcessStep,
   ServiceCard,
   ServiceIcon,
   SiteFooter,
@@ -12,6 +13,11 @@ import {
 import { ContactForm } from 'domain';
 import { STUDIO } from '../studio';
 
+interface Step {
+  readonly heading: string;
+  readonly body: string;
+}
+
 interface Service {
   readonly heading: string;
   readonly body: string;
@@ -20,7 +26,16 @@ interface Service {
 
 @Component({
   selector: 'gw-home-page',
-  imports: [ContactForm, Hero, ServiceCard, SiteFooter, SiteHeader, SkipLink, VideoPlayer],
+  imports: [
+    ContactForm,
+    Hero,
+    ProcessStep,
+    ServiceCard,
+    SiteFooter,
+    SiteHeader,
+    SkipLink,
+    VideoPlayer,
+  ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -60,6 +75,25 @@ export class HomePage {
     icon: 'app',
     body: 'Ready-made tools for churches, ministries and non-profits are on the way. Tell us what you would use.',
   };
+
+  protected readonly process: readonly Step[] = [
+    {
+      heading: 'Lament',
+      body: 'We listen before we build, sitting with the people your work serves until we understand what is broken.',
+    },
+    {
+      heading: 'Discern',
+      body: 'We seek the wisest response, which is not always new software: reject, receive what exists, reimagine it, or create.',
+    },
+    {
+      heading: 'Build',
+      body: 'We build in short cycles of prayer, prototype and pause, ready to change course when the work drifts.',
+    },
+    {
+      heading: 'Steward',
+      body: 'We take responsibility for what we release: we tend it, examine its fruit and tell its story truthfully.',
+    },
+  ];
 
   private readonly main = viewChild.required<ElementRef<HTMLElement>>('main');
   private readonly contact = viewChild.required(ContactForm);
