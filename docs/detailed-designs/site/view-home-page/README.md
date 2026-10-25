@@ -8,7 +8,11 @@ Goodwork is a small software studio that builds websites and custom applications
 
 **service card** — panel naming one service the studio offers, with a short description
 
-This feature covers everything a visitor sees when the page loads: the header, the hero text, the two service cards and the footer. It also covers the cross-cutting qualities of that page: responsive layout, light and dark themes, accessibility, transport security headers and load performance. The contact form sits inside the page but has its own feature, `contact/submit-contact-request`.
+**process step** — numbered card naming one practice of the FaithTech Playbook 2.0 (Lament, Discern, Build, Steward), with one sentence
+
+**disclosure** — native `<details>` element: a question the visitor opens to read its answer
+
+This feature covers everything a visitor sees when the page loads: the header, the hero text, the two service cards, the products placeholder, the work process, the frequently asked questions and the footer. It also covers the cross-cutting qualities of that page: responsive layout, light and dark themes, accessibility, transport security headers and load performance. The contact form sits inside the page but has its own feature, `contact/submit-contact-request`.
 
 The page requires no sign-in and fetches no data. It renders complete on first paint. For that reason it has no loading or empty state.
 
@@ -20,6 +24,10 @@ The slice runs from the ASP.NET Core host that serves the built Angular app to t
 
 - **`HomePage`** — routed component in the `goodwork` application project. It composes the page and owns the `skipToContent()` handler, which focuses `<main>`, and the `startProject()` handler, which scrolls to the contact section and calls `ContactForm.focusEmail()`.
 - **`ServiceSummary`** — data shape holding a service title and body. The two summaries are static copy taken from the mock.
+- **Products, process and FAQ copy** — static arrays in `HomePage`, taken from the mock: one "Coming soon" product card, four process steps and six questions with answers. The process copy paraphrases the four practices of the FaithTech Playbook 2.0.
+- **Lower sections** — below the first screen, `HomePage` renders three full-width sections (`grid-column: 1 / -1` at 1024px and wider) after the contact form, so the first screen still ends within 1100px at 1280×800 and the tab order follows the visual order. "Products" reuses `ServiceCard`; "How we work" is an `<ol>` of `ProcessStep`; "Frequently asked questions" stacks `Disclosure` components.
+- **`ProcessStep`** — presentational component in `components`. It renders the gold "Step n" number, the `h3` title and the body on a `Card`. Its inputs are `step`, `heading` and `body`.
+- **`Disclosure`** — presentational component in `components`. It renders a native `<details>` whose `<summary>` shows the `heading` input and whose body projects the answer through one `ng-content` slot. The browser supplies the button role, the expanded state and Enter/Space handling, so the component holds no state.
 - **`SkipLink`** — presentational component in `components`. It renders the "Skip to content" link and emits `activated`.
 - **`BrandLockup`** — presentational component in `components`. It renders the Cornerstone logo and the studio name as a link to `/`.
 - **`SiteHeader`** — presentational component in the `components` library. It renders the `BrandLockup` and the "Start a project" link as a `Button`, and emits `ctaActivated`.
@@ -43,10 +51,13 @@ The feature realizes the following level-2 (L2) requirements. Each L2 requiremen
 | L2 ID | Refines (L1) | Requirement |
 |-------|--------------|-------------|
 | `L2-001` | `L1-001` | The page at `/` shall render, without signing in, the header, hero, two service cards, contact section and footer, with copy matching the mock. |
-| `L2-017` | `L1-001` | A narrated pitch video with native controls, a poster and captions shall sit beside the hero copy, never autoplay, and keep the page within the 1100px rule. |
+| `L2-017` | `L1-001` | A narrated pitch video with native controls, a poster and captions shall sit beside the hero copy, never autoplay, and keep the first screen within the 1100px rule. |
+| `L2-018` | `L1-001` | A "Products" section below the contact form shall show one "Coming soon" placeholder card. |
+| `L2-019` | `L1-001` | A "How we work" section shall name the FaithTech Playbook 2.0 and list Lament, Discern, Build and Steward as numbered steps. |
+| `L2-020` | `L1-001` | A "Frequently asked questions" section shall list six questions as keyboard-operable native disclosures, closed by default. |
 | `L2-002` | `L1-001` | "Start a project" shall scroll to the contact form and focus the email field, and a "Skip to content" link shall be the first focus stop. |
 | `L2-011` | `L1-004` | The site shall enforce HTTPS with HSTS, send a Content-Security-Policy, `nosniff` and `Referrer-Policy` header on every response, and refuse cross-origin writes. |
-| `L2-012` | `L1-005` | The page shall lay out correctly from below 576px to 1200px and wider, with no horizontal scroll, and shall be no taller than 1100px at 1280×800. |
+| `L2-012` | `L1-005` | The page shall lay out correctly from below 576px to 1200px and wider, with no horizontal scroll, and its first screen shall end within 1100px at 1280×800. |
 | `L2-013` | `L1-005` | The page shall follow the operating system's light or dark preference with no flash, and every pair shall meet WCAG 2.2 AA contrast. |
 | `L2-014` | `L1-006` | The page shall meet WCAG 2.2 AA in every state, including keyboard order, visible focus, announcements, heading order and reduced motion. |
 | `L2-015` | `L1-007` | The page shall reach LCP under 2.5 s, CLS under 0.1 and INP under 200 ms on a mid-range phone over 4G, with initial JavaScript under 200 KB and self-hosted fonts. |
@@ -69,13 +80,13 @@ The Goodwork API hosts the built Goodwork web app and adds security headers to e
 
 ### Components
 
-`HomePage` composes four `components` library parts and the `ContactForm` from the `domain` library. On the server, `SecurityHeadersMiddleware` wraps the static file host.
+`HomePage` composes the `components` library parts (including `ProcessStep` and `Disclosure`) and the `ContactForm` from the `domain` library. On the server, `SecurityHeadersMiddleware` wraps the static file host.
 
 ![C4 component view for viewing the home page](diagrams/c4-component.png)
 
 ### Class structure
 
-`HomePage` owns one header, one hero, two service cards, one contact form and one footer. `startProject()` depends on `ContactForm.focusEmail()`.
+`HomePage` owns one header, one hero, three service cards (two services and the products placeholder), one contact form, four process steps, six disclosures and one footer. `startProject()` depends on `ContactForm.focusEmail()`.
 
 ![Class diagram for viewing the home page](diagrams/class-structure.png)
 

@@ -41,6 +41,14 @@ class ServiceCard {
   +title: input<string>
   +body: input<string>
 }
+class ProcessStep {
+  +step: input<number>
+  +heading: input<string>
+  +body: input<string>
+}
+class Disclosure {
+  +heading: input<string>
+}
 class SiteFooter {
   +year: input<number>
   +location: input<string>
@@ -59,7 +67,9 @@ HomePage *-- "1" SkipLink
 HomePage *-- "1" SiteHeader
 HomePage *-- "1" Hero
 HomePage *-- "1" VideoPlayer
-HomePage *-- "2" ServiceCard
+HomePage *-- "3" ServiceCard
+HomePage *-- "4" ProcessStep
+HomePage *-- "6" Disclosure
 HomePage *-- "1" ContactForm
 HomePage *-- "1" SiteFooter
 HomePage --> "2" ServiceSummary

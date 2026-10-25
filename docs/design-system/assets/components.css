@@ -428,9 +428,29 @@ legend { font: var(--text-label); padding: 0; margin-bottom: var(--space-2); }
 /* Footer, contained variant: sits inside .container on marketing pages. */
 .site-footer { border-top: 1px solid var(--color-border-default); padding-block: var(--space-5); font: var(--text-body-sm); color: var(--color-fg-muted); display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); justify-content: space-between; }
 .site-footer a { color: inherit; }
+/* Below the first screen: full-width sections (products, process, FAQ). */
+.brochure__wide { display: grid; gap: var(--space-10); }
+.section-head__lead { font: var(--text-body); color: var(--color-fg-muted); text-wrap: pretty; max-width: var(--layout-measure); }
+.products { display: grid; gap: var(--space-4); }
+/* Process step: numbered card for one practice in a sequence. */
+.process { display: grid; gap: var(--space-4); list-style: none; padding: 0; margin: 0; }
+.process-step { display: grid; gap: var(--space-2); align-content: start; height: 100%; }
+.process-step__number { font: var(--text-overline); letter-spacing: var(--letter-spacing-wide); text-transform: uppercase; color: var(--color-fg-gold); }
+.process-step__title { font: var(--text-h4); }
+.process-step__body { font: var(--text-body-sm); color: var(--color-fg-muted); text-wrap: pretty; }
+/* Disclosure: native <details>; the summary is the control. */
+.faq { display: grid; max-width: var(--layout-measure); border-top: 1px solid var(--color-border-default); }
+.disclosure { border-bottom: 1px solid var(--color-border-default); }
+.disclosure__summary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); min-height: 2.75rem; padding-block: var(--space-3); font: var(--text-body); font-weight: var(--font-weight-semibold); color: var(--color-fg-default); cursor: pointer; list-style: none; }
+.disclosure__summary::-webkit-details-marker { display: none; }
+.disclosure__summary::after { content: ""; flex: none; width: 0.5rem; height: 0.5rem; border-right: 2px solid var(--color-fg-gold); border-bottom: 2px solid var(--color-fg-gold); transform: rotate(45deg); margin-inline-end: var(--space-1); }
+.disclosure[open] > .disclosure__summary::after { transform: rotate(-135deg); }
+.disclosure__summary:focus-visible { outline: var(--focus-ring-width) solid var(--color-focus-ring); outline-offset: var(--focus-ring-offset); border-radius: var(--radius-sm); }
+.disclosure__body { padding-bottom: var(--space-4); font: var(--text-body); color: var(--color-fg-muted); text-wrap: pretty; }
 @media (min-width: 48rem) {
   .hero__title { font: var(--text-display); letter-spacing: var(--letter-spacing-tight); }
   .services { grid-template-columns: 1fr 1fr; }
+  .products, .process { grid-template-columns: 1fr 1fr; }
   .contact { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: var(--space-10); }
 }
 @media (min-width: 64rem) {
@@ -438,5 +458,7 @@ legend { font: var(--text-label); padding: 0; margin-bottom: var(--space-2); }
   .brochure__left { grid-row: 1 / span 2; }
   .brochure__video { grid-column: 2; grid-row: 1; }
   .brochure .contact { grid-column: 2; grid-row: 2; }
+  .brochure__wide { grid-column: 1 / -1; }
+  .process { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .contact { grid-template-columns: 1fr; gap: var(--space-5); }
 }
