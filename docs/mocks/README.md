@@ -43,7 +43,8 @@ See [the design system](../design-system/README.md).
 - Below the first screen, full width: a "Products" placeholder (one "Coming
   soon" card), "How we work" (the four FaithTech Playbook 2.0 practices: Lament,
   Discern, Build, Steward) and six frequently asked questions as native
-  disclosures. Content inspired by hoshen.dev's section mix.
+  disclosures. Content inspired by hoshen.dev's section mix; its FAQ suggested the timeline and
+  after-launch questions.
 - `loading` and `empty` page states are not applicable (reasons in
   `manifest.json`).
 
