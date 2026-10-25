@@ -30,7 +30,7 @@ The slice runs from the ASP.NET Core host that serves the built Angular app to t
 - **`Hero`** — presentational component in `components`. It renders an optional eyebrow (the home page sets none), the single `h1`, the description paragraph and the notes passed in as `HeroNote` values (an optional bold lead-in plus text).
 - **`VideoPlayer`** — presentational component in `components`. It renders a native `<video>` with controls, a poster, `preload="metadata"`, no autoplay and a captions `<track>`, inside a `<figure>` labelled by the `label` input. `HomePage` places it in the right column above the contact form at 1024px and wider, so it sits beside the hero copy without lengthening the left column; below that width it spans the content between the services and the contact form. The MP4, VTT and poster are static files in the app's `public/` folder, copied from `docs/videos/01-pitch/`.
 - **`ServiceCard`** — presentational component in `components`. It renders one service title, body and icon on a `Card`.
-- **Products section** — `HomePage` composes a `Card` holding a `Badge` ("Coming soon"), an h3 and a paragraph. It is a placeholder until the first product ships; when products exist, each becomes one card in the same section.
+- **`ProductCard`** — presentational component in `components`. It renders an optional status `Badge`, the product title as an h3 and a short body on a `Card`. `HomePage` shows one, marked "Coming soon", as a placeholder until the first product ships; when products exist, each becomes one card in the same section.
 - **`Badge`** — presentational component in `components`. It renders a status word with a dot, so colour is never the only signal.
 - **`ProcessStep`** — presentational component in `components`. It renders one step of the work process on a `Card`: "Step N", the name as an h3, a one-line summary and the practices. `HomePage` places four of them in an `<ol>`, followed by "Then the cycle starts again." and a credit linking to faithtech.com. The four `ProcessStepSummary` values are static copy taken from the mock.
 - **`Disclosure`** — presentational component in `components`. It renders a native `<details>` with the question as its `<summary>` and the answer as a paragraph. The browser supplies the expanded state and keyboard handling, so it needs no script. `HomePage` stacks six of them from static `Question` values.
@@ -86,7 +86,7 @@ The Goodwork API hosts the built Goodwork web app and adds security headers to e
 
 ### Class structure
 
-`HomePage` owns one header, one hero, two service cards, one contact form, one badge, four process steps, six disclosures and one footer. `startProject()` depends on `ContactForm.focusEmail()`.
+`HomePage` owns one header, one hero, two service cards, one contact form, one product card, four process steps, six disclosures and one footer. `startProject()` depends on `ContactForm.focusEmail()`.
 
 ![Class diagram for viewing the home page](diagrams/class-structure.png)
 

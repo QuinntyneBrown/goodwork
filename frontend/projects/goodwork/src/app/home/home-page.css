@@ -6,7 +6,7 @@
   gap: var(--space-10);
   padding-block: var(--space-10) var(--space-12);
 }
-.brochure:focus {
+main:focus {
   outline: none;
 }
 .left {
@@ -24,6 +24,14 @@
   list-style: none;
   padding: 0;
   margin: 0;
+}
+.page-section {
+  padding-block: var(--space-10);
+  border-top: 1px solid var(--color-border-default);
+}
+.product {
+  display: block;
+  max-width: 40rem;
 }
 gw-contact-form {
   scroll-margin-top: calc(var(--layout-topbar-height) + var(--space-4));

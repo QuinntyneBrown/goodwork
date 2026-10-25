@@ -1,37 +1,50 @@
 <gw-skip-link (activated)="skipToContent()" />
 <gw-site-header ctaLabel="Start a project" (ctaActivated)="startProject()" />
-<main #main id="main" tabindex="-1" class="container brochure">
-  <div class="left">
-    <gw-hero
-      heading="Professional apps, at a price a small mission can afford."
-      [lead]="lead"
-      [notes]="notes"
+<main #main id="main" tabindex="-1" class="container">
+  <div class="brochure">
+    <div class="left">
+      <gw-hero
+        heading="Professional apps, at a price a small mission can afford."
+        [lead]="lead"
+        [notes]="notes"
+      />
+      <section aria-labelledby="services-title">
+        <div class="section-head">
+          <h2 id="services-title">What we build</h2>
+        </div>
+        <ul class="services" role="list">
+          @for (service of services; track service.heading) {
+          <li>
+            <gw-service-card
+              [heading]="service.heading"
+              [body]="service.body"
+              [icon]="service.icon"
+            />
+          </li>
+          }
+        </ul>
+      </section>
+    </div>
+    <gw-video-player
+      class="video"
+      src="pitch.mp4"
+      poster="pitch-poster.jpg"
+      captionsSrc="pitch.vtt"
+      label="Goodwork pitch"
     />
-    <section aria-labelledby="services-title">
-      <div class="section-head">
-        <h2 id="services-title">What we build</h2>
-      </div>
-      <ul class="services" role="list">
-        @for (service of services; track service.heading) {
-        <li>
-          <gw-service-card
-            [heading]="service.heading"
-            [body]="service.body"
-            [icon]="service.icon"
-          />
-        </li>
-        }
-      </ul>
-    </section>
+    <gw-contact-form [studioEmail]="studio.email" />
   </div>
-  <gw-video-player
-    class="video"
-    src="pitch.mp4"
-    poster="pitch-poster.jpg"
-    captionsSrc="pitch.vtt"
-    label="Goodwork pitch"
-  />
-  <gw-contact-form [studioEmail]="studio.email" />
+  <section class="page-section" aria-labelledby="products-title">
+    <div class="section-head">
+      <h2 id="products-title">Products</h2>
+    </div>
+    <gw-product-card
+      class="product"
+      status="Coming soon"
+      heading="Ready-made tools for ministries"
+      body="We're building ready-made tools for churches, ministries and non-profits. Ask us about early access when you get in touch."
+    />
+  </section>
 </main>
 <gw-site-footer
   class="container"

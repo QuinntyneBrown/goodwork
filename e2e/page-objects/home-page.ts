@@ -25,6 +25,10 @@ export class HomePage {
   readonly pitchCaptions: Locator;
   readonly contactIntro: Locator;
   readonly messageHelp: Locator;
+  readonly contactSection: Locator;
+  readonly opening: Locator;
+  readonly products: Locator;
+  readonly productCards: Locator;
 
   constructor(readonly page: Page) {
     this.skipLink = page.getByRole('link', { name: 'Skip to content' });
@@ -33,9 +37,7 @@ export class HomePage {
     this.main = page.getByRole('main');
     this.heading = page.getByRole('heading', { level: 1 });
     this.eyebrow = page.getByText('Software for people doing good work');
-    this.serviceCards = page
-      .getByRole('listitem')
-      .filter({ has: page.getByRole('heading', { level: 3 }) });
+    this.serviceCards = page.getByRole('region', { name: 'What we build' }).getByRole('listitem');
     this.serviceCardSurfaces = this.serviceCards.locator('[gwCard]');
     this.footerEmail = page.getByRole('contentinfo').getByRole('link');
     this.pitchVideo = page.locator('video[aria-label="Goodwork pitch"]');
@@ -59,6 +61,10 @@ export class HomePage {
     this.replyHint = page.getByText('We reply within two business days.');
     this.contactIntro = page.getByText('No long forms.');
     this.messageHelp = page.getByText('Who you serve and what you need.');
+    this.contactSection = page.locator('gw-contact-form');
+    this.opening = page.locator('.brochure');
+    this.products = page.getByRole('region', { name: 'Products' });
+    this.productCards = this.products.locator('[gwCard]');
   }
 
   async goto(): Promise<void> {

@@ -54,7 +54,10 @@ class Question <<data>> {
   +question: string
   +answer: string
 }
-class Badge {
+class ProductCard {
+  +status: input<string>
+  +heading: input<string>
+  +body: input<string>
 }
 class ProcessStep {
   +number: input<number>
@@ -86,7 +89,7 @@ HomePage *-- "1" Hero
 HomePage *-- "1" VideoPlayer
 HomePage *-- "2" ServiceCard
 HomePage *-- "1" ContactForm
-HomePage *-- "1" Badge
+HomePage *-- "1" ProductCard
 HomePage *-- "4" ProcessStep
 HomePage *-- "6" Disclosure
 HomePage *-- "1" SiteFooter

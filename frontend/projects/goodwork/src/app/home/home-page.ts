@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, viewChild } from '@angu
 import {
   HeroNote,
   Hero,
+  ProductCard,
   ServiceCard,
   ServiceIcon,
   SiteFooter,
@@ -20,7 +21,16 @@ interface Service {
 
 @Component({
   selector: 'gw-home-page',
-  imports: [ContactForm, Hero, ServiceCard, SiteFooter, SiteHeader, SkipLink, VideoPlayer],
+  imports: [
+    ContactForm,
+    Hero,
+    ProductCard,
+    ServiceCard,
+    SiteFooter,
+    SiteHeader,
+    SkipLink,
+    VideoPlayer,
+  ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
