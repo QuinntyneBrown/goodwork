@@ -41,6 +41,31 @@ class ServiceCard {
   +title: input<string>
   +body: input<string>
 }
+class ProductSummary <<data>> {
+  +title: string
+  +body: string
+}
+class ProcessStepSummary <<data>> {
+  +name: string
+  +summary: string
+  +practices: string
+}
+class Question <<data>> {
+  +question: string
+  +answer: string
+}
+class Badge {
+}
+class ProcessStep {
+  +number: input<number>
+  +name: input<string>
+  +summary: input<string>
+  +practices: input<string>
+}
+class Disclosure {
+  +summary: input<string>
+  +body: input<string>
+}
 class SiteFooter {
   +year: input<number>
   +location: input<string>
@@ -61,7 +86,13 @@ HomePage *-- "1" Hero
 HomePage *-- "1" VideoPlayer
 HomePage *-- "2" ServiceCard
 HomePage *-- "1" ContactForm
+HomePage *-- "1" Badge
+HomePage *-- "4" ProcessStep
+HomePage *-- "6" Disclosure
 HomePage *-- "1" SiteFooter
 HomePage --> "2" ServiceSummary
+HomePage --> "1" ProductSummary
+HomePage --> "4" ProcessStepSummary
+HomePage --> "6" Question
 HomePage ..> ContactForm : startProject() calls focusEmail()
 @enduml
