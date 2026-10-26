@@ -61,7 +61,10 @@ Extracted from [docs/mocks](../mocks/README.md) on 2026-10-23. Open [index.html]
 | [Brand lockup](components/brand-lockup.html) | Standard and reversed. | Default, Focus | pages/home/default |
 | [Hero](components/hero.html) | From the mock. | Default | pages/home/default |
 | [Service card](components/service-card.html) | Pair, from the mock. | Default | pages/home/default |
+| [Product card](components/product-card.html) | With or without a status badge. | Default | pages/home/default |
 | [Video player](components/video-player.html) | Native player with poster and captions. | Default, Focus | pages/home/default |
+| [Disclosure](components/disclosure.html) | One. | Closed, Hover, Focus, Open | pages/home/default |
+| [Process step](components/process-step.html) | One. | Default | pages/home/default |
 
 ## Patterns
 | Pattern | Covers |

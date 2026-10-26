@@ -8,7 +8,11 @@ Goodwork is a small software studio that builds websites and custom applications
 
 **service card** — panel naming one service the studio offers, with a short description
 
-This feature covers everything a visitor sees when the page loads: the header, the hero text, the two service cards and the footer. It also covers the cross-cutting qualities of that page: responsive layout, light and dark themes, accessibility, transport security headers and load performance. The contact form sits inside the page but has its own feature, `contact/submit-contact-request`.
+**opening section** — the hero, services, pitch video and contact form, which must end within the first 1100px at 1280×800
+
+**work process** — the FaithTech Playbook 2.0 cycle of four steps (Lament, Discern, Build, Steward) that the studio follows on every project
+
+This feature covers everything a visitor sees when the page loads: the header, the hero text, the two service cards, the products placeholder, the work process, the frequently asked questions and the footer. It also covers the cross-cutting qualities of that page: responsive layout, light and dark themes, accessibility, transport security headers and load performance. The contact form sits inside the page but has its own feature, `contact/submit-contact-request`.
 
 The page requires no sign-in and fetches no data. It renders complete on first paint. For that reason it has no loading or empty state.
 
@@ -26,6 +30,10 @@ The slice runs from the ASP.NET Core host that serves the built Angular app to t
 - **`Hero`** — presentational component in `components`. It renders an optional eyebrow (the home page sets none), the single `h1`, the description paragraph and the notes passed in as `HeroNote` values (an optional bold lead-in plus text).
 - **`VideoPlayer`** — presentational component in `components`. It renders a native `<video>` with controls, a poster, `preload="metadata"`, no autoplay and a captions `<track>`, inside a `<figure>` labelled by the `label` input. `HomePage` places it in the right column above the contact form at 1024px and wider, so it sits beside the hero copy without lengthening the left column; below that width it spans the content between the services and the contact form. The MP4, VTT and poster are static files in the app's `public/` folder, copied from `docs/videos/01-pitch/`.
 - **`ServiceCard`** — presentational component in `components`. It renders one service title, body and icon on a `Card`.
+- **`ProductCard`** — presentational component in `components`. It renders an optional status `Badge`, the product title as an h3 and a short body on a `Card`. `HomePage` shows one, marked "Coming soon", as a placeholder until the first product ships; when products exist, each becomes one card in the same section.
+- **`Badge`** — presentational component in `components`. It renders a status word with a dot, so colour is never the only signal.
+- **`ProcessStep`** — presentational component in `components`. It renders one step of the work process on a `Card`: "Step N", the name as an h3, a one-line summary and the practices. `HomePage` places four of them in an `<ol>`, followed by "Then the cycle starts again." and a credit linking to faithtech.com. The four `ProcessStepSummary` values are static copy taken from the mock.
+- **`Disclosure`** — presentational component in `components`. It renders a native `<details>` with the question as its `<summary>` and the answer as a paragraph. The browser supplies the expanded state and keyboard handling, so it needs no script. `HomePage` stacks six of them from static `Question` values.
 - **`SiteFooter`** — presentational component in `components`. It renders the copyright year, the location and the studio email as a `mailto:` link.
 - **`ContactForm`** — component in the `domain` library, described in `contact/submit-contact-request`.
 - **Design tokens** — CSS custom properties copied from the design system. The dark palette applies under `prefers-color-scheme: dark` with no script, so no light flash occurs.
@@ -43,10 +51,13 @@ The feature realizes the following level-2 (L2) requirements. Each L2 requiremen
 | L2 ID | Refines (L1) | Requirement |
 |-------|--------------|-------------|
 | `L2-001` | `L1-001` | The page at `/` shall render, without signing in, the header, hero, two service cards, contact section and footer, with copy matching the mock. |
-| `L2-017` | `L1-001` | A narrated pitch video with native controls, a poster and captions shall sit beside the hero copy, never autoplay, and keep the page within the 1100px rule. |
+| `L2-017` | `L1-001` | A narrated pitch video with native controls, a poster and captions shall sit beside the hero copy, never autoplay, and keep the opening section within the 1100px rule. |
+| `L2-018` | `L1-008` | A "Products" section shall hold one "Coming soon" placeholder card below the opening section. |
+| `L2-019` | `L1-008` | A "How we work" section shall list the four FaithTech Playbook 2.0 steps in order, say the cycle starts again and credit faithtech.com. |
+| `L2-020` | `L1-008` | A "Frequently asked questions" section shall offer six closed native disclosures, with no price figures. |
 | `L2-002` | `L1-001` | "Start a project" shall scroll to the contact form and focus the email field, and a "Skip to content" link shall be the first focus stop. |
 | `L2-011` | `L1-004` | The site shall enforce HTTPS with HSTS, send a Content-Security-Policy, `nosniff` and `Referrer-Policy` header on every response, and refuse cross-origin writes. |
-| `L2-012` | `L1-005` | The page shall lay out correctly from below 576px to 1200px and wider, with no horizontal scroll, and shall be no taller than 1100px at 1280×800. |
+| `L2-012` | `L1-005` | The page shall lay out correctly from below 576px to 1200px and wider, with no horizontal scroll, and the opening section shall end within 1100px at 1280×800. |
 | `L2-013` | `L1-005` | The page shall follow the operating system's light or dark preference with no flash, and every pair shall meet WCAG 2.2 AA contrast. |
 | `L2-014` | `L1-006` | The page shall meet WCAG 2.2 AA in every state, including keyboard order, visible focus, announcements, heading order and reduced motion. |
 | `L2-015` | `L1-007` | The page shall reach LCP under 2.5 s, CLS under 0.1 and INP under 200 ms on a mid-range phone over 4G, with initial JavaScript under 200 KB and self-hosted fonts. |
@@ -75,7 +86,7 @@ The Goodwork API hosts the built Goodwork web app and adds security headers to e
 
 ### Class structure
 
-`HomePage` owns one header, one hero, two service cards, one contact form and one footer. `startProject()` depends on `ContactForm.focusEmail()`.
+`HomePage` owns one header, one hero, two service cards, one contact form, one product card, four process steps, six disclosures and one footer. `startProject()` depends on `ContactForm.focusEmail()`.
 
 ![Class diagram for viewing the home page](diagrams/class-structure.png)
 

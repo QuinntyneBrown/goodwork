@@ -1,7 +1,7 @@
 // Acceptance Test
 // Traces to: L2-012
 // Description: The page lays out correctly from extra small to extra large viewports,
-// never scrolls horizontally, and fits in 1100 px at 1280x800.
+// never scrolls horizontally, and the opening section ends within 1100 px at 1280x800.
 
 import { expect, test } from '../fixtures/test';
 
@@ -88,7 +88,9 @@ test.describe('Responsive layout', () => {
     expect(second?.height).toBe(first?.height);
   });
 
-  test('XL: two columns and the whole page fits in 1100 px at 1280x800', async ({ home }) => {
+  test('XL: two columns and the opening section ends within 1100 px at 1280x800', async ({
+    home,
+  }) => {
     await home.page.setViewportSize({ width: 1280, height: 800 });
     await home.goto();
 
@@ -98,7 +100,7 @@ test.describe('Responsive layout', () => {
     const hero = await home.heading.boundingBox();
     expect(contact?.x).toBeGreaterThan((hero?.x ?? 0) + (hero?.width ?? 0) - 1);
 
-    const height = await home.page.evaluate(() => document.documentElement.scrollHeight);
-    expect(height).toBeLessThanOrEqual(1100);
+    const opening = await home.opening.boundingBox();
+    expect((opening?.y ?? 0) + (opening?.height ?? 0)).toBeLessThanOrEqual(1100);
   });
 });

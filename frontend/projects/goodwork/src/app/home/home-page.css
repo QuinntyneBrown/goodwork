@@ -6,7 +6,7 @@
   gap: var(--space-10);
   padding-block: var(--space-10) var(--space-12);
 }
-.brochure:focus {
+main:focus {
   outline: none;
 }
 .left {
@@ -25,11 +25,66 @@
   padding: 0;
   margin: 0;
 }
+.page-section {
+  padding-block: var(--space-10);
+  border-top: 1px solid var(--color-border-default);
+}
+.product {
+  display: block;
+  max-width: 40rem;
+}
+.section-lead {
+  font: var(--text-body);
+  color: var(--color-fg-muted);
+  max-width: var(--layout-measure);
+  text-wrap: pretty;
+}
+.process {
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.cycle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+  font: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+}
+.cycle svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
+  fill: none;
+  stroke: var(--color-fg-gold);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.credit {
+  margin-top: var(--space-2);
+  font: var(--text-body-sm);
+  color: var(--color-fg-muted);
+}
+.credit a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  color: inherit;
+}
+.faq {
+  max-width: var(--layout-measure);
+  border-top: 1px solid var(--color-border-default);
+}
 gw-contact-form {
   scroll-margin-top: calc(var(--layout-topbar-height) + var(--space-4));
 }
 @media (min-width: 48rem) {
-  .services {
+  .services,
+  .process {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -51,5 +106,8 @@ gw-contact-form {
   gw-contact-form {
     grid-column: 2;
     grid-row: 2;
+  }
+  .process {
+    grid-template-columns: repeat(4, 1fr);
   }
 }

@@ -1,8 +1,9 @@
 # Goodwork mocks
 
-Static HTML mocks for the Goodwork brochure page: a single page, no taller than
-1100px at desktop width, with a short company description, two services and a
-contact request form.
+Static HTML mocks for the Goodwork brochure page: a single page whose opening
+section (a short company description, two services, the pitch video and a
+contact request form) ends within 1100px at desktop width, followed by a
+products placeholder, the work process and frequently asked questions.
 
 <!-- Cast & catalog
   Company:   Goodwork, Toronto, Ontario · hello@goodwork.rocks
@@ -37,8 +38,13 @@ See [the design system](../design-system/README.md).
 - Services: web and mobile apps; websites.
 - Contact form: email and message only. States: default, invalid, sending,
   sent, error. Replies promised within two business days.
-- The 1100px height limit applies at 1280px wide; phone and tablet stack and
-  scroll naturally.
+- The 1100px height limit applies to the opening section at 1280px wide; phone
+  and tablet stack and scroll naturally.
+- Products: a placeholder card marked "Coming soon" until the first product
+  ships.
+- Work process: the FaithTech Playbook 2.0 cycle (Lament, Discern, Build,
+  Steward), credited with a link to faithtech.com.
+- FAQ: native `details`/`summary` disclosures, all closed on load.
 - `loading` and `empty` page states are not applicable (reasons in
   `manifest.json`).
 

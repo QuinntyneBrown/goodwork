@@ -25,6 +25,16 @@ export class HomePage {
   readonly pitchCaptions: Locator;
   readonly contactIntro: Locator;
   readonly messageHelp: Locator;
+  readonly contactSection: Locator;
+  readonly opening: Locator;
+  readonly products: Locator;
+  readonly productCards: Locator;
+  readonly process: Locator;
+  readonly processSteps: Locator;
+  readonly processCycle: Locator;
+  readonly processCredit: Locator;
+  readonly faq: Locator;
+  readonly faqQuestions: Locator;
 
   constructor(readonly page: Page) {
     this.skipLink = page.getByRole('link', { name: 'Skip to content' });
@@ -33,9 +43,7 @@ export class HomePage {
     this.main = page.getByRole('main');
     this.heading = page.getByRole('heading', { level: 1 });
     this.eyebrow = page.getByText('Software for people doing good work');
-    this.serviceCards = page
-      .getByRole('listitem')
-      .filter({ has: page.getByRole('heading', { level: 3 }) });
+    this.serviceCards = page.getByRole('region', { name: 'What we build' }).getByRole('listitem');
     this.serviceCardSurfaces = this.serviceCards.locator('[gwCard]');
     this.footerEmail = page.getByRole('contentinfo').getByRole('link');
     this.pitchVideo = page.locator('video[aria-label="Goodwork pitch"]');
@@ -59,6 +67,16 @@ export class HomePage {
     this.replyHint = page.getByText('We reply within two business days.');
     this.contactIntro = page.getByText('No long forms.');
     this.messageHelp = page.getByText('Who you serve and what you need.');
+    this.contactSection = page.locator('gw-contact-form');
+    this.opening = page.locator('.brochure');
+    this.products = page.getByRole('region', { name: 'Products' });
+    this.productCards = this.products.locator('[gwCard]');
+    this.process = page.getByRole('region', { name: 'How we work' });
+    this.processSteps = this.process.getByRole('list').getByRole('listitem');
+    this.processCycle = this.process.getByText('Then the cycle starts again.');
+    this.processCredit = this.process.getByRole('link', { name: 'FaithTech Playbook 2.0' });
+    this.faq = page.getByRole('region', { name: 'Frequently asked questions' });
+    this.faqQuestions = this.faq.locator('summary');
   }
 
   async goto(): Promise<void> {
@@ -80,6 +98,18 @@ export class HomePage {
 
   async submit(): Promise<void> {
     await this.page.getByRole('button', { name: /Send request|Try again/ }).click();
+  }
+
+  faqQuestion(question: string): Locator {
+    return this.faqQuestions.filter({ hasText: question });
+  }
+
+  /** The answer under a question; hidden while the question is closed. */
+  faqAnswer(question: string): Locator {
+    return this.faq
+      .locator('details')
+      .filter({ has: this.page.locator('summary', { hasText: question }) })
+      .locator('p');
   }
 
   /** The message shown beside a field (not the matching link in the error summary). */

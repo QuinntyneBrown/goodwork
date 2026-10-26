@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  height: 100%;
+}
+.product {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  height: 100%;
+}
+gw-badge {
+  justify-self: start;
+}
+.title {
+  font: var(--text-h4);
+}
+.body {
+  font: var(--text-body-sm);
+  color: var(--color-fg-muted);
+  text-wrap: pretty;
+}
