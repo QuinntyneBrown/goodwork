@@ -119,6 +119,16 @@ Rules:
 - Reuse existing classes in `slides.css` (e.g. `kicker`, `lead`, `quote`, `muted`, `small`, `cols`, `card`, `file`, `tag`, `steps`, `question`, `recap`). Add a class only if none fits, and check it doesn't change other decks.
 - If no shared stylesheet/runtime exists, create them first: 1920x1080 slides, one visible at a time, `?slide=N` or hash navigation so the renderer can screenshot each slide, header label and progress bar from `data-parts`.
 
+## Film decks (animated)
+
+For a short promotional piece, a deck can be a film instead of stills: `<body data-film data-narration="NN-topic.mp3" data-music="...">`, loading `assets/film.css` and `assets/film.js` (and a generated `timing.js`) in place of `slides.js`. Copy the head and foot of an existing film deck.
+
+- The builder renders it frame by frame at 60 fps through `FILM.seek(seconds)`: a WebGPU background that follows the music, WebGL transitions over each cut, and DOM entrances. Never use CSS animation or transitions in a film deck; every moving value must be a function of film time.
+- `data-cue` still places each `<section>`; the cut moves onto the nearest beat of the music. `data-transition="bricks|sweep|mark"` picks the wipe into a section, and `class="dark"` its ground.
+- `data-in="words|rise|pop|mark"` gives an element its entrance; `data-at="verbatim script phrase"` starts it on the narration, `data-beat="n"` on the scene's nth beat.
+- `--check` writes `timing.js` and prints the cuts and phrase times; `--frame <seconds> <png>` renders one frame. Look at frames either side of every cut before the full build.
+- Needs Playwright's Chromium (`e2e/node_modules`) with working WebGPU; the builder stops if the background cannot draw. Commit `timing.js` with the deck.
+
 ## Tooling
 
 Keep two small scripts under `tools/` (language of the repo's choice; a .NET single-file app, Node or Python all work):

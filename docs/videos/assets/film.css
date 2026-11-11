@@ -1,0 +1,142 @@
+/* Film decks (<body data-film>, run by film.js): loaded after slides.css and brand.css.
+   The slides lose their own ground and sit between two canvases: the WebGPU background beneath
+   them and the WebGL transitions above. Nothing here animates; film.js sets every moving value
+   from film time. */
+
+html,
+body {
+  background: #1e2d2a;
+}
+
+body > section {
+  background: none;
+  z-index: 1;
+}
+
+/* Without WebGPU the live deck keeps the brand's flat grounds. */
+body.no-webgpu > section {
+  background: var(--page);
+}
+
+body.no-webgpu > section.dark {
+  background: var(--ink);
+}
+
+#film-field,
+#film-wipes {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1920px;
+  height: 1080px;
+  transform: scale(var(--fit));
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+#film-wipes {
+  z-index: 2;
+}
+
+/* Slides on Evergreen Ink. */
+body > section.dark {
+  color: var(--page);
+}
+
+section.dark .eyebrow,
+section.dark .url {
+  color: #d9a851; /* --palette-gold-300: the gold that passes contrast on ink */
+}
+
+/* The mark is drawn inline here so film.js can move its stones one by one. */
+.brand-mark {
+  background: none;
+}
+
+.brand-mark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.brand-mark rect {
+  fill: currentColor;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.brand-mark rect.gold {
+  fill: var(--coral);
+}
+
+section.dark .brand-mark rect.gold {
+  fill: #d9a851;
+}
+
+/* Masked words: each word rises from behind the bottom of its own box. The padding keeps
+   ascenders and descenders inside the mask. */
+.w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding: 0.12em 0.04em 0.16em;
+  margin: -0.12em -0.04em -0.16em;
+}
+
+.wi {
+  display: inline-block;
+  will-change: transform;
+}
+
+[data-in] {
+  will-change: transform, opacity;
+}
+
+.display .line {
+  display: block;
+}
+
+.display.stack {
+  font-size: 96px;
+  display: grid;
+  gap: 18px;
+}
+
+/* Live playback only. */
+#film-play {
+  position: absolute;
+  left: calc(960px * var(--fit));
+  top: calc(540px * var(--fit));
+  translate: -50% -50%;
+  z-index: 3;
+  padding: 0.6em 1.4em;
+  border: 0;
+  border-radius: 999px;
+  background: #1e2d2a;
+  color: #f5f0e6;
+  font: 600 calc(40px * var(--fit)) / 1 var(--sans);
+  cursor: pointer;
+}
+
+#film-play:focus-visible {
+  outline: 4px solid #d9a851;
+  outline-offset: 4px;
+}
+
+.film-error {
+  position: absolute;
+  z-index: 4;
+  margin: 40px;
+  color: #f5f0e6;
+  font-size: 28px;
+}
+
+/* The bullets share a left edge, and the list sits centred as a block. */
+[data-film] .points {
+  text-align: left;
+}
+
+[data-film] .points li::before {
+  scale: calc(1 + 0.3 * var(--beat, 0));
+}
