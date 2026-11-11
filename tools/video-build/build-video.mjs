@@ -15,20 +15,32 @@
 // is shorter, at data-music-db (default -10.8 dB), faded in over 1.5 s. The last slide holds 3 s
 // after the narration so the music plays on and fades out over the last 2 s.
 //
+// A film deck (<body data-film>, run by docs/videos/assets/film.js) is not a set of stills: it is
+// rendered frame by frame at 60 fps. The builder first writes timing.js beside the deck - each
+// scene's start (its data-cue, moved onto the nearest beat of the music), the time of every
+// data-at phrase (exact at the narration's pauses) and the music's beats, hits and loudness
+// (analyze-music.mjs) - then seeks the page through FILM.seek and pipes the frames to ffmpeg.
+// --check writes timing.js and prints the schedule; --slides-only renders one settled PNG a scene.
+// Film decks need Playwright's Chromium (e2e/node_modules) for WebGPU and WebGL.
+//
 // Needs the manifest written by tools/video-audio (run it first), Chrome/Chromium (EDGE_PATH
 // or CHROME_PATH override; Playwright's bundled Chromium is found automatically) and ffmpeg
 // with libx264 and libass (FFMPEG_PATH override).
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawn, spawnSync } from "node:child_process";
+import { once } from "node:events";
+import { createRequire } from "node:module";
 import {
   existsSync,
   mkdirSync,
   readFileSync,
   readdirSync,
+  renameSync,
   rmSync,
   writeFileSync,
 } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { analyzeMusic, ENVELOPE_RATE } from "./analyze-music.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const repo = resolve(here, "../..");
@@ -41,6 +53,8 @@ const MUSIC_DB = -10.8;
 const MUSIC_FADE_IN = 1.5;
 const MUSIC_FADE_OUT = 2;
 const MUSIC_TAIL = 3;
+const FILM_FPS = 60;
+const BEAT_SNAP = 0.3;
 
 function findBrowser() {
   const override = process.env.EDGE_PATH ?? process.env.CHROME_PATH;
@@ -121,9 +135,75 @@ function parseMusic(html, folder) {
   return { file, db: Number(attr("data-music-db") ?? MUSIC_DB) };
 }
 
-/** data-cue → seconds: a `##` heading is its section's start; text inside a paragraph is
- *  interpolated by words. Every cue must be unique in the script. */
-function resolveCues(slides, manifest) {
+/** When word `k` of a paragraph's `total` is spoken: by word count, inside the phrase that holds
+ *  it when the pauses were measured (measurePhrases), else across the whole paragraph. */
+function wordTime(b, k, total) {
+  const p = b.phrases?.find((x) => k >= x.from && k < x.to) ?? {
+    from: 0,
+    to: total,
+    start: b.start,
+    end: b.end,
+  };
+  return p.start + ((p.end - p.start) * (k - p.from)) / (p.to - p.from);
+}
+
+/** Every place a cue occurs in the script: a `##` heading is its section's start; text inside a
+ *  paragraph is interpolated by words. */
+function findCue(text, manifest) {
+  const cue = norm(text);
+  const hits = [];
+  for (const sec of manifest.sections) {
+    if (norm(sec.title) === cue) hits.push(sec.start);
+    for (const b of sec.blocks) {
+      const spoken = norm(b.text);
+      const total = spoken.split(" ").length;
+      let at = spoken.indexOf(cue);
+      while (at !== -1) {
+        const before = spoken.slice(0, at).split(" ").filter(Boolean).length;
+        hits.push(wordTime(b, before, total));
+        at = spoken.indexOf(cue, at + 1);
+      }
+    }
+  }
+  return hits;
+}
+
+/** Splits every paragraph into its phrases (at , . ; : ! ?) and times each one from the pauses
+ *  in the narration itself, so a cue lands on its word rather than on a word-count estimate.
+ *  A paragraph with fewer pauses than phrase breaks keeps the estimate. */
+function measurePhrases(manifest, mp3) {
+  const log = spawnSync(
+    ffmpeg,
+    ["-hide_banner", "-i", mp3, "-af", "silencedetect=noise=-35dB:d=0.12", "-f", "null", "-"],
+    { encoding: "utf8" },
+  ).stderr;
+  const starts = [...log.matchAll(/silence_start: ([\d.]+)/g)].map((m) => Number(m[1]));
+  const ends = [...log.matchAll(/silence_end: ([\d.]+)/g)].map((m) => Number(m[1]));
+  const pauses = ends.map((end, i) => ({ start: starts[i], end }));
+  for (const b of manifest.sections.flatMap((sec) => sec.blocks)) {
+    const words = norm(b.text).split(" ");
+    const breaks = words.flatMap((w, i) => (/[,.;:!?]$/.test(w) && i + 1 < words.length ? [i + 1] : []));
+    // The speech itself: the paragraph without the silence at either end.
+    const from = pauses.find((p) => p.start <= b.start + 0.05 && p.end > b.start)?.end ?? b.start;
+    const to = pauses.find((p) => p.start < b.end && p.end >= b.end - 0.05)?.start ?? b.end;
+    const inside = pauses
+      .filter((p) => p.start > from && p.end < to)
+      .sort((x, y) => y.end - y.start - (x.end - x.start))
+      .slice(0, breaks.length)
+      .sort((x, y) => x.start - y.start);
+    if (inside.length < breaks.length) continue;
+    b.phrases = [0, ...breaks].map((wordFrom, i) => ({
+      from: wordFrom,
+      to: breaks[i] ?? words.length,
+      start: i ? inside[i - 1].end : from,
+      end: inside[i]?.start ?? to,
+    }));
+  }
+}
+
+/** data-cue → seconds, `lead` seconds early. Every cue must be unique in the script and in
+ *  narration order. */
+function resolveCues(slides, manifest, lead = 0.15) {
   const errors = [];
   let last = -1;
   for (const s of slides) {
@@ -135,25 +215,7 @@ function resolveCues(slides, manifest) {
       errors.push(`slide ${s.index + 1} (#${s.id}) has no data-cue`);
       continue;
     }
-    const cue = norm(s.cue);
-    const hits = [];
-    for (const sec of manifest.sections) {
-      if (norm(sec.title) === cue)
-        hits.push({ t: sec.start, where: `## ${sec.title}` });
-      for (const b of sec.blocks) {
-        const text = norm(b.text);
-        let at = text.indexOf(cue);
-        while (at !== -1) {
-          const before = text.slice(0, at).split(" ").filter(Boolean).length;
-          const total = text.split(" ").length;
-          hits.push({
-            t: b.start + ((b.end - b.start) * before) / total,
-            where: text.slice(0, 50),
-          });
-          at = text.indexOf(cue, at + 1);
-        }
-      }
-    }
+    const hits = findCue(s.cue, manifest);
     if (hits.length === 0)
       errors.push(
         `slide ${s.index + 1} (#${s.id}): cue not found in script: "${s.cue}"`,
@@ -163,7 +225,7 @@ function resolveCues(slides, manifest) {
         `slide ${s.index + 1} (#${s.id}): cue is not unique (${hits.length} matches): "${s.cue}"`,
       );
     else {
-      s.start = Math.max(0, hits[0].t - 0.15);
+      s.start = Math.max(0, hits[0] - lead);
       if (s.start <= last)
         errors.push(
           `slide ${s.index + 1} (#${s.id}): cue is out of narration order`,
@@ -332,7 +394,160 @@ function renderSlides(slidesFile, slides, outDir) {
   process.stdout.write("\n");
 }
 
-function main() {
+/** The filter graph that lays the music (input `musicInput`) under the narration (input 1):
+ *  the narration is padded with the tail's silence and the mix keeps that length. */
+function musicGraph(music, musicInput, total, tail) {
+  const fadeOut = Math.max(0, total - MUSIC_FADE_OUT);
+  return [
+    `[${musicInput}:a]volume=${music.db}dB,afade=t=in:d=${MUSIC_FADE_IN},` +
+      `afade=t=out:st=${fadeOut.toFixed(3)}:d=${MUSIC_FADE_OUT}[m]`,
+    `[1:a]apad=pad_dur=${tail}[n]`,
+    `[n][m]amix=inputs=2:duration=first:normalize=0[a]`,
+  ];
+}
+
+/** A film deck: write timing.js, then render the page frame by frame. */
+async function buildFilm({ args, folder, name, cache, manifest, html, slides, music }) {
+  const mp3 = join(folder, `${name}.mp3`);
+  const tail = music ? MUSIC_TAIL : 0;
+  const total = manifest.duration + tail;
+  measurePhrases(manifest, mp3);
+  const errors = resolveCues(slides, manifest, 0);
+
+  // Scenes cut on the beat nearest their cue; phrases inside a scene keep the narration's time.
+  const analysis = music
+    ? analyzeMusic(music.file, total)
+    : { bpm: 0, beats: [], hits: [], envelope: [] };
+  for (const s of slides.slice(1)) {
+    const beat = analysis.beats.reduce(
+      (best, b) => (Math.abs(b - s.start) < Math.abs(best - s.start) ? b : best),
+      Infinity,
+    );
+    s.cueTime = s.start;
+    if (Math.abs(beat - s.start) <= BEAT_SNAP) s.start = beat;
+  }
+  slides.forEach((s, i) => (s.end = slides[i + 1]?.start ?? total));
+  const at = {};
+  for (const [, phrase] of html.matchAll(/data-at="([^"]*)"/g)) {
+    const hits = findCue(phrase, manifest);
+    if (hits.length !== 1)
+      errors.push(`data-at="${phrase}" matches ${hits.length} places in the script; it must match one`);
+    else at[phrase] = Number(Math.max(0, hits[0] - 0.1).toFixed(3));
+  }
+  if (errors.length) throw new Error(errors.join("\n"));
+
+  const timing = {
+    duration: Number(total.toFixed(3)),
+    scenes: slides.map((s) => ({ id: s.id, start: Number(s.start.toFixed(3)) })),
+    at,
+    music: { ...analysis, envelopeRate: ENVELOPE_RATE },
+  };
+  writeFileSync(
+    join(folder, "timing.js"),
+    `// Generated by tools/video-build/build-video.mjs. Do not edit.\nwindow.FILM_TIMING = ${JSON.stringify(timing)};\n`,
+  );
+
+  console.log(`${manifest.title} — film, ${slides.length} scenes, ${mmss(total)}, ${FILM_FPS} fps`);
+  for (const s of slides) {
+    const moved = s.cueTime === undefined || s.cueTime === s.start ? "" : `  (cue ${s.cueTime.toFixed(2)} s, cut on the beat)`;
+    console.log(
+      `  ${String(s.index + 1).padStart(2)}  ${s.start.toFixed(2).padStart(6)} s  ${(s.end - s.start).toFixed(1).padStart(5)} s  #${s.id}${moved}`,
+    );
+  }
+  for (const [phrase, t] of Object.entries(at)) console.log(`  ${t.toFixed(2).padStart(10)} s  "${phrase}"`);
+  if (music)
+    console.log(
+      `  music: ${basename(music.file)} at ${music.db} dB, ${analysis.bpm} BPM, ${analysis.beats.length} beats, ${analysis.hits.length} hits`,
+    );
+  if (args.includes("--check")) return;
+
+  // WebGPU needs a secure context (file:// is one) and, in headless Chromium, the unsafe flag.
+  // On macOS both APIs run on Metal; elsewhere they fall back to SwiftShader.
+  const { chromium } = createRequire(join(repo, "e2e/"))("playwright");
+  const browser = await chromium.launch({
+    args: [
+      "--enable-unsafe-webgpu",
+      "--ignore-gpu-blocklist",
+      ...(process.platform === "darwin" ? ["--use-angle=metal"] : ["--enable-unsafe-swiftshader"]),
+    ],
+  });
+  try {
+    const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
+    const pageErrors = [];
+    page.on("pageerror", (e) => pageErrors.push(e.message));
+    await page.goto(`${pathToFileURL(join(folder, "slides.html")).href}?render=1`);
+    await page.waitForFunction(() => window.FILM, null, { timeout: 10000 }).catch(() => {});
+    if (pageErrors.length) throw new Error(pageErrors.join("; "));
+    await page.evaluate(() => window.FILM.ready);
+    const filmErrors = await page.evaluate(() => window.FILM.errors);
+    if (filmErrors.length || pageErrors.length) throw new Error([...filmErrors, ...pageErrors].join("; "));
+    const frame = async (t, options) => {
+      const lost = await page.evaluate(async (x) => {
+        await window.FILM.seek(x);
+        return window.FILM.errors;
+      }, t);
+      if (lost.length) throw new Error(lost.join("; "));
+      return page.screenshot(options);
+    };
+
+    if (args.includes("--frame")) {
+      const i = args.indexOf("--frame");
+      await frame(Number(args[i + 1]), { path: resolve(args[i + 2]) });
+      return;
+    }
+    if (args.includes("--slides-only")) {
+      // One still a scene, late enough that everything has landed.
+      const out = join(cache, "slides");
+      rmSync(out, { recursive: true, force: true });
+      mkdirSync(out, { recursive: true });
+      for (const s of slides)
+        await frame(s.end - 0.6, { path: join(out, `${String(s.index + 1).padStart(3, "0")}.png`) });
+      console.log(`rendered ${slides.length} PNGs to .cache/${name}/slides/`);
+      return;
+    }
+
+    const events = captionEvents(manifest);
+    const ass = join(cache, "captions.ass");
+    writeAss(events, ass);
+    writeSrt(events, join(cache, "captions.srt"));
+    const burn = !args.includes("--no-captions");
+    const mp4 = join(folder, `${name}.mp4`);
+    const partial = join(cache, `${name}.partial.mp4`);
+    const encoder = spawn(
+      ffmpeg,
+      [
+        "-y", "-v", "error",
+        "-f", "image2pipe", "-c:v", "mjpeg", "-framerate", String(FILM_FPS), "-i", "pipe:0",
+        "-i", mp3,
+        ...(music ? ["-stream_loop", "-1", "-i", music.file] : []),
+        "-filter_complex",
+        [`[0:v]${burn ? `ass=${basename(ass)},` : ""}format=yuv420p[out]`, ...(music ? musicGraph(music, 2, total, tail) : [])].join(";"),
+        "-map", "[out]", "-map", music ? "[a]" : "1:a",
+        "-c:v", "libx264", "-preset", "slow", "-crf", "24",
+        "-c:a", "aac", "-b:a", "128k",
+        "-movflags", "+faststart", "-t", total.toFixed(3),
+        partial,
+      ],
+      { stdio: ["pipe", "inherit", "inherit"], cwd: cache },
+    );
+    const frames = Math.round(total * FILM_FPS);
+    for (let i = 0; i < frames; i++) {
+      const jpeg = await frame(i / FILM_FPS, { type: "jpeg", quality: 96 });
+      if (!encoder.stdin.write(jpeg)) await once(encoder.stdin, "drain");
+      if (i % 300 === 0) console.log(`  frame ${i}/${frames}`);
+    }
+    encoder.stdin.end();
+    const [code] = await once(encoder, "close");
+    if (code !== 0) throw new Error("ffmpeg failed");
+    rmSync(mp4, { force: true });
+    renameSync(partial, mp4);
+    console.log(`wrote ${mp4}`);
+  } finally {
+    await browser.close();
+  }
+}
+
+async function main() {
   const args = process.argv.slice(2);
   const folder = resolve(args.find((a) => !a.startsWith("--")) ?? "");
   const name = basename(folder);
@@ -345,6 +560,8 @@ function main() {
   const html = readFileSync(slidesFile, "utf8");
   const slides = parseSlides(html);
   const music = parseMusic(html, folder);
+  if (/<body\b[^>]*\bdata-film\b/.test(html))
+    return buildFilm({ args, folder, name, cache, manifest, html, slides, music });
 
   const errors = resolveCues(slides, manifest);
   if (errors.length) throw new Error(errors.join("\n"));
@@ -490,15 +707,7 @@ function main() {
   // with the tail's silence and the mix keeps that length (duration=first), so -shortest still
   // ends the file with the speech plus the tail.
   const musicInput = 2 + clips.length;
-  if (music) {
-    const fadeOut = Math.max(0, total - MUSIC_FADE_OUT);
-    graph.push(
-      `[${musicInput}:a]volume=${music.db}dB,afade=t=in:d=${MUSIC_FADE_IN},` +
-        `afade=t=out:st=${fadeOut.toFixed(3)}:d=${MUSIC_FADE_OUT}[m]`,
-      `[1:a]apad=pad_dur=${tail}[n]`,
-      `[n][m]amix=inputs=2:duration=first:normalize=0[a]`,
-    );
-  }
+  if (music) graph.push(...musicGraph(music, musicInput, total, tail));
   execFileSync(
     ffmpeg,
     [
@@ -538,9 +747,7 @@ function main() {
   console.log(`wrote ${mp4}`);
 }
 
-try {
-  main();
-} catch (e) {
+main().catch((e) => {
   console.error(e.message);
   process.exit(1);
-}
+});

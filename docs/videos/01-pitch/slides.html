@@ -3,38 +3,44 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Video 01 Slides</title>
+<title>Video 01 · Goodwork pitch</title>
 <link rel="stylesheet" href="../assets/slides.css">
 <link rel="stylesheet" href="../assets/brand.css">
+<link rel="stylesheet" href="../assets/film.css">
 </head>
-<body data-video-number="01" data-video-title="Goodwork pitch" data-parts="Introduction|Why it costs less|Closing" data-music="../assets/music/inspiring-acoustic-corporate.mp3">
+<body data-film data-video-number="01" data-video-title="Goodwork pitch" data-parts="Introduction|Why it costs less|Closing" data-narration="01-pitch.mp3" data-music="../assets/music/inspiring-acoustic-corporate.mp3">
 
 <section id="title" data-part="0">
-  <div class="brand"><span class="brand-mark"></span>Goodwork</div>
-  <p class="eyebrow">Software for people doing good work</p>
-  <h1 class="display">Professional apps, at a price a small mission can afford.</h1>
+  <div class="brand"><span class="brand-mark" data-in="mark"></span><span data-in="rise">Goodwork</span></div>
+  <p class="eyebrow" data-in="rise" data-beat="1">Software for people doing good work</p>
+  <h1 class="display" data-in="words" data-beat="2">Professional apps, at a price a small mission can afford.</h1>
 </section>
 
-<section id="who" data-part="0" data-cue="and companies whose work">
-  <p class="eyebrow">Who we serve</p>
-  <h2 class="display">Non-profits. Churches and ministries. Companies whose work makes life better for someone.</h2>
+<section id="who" class="dark" data-part="0" data-cue="and companies whose work" data-transition="bricks">
+  <p class="eyebrow" data-in="rise">Who we serve</p>
+  <h2 class="display stack">
+    <span class="line" data-in="words" data-beat="1">Non-profits.</span>
+    <span class="line" data-in="words" data-beat="2">Churches and ministries.</span>
+    <span class="line" data-in="words" data-beat="3">Companies whose work makes life better for someone.</span>
+  </h2>
 </section>
 
-<section id="why" data-part="1" data-cue="A small senior team">
-  <p class="eyebrow">Why it costs less</p>
+<section id="why" data-part="1" data-cue="A small senior team" data-transition="sweep">
+  <p class="eyebrow" data-in="rise">Why it costs less</p>
   <ul class="points">
-    <li>A small, senior team with low overhead</li>
-    <li>A modern, AI-assisted, spec-driven process</li>
-    <li>A fixed-price quote before any work starts</li>
+    <li data-in="rise" data-at="A small senior team">A small, senior team with low overhead</li>
+    <li data-in="rise" data-at="an AI-assisted process">A modern, AI-assisted, spec-driven process</li>
+    <li data-in="rise" data-at="and a fixed-price quote">A fixed-price quote before any work starts</li>
   </ul>
 </section>
 
-<section id="outro" data-part="2" data-cue="Agency quality, without the agency price">
-  <span class="brand-mark large"></span>
-  <h2 class="display">Agency quality, without the agency price.</h2>
-  <p class="url">goodwork.rocks · hello@goodwork.rocks</p>
+<section id="outro" class="dark" data-part="2" data-cue="Agency quality, without the agency price" data-transition="mark">
+  <span class="brand-mark large" data-in="mark" data-beat="1"></span>
+  <h2 class="display" data-in="words" data-beat="2">Agency quality, without the agency price.</h2>
+  <p class="url" data-in="pop" data-at="Start a project at">goodwork.rocks · hello@goodwork.rocks</p>
 </section>
 
-<script src="../assets/slides.js"></script>
+<script src="timing.js"></script>
+<script src="../assets/film.js"></script>
 </body>
 </html>

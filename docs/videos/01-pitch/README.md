@@ -1,6 +1,6 @@
 # 01 · Goodwork pitch
 
-> **Runtime:** ~0:26 · **Audience:** prospective clients visiting the brochure page · **Prerequisites:** none
+> **Runtime:** ~0:26 · **Format:** 1920×1080, 60 fps · **Audience:** prospective clients visiting the brochure page · **Prerequisites:** none
 
 **Video:** [01-pitch.mp4](01-pitch.mp4) · [Slides](slides.html) · **Audio:** [01-pitch.mp3](01-pitch.mp3) · [Transcript](script.md) · [Captions](01-pitch.vtt)
 
@@ -26,20 +26,26 @@ By the end, the viewer can:
 
 ## Code / assets on screen
 
-| File                                                        | What to show                                                                    |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `docs/detailed-designs/logo.svg`                            | The Cornerstone mark on the title and closing slides.                           |
-| `docs/mocks/pages/home/default.html`                        | Source of every line of copy: eyebrow, headline, "Why it costs less", services. |
-| `docs/videos/assets/music/inspiring-acoustic-corporate.mp3` | Background music under the narration (Universfield, Pixabay Content License).   |
+| File                                                        | What to show                                                                                           |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `docs/detailed-designs/logo.svg`                            | The Cornerstone mark on the title and closing slides.                                                  |
+| `docs/mocks/pages/home/default.html`                        | Source of every line of copy: eyebrow, headline, "Why it costs less", services.                        |
+| `docs/videos/assets/music/inspiring-acoustic-corporate.mp3` | Background music under the narration (Universfield, Pixabay Content License); its beats time the cuts. |
 
 ## Run sheet
 
-| Time        | Segment           | Content                                                                                    |
-| ----------- | ----------------- | ------------------------------------------------------------------------------------------ |
-| 00:00-00:04 | Title             | Mark, eyebrow, headline.                                                                   |
-| 00:04-00:09 | Who we serve      | The three audiences.                                                                       |
-| 00:09-00:16 | Why it costs less | Three bullets.                                                                             |
-| 00:16-00:26 | Closing           | Mark, "Agency quality, without the agency price.", goodwork.rocks; music plays on for 3 s. |
+The deck is a film (`<body data-film>`, see [the videos README](../README.md)): every frame is
+drawn from film time. The music runs at 120 BPM and every cut sits on the beat nearest its cue.
+
+| Time        | Segment           | Content                                                                                                                          | Into it                           |
+| ----------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| 00:00-00:05 | Title             | The mark's stones land, then the eyebrow and the headline rise on the next two beats.                                            | Opens on the background           |
+| 00:05-00:09 | Who we serve      | On ink. The three audiences rise on three consecutive beats.                                                                     | Brick wipe (WebGL), cut at 5.54 s |
+| 00:09-00:17 | Why it costs less | Each bullet rises as the narration names it (9.3 s, 10.9 s, 12.8 s); their gold stones swell on the beat.                        | Gold sweep (WebGL), cut at 9.53 s |
+| 00:17-00:26 | Closing           | On ink. The mark, "Agency quality, without the agency price.", then goodwork.rocks on "Start a project"; music plays on for 3 s. | Mark wipe (WebGL), cut at 17.02 s |
+
+Behind every slide the WebGPU background drifts: its gold light reaches further as the music gets
+louder, and it and the drifting stones swell on each beat. The mark's gold stone does the same.
 
 ## Demo commands
 
@@ -49,6 +55,7 @@ python3 -m pip install edge-tts
 node tools/video-audio/generate-audio.mjs docs/videos/01-pitch --dry-run
 node tools/video-audio/generate-audio.mjs docs/videos/01-pitch
 node tools/video-build/build-video.mjs docs/videos/01-pitch --check
+node tools/video-build/build-video.mjs docs/videos/01-pitch --frame 5.6 .cache/01-pitch/frame.png
 node tools/video-build/build-video.mjs docs/videos/01-pitch --slides-only
 node tools/video-build/build-video.mjs docs/videos/01-pitch --no-captions
 ffmpeg -y -i .cache/01-pitch/captions.srt docs/videos/01-pitch/01-pitch.vtt
@@ -63,6 +70,10 @@ cp docs/videos/01-pitch/01-pitch-poster.jpg frontend/projects/goodwork/public/pi
 - Every cue must be copied verbatim from `script.md`; `--check` fails otherwise.
 - Keep the script near fifty words; edge-tts adds about a second of silence at each section break.
 - The page copy is the source of truth. Change the mock first, then the script.
+- `timing.js` is generated; `--check` rewrites it. Rebuild after changing the script, a cue or the music.
+- The render needs WebGPU. It was built on macOS, where headless Chromium runs it on Metal; the
+  builder stops with a message if the background cannot draw.
+- The MP4 is about 5.8 MB (the still-slide version was 0.6 MB). The page loads only its metadata until someone presses play.
 
 ## References
 
